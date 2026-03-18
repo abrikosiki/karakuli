@@ -32,6 +32,14 @@
         gap: 64px;
         align-items: center;
       }
+
+      .hero-visual {
+        display: block;
+      }
+    }
+
+    .hero-visual {
+      display: none;
     }
 
     .trust-strip {
@@ -48,34 +56,19 @@
     }
 
     .subjects-row {
-      display: flex;
-      gap: 24px;
-      overflow-x: auto;
-      padding-bottom: 24px;
-      scroll-snap-type: x mandatory;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
+      display: grid;
+      gap: 16px;
     }
 
-    .subjects-row::-webkit-scrollbar {
-      display: none;
-    }
-
-    .subjects-row>.card-gray {
-      min-width: 280px;
-      flex: 0 0 auto;
-      scroll-snap-align: start;
+    @media (min-width: 768px) {
+      .subjects-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     @media (min-width: 1024px) {
       .subjects-row {
         grid-template-columns: repeat(5, 1fr);
-        display: grid;
-        overflow: visible;
-      }
-
-      .subjects-row>.card-gray {
-        min-width: auto;
       }
     }
 
