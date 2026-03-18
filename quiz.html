@@ -3,81 +3,1348 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karakuli - Quiz</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap"
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KARAKULI - Quiz</title>
+    <!-- Meta Pixel: replace with actual pixel ID -->
+    <!-- fbq('init', 'YOUR_PIXEL_ID'); -->
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700&family=DM+Sans:wght@400;500&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="quiz.css">
+    <style>
+        :root {
+            --primary: #E8612A;
+            --primary-hover: #D4551F;
+            --bg-page: #FFFFFF;
+            --bg-info: #F5F0FF;
+            --text-primary: #2D1B6B;
+            --text-secondary: #666666;
+            --card-border: #E8E4DF;
+            --selected-border: #E8612A;
+            --selected-bg: #FEF0EB;
+            --progress-bar: #E8612A;
+            --accent-green: #5BBD6B;
+            --bg-loading: #1A1A1A;
+
+            --font-heading: 'Fraunces', serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-page);
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+        }
+
+        #app {
+            width: 100%;
+            max-width: 480px;
+            min-height: 100vh;
+            position: relative;
+            background-color: var(--bg-page);
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        .heading-font {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 32px;
+        }
+
+        h2 {
+            font-size: 24px;
+        }
+
+        p,
+        .subtext {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .trust-line {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-top: 16px;
+            opacity: 0.8;
+        }
+
+        /* Nav & Progress */
+        #top-nav {
+            display: none;
+            align-items: center;
+            padding: 24px 24px 0 24px;
+            background: transparent;
+            z-index: 10;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #666666;
+            cursor: pointer;
+            padding: 0 16px 0 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .progress-container {
+            flex-grow: 1;
+            height: 4px;
+            background: #F0EBE5;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: var(--progress-bar);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .screen-counter {
+            font-size: 13px;
+            color: #999999;
+            margin-left: 16px;
+            font-family: var(--font-body);
+            font-weight: 500;
+        }
+
+        /* Screens */
+        .screen {
+            display: none;
+            flex-direction: column;
+            flex-grow: 1;
+            padding: 24px;
+            width: 100%;
+            background-color: var(--bg-page);
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-height: 100vh;
+        }
+
+        .screen.has-nav {
+            padding-top: 80px;
+            /* Space for nav */
+        }
+
+        .screen.active {
+            display: flex;
+            z-index: 2;
+        }
+
+        .screen.slide-in {
+            animation: slideLeft 0.3s ease-out forwards;
+        }
+
+        @keyframes slideLeft {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .screen.info-screen {
+            background-color: var(--bg-info);
+            justify-content: center;
+        }
+
+        /* Buttons */
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 16px 32px;
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.2s;
+            margin-top: auto;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Inputs */
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 16px 20px;
+            border: 1.5px solid var(--card-border);
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: var(--font-body);
+            margin-bottom: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+        }
+
+        .input-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        /* Options (Cards) */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .option-card {
+            background: white;
+            border: 1.5px solid var(--card-border);
+            border-radius: 16px;
+            padding: 16px 20px;
+            font-family: var(--font-body);
+            font-size: 16px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+
+        .option-card:hover {
+            border-color: #ccc;
+        }
+
+        .option-card.selected {
+            border: 2px solid var(--selected-border);
+            background-color: var(--selected-bg);
+        }
+
+        /* Multi-select Grid */
+        .multi-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .multi-card {
+            background: white;
+            border: 1.5px solid var(--card-border);
+            border-radius: 16px;
+            padding: 16px 12px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .multi-card.selected {
+            border: 2px solid var(--selected-border);
+            background-color: var(--selected-bg);
+        }
+
+        .multi-card .emoji {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .multi-card span {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Info Screens Specific */
+        .big-stat {
+            font-family: var(--font-heading);
+            font-size: 64px;
+            color: var(--primary);
+            margin: 0;
+            line-height: 1;
+        }
+
+        .anim-pop {
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        @keyframes popIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .stat-label {
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            margin-top: 8px;
+            font-family: var(--font-body);
+            font-size: 18px;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+
+        .feature-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            font-size: 16px;
+        }
+
+        .feature-list li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
+        /* Tutor Carousel */
+        .tutor-carousel {
+            display: flex;
+            overflow-x: auto;
+            gap: 16px;
+            padding-bottom: 16px;
+            scroll-snap-type: x mandatory;
+            margin-bottom: 16px;
+        }
+
+        .tutor-carousel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tutor-card {
+            background: white;
+            border: 1.5px solid var(--card-border);
+            border-radius: 16px;
+            padding: 20px;
+            min-width: 260px;
+            scroll-snap-align: start;
+        }
+
+        .tutor-card h3 {
+            margin-bottom: 4px;
+            font-size: 18px;
+        }
+
+        .tutor-card .subj {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .tutor-card .quote {
+            font-style: italic;
+            font-size: 15px;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            background-color: var(--bg-loading) !important;
+            color: white;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading-ring {
+            width: 64px;
+            height: 64px;
+            border: 4px solid rgba(232, 97, 42, 0.3);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 32px;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .loading-line {
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .loading-line.visible {
+            animation: fadeIn 0.5s forwards;
+        }
+
+        .loading-line::before {
+            content: '✓';
+            color: var(--accent-green);
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Results Screen */
+        .results-screen {
+            padding: 0;
+            display: block;
+            /* scrolling */
+            position: relative;
+        }
+
+        .results-screen.active {
+            display: block;
+        }
+
+        .result-section {
+            padding: 40px 24px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .result-section:last-child {
+            border-bottom: none;
+        }
+
+        .bg-light {
+            background-color: var(--bg-page);
+        }
+
+        .bg-lavender {
+            background-color: var(--bg-info);
+        }
+
+        .learner-badge {
+            text-align: center;
+            padding: 32px 24px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 24px;
+        }
+
+        .learner-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .trait-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 24px;
+        }
+
+        .trait-tag {
+            background: var(--bg-info);
+            color: var(--text-primary);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .subject-rec {
+            background: white;
+            border: 1.5px solid var(--card-border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .subject-icon {
+            font-size: 32px;
+        }
+
+        .subject-rec h3 {
+            margin-bottom: 4px;
+            font-size: 18px;
+        }
+
+        .subject-rec p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .schedule-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 16px;
+        }
+
+        .schedule-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--card-border);
+            font-size: 15px;
+        }
+
+        .schedule-item:last-child {
+            border-bottom: none;
+        }
+
+        .plan-comparison {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .plan-card {
+            background: white;
+            border: 1.5px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .plan-card.highlight {
+            border: 2px solid var(--primary);
+            box-shadow: 0 10px 20px rgba(232, 97, 42, 0.1);
+        }
+
+        .plan-title {
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .plan-price {
+            font-size: 24px;
+            color: var(--primary);
+            font-weight: 700;
+            margin: 8px 0;
+        }
+
+        .plan-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .fine-print {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 16px;
+        }
+
+        .cta-bottom {
+            margin-top: 32px;
+        }
+
+        /* Microcopy */
+        .micro {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 8px;
+        }
+    </style>
 </head>
 
-<body class="quiz-body">
-
-    <div class="progress-bar-container" id="progress-container">
-        <div class="progress-bar" id="progress-bar"></div>
-    </div>
-
-    <div class="quiz-header" id="quiz-header" style="display: none;">
-        <button class="back-btn" id="back-btn">←</button>
-        <div class="question-counter" id="question-counter">1 / 7</div>
-    </div>
-
-    <div class="quiz-container">
-
-        <!-- Screen 0: Intro -->
-        <div class="screen active" id="screen-0">
-            <div class="quiz-content" style="text-align: center;">
-                <h1 class="quiz-h1">Discover your child's learning superpower</h1>
-                <p class="quiz-sub">7 questions · 2 minutes · personalized class recommendations</p>
-                <button class="btn btn-primary" style="font-size: 18px; padding: 16px 32px;" onclick="startQuiz()">Let's
-                    find out →</button>
-                <p class="text-small text-secondary mt-16" style="color: #666666;">No email required to start</p>
+<body>
+    <div id="app">
+        <!-- Top Nav (Progress) -->
+        <div id="top-nav">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
             </div>
+            <div class="screen-counter" id="screen-counter"></div>
         </div>
 
-        <!-- Questions 1-6 are dynamically injected by Javascript -->
-        <div id="questions-container"></div>
+        <!-- Rendered screens wrapper -->
+        <div id="screens-container"></div>
+    </div>
 
-        <!-- Screen 7: Email Gate -->
-        <div class="screen" id="screen-email">
-            <div class="quiz-content">
-                <h2 class="quiz-q-h2" style="font-size: 36px;">Your child's learning profile is ready</h2>
-                <p style="color: #999999; margin-bottom: 32px;">Where should we send it — along with your matched class
-                    recommendations?</p>
-                <input type="email" class="input-dark" placeholder="Email address" id="quiz-email">
-                <input type="text" class="input-dark" placeholder="WhatsApp: +972... (optional)">
-                <button class="btn btn-primary btn-full" style="font-size: 16px; margin-bottom: 16px;"
-                    onclick="submitQuiz()">Show me the results →</button>
-                <p style="color: #555555; font-size: 12px;">No spam. We'll send one email with your results and class
-                    picks.</p>
+    <script>
+        /***********************************************************
+         * CONSTANTS & STATE
+         ***********************************************************/
+        const WEBHOOK_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
+        const STRIPE_URL = 'YOUR_STRIPE_PAYMENT_LINK';
+
+        let currentScreenIndex = 0;
+        let questionCounter = 0; // To track progress out of 10
+
+        const quizState = {
+            age: null,
+            social: null,
+            pain: null,
+            energy: null,
+            decision: null,
+            subjects: [],
+            email: null,
+            phone: null,
+            online: null,
+            focus: null,
+            barrier: null,
+            childName: null,
+        };
+
+        const traitMap = {
+            social_group: 'Social', social_1on1: 'Focused', social_solo: 'Independent', social_flex: 'Adaptive',
+            energy_create: 'Creative', energy_challenge: 'Analytical', energy_realworld: 'Practical', energy_perform: 'Expressive',
+            decision_logical: 'Logical', decision_intuitive: 'Intuitive', decision_social: 'Communicative', decision_experiment: 'Experimental',
+            focus_deep: 'Deep-Diver', focus_explorer: 'Explorer', focus_slow_start: 'Warm-Up Kid', focus_disciplined: 'Achiever',
+        };
+
+        const learnerTypes = {
+            'Creative+Explorer': { name: 'Creative Explorer', icon: '🎨', description: '[name] is a naturally curious child who loves to create and try new things. They learn best when they can experiment freely and express themselves. Variety is key — they thrive when they can switch between different activities.' },
+            'Creative+Deep-Diver': { name: 'Imaginative Builder', icon: '🧱', description: '[name] gets deeply immersed in creative projects. Give them a canvas, a keyboard, or an instrument, and they\'ll lose track of time. They love building things from scratch and seeing the result of their effort.' },
+            'Creative+Achiever': { name: 'Creative Achiever', icon: '🌟', description: '[name] combines imagination with discipline. They don\'t just dream up ideas — they follow through and make them real. They thrive in creative subjects with clear milestones.' },
+            'Creative+Warm-Up Kid': { name: 'Thoughtful Creator', icon: '💭', description: '[name] takes a moment to warm up, but once they start creating, there\'s no stopping them. They need a gentle nudge and a supportive environment to unlock their full creative potential.' },
+            'Analytical+Explorer': { name: 'Curious Strategist', icon: '🔍', description: '[name] loves puzzles, challenges, and figuring things out — but also gets excited about jumping to the next thing. They need variety within structured thinking: chess one day, coding the next.' },
+            'Analytical+Deep-Diver': { name: 'Strategic Thinker', icon: '♟️', description: '[name] loves to go deep into logical challenges. They\'re the kind of kid who won\'t stop until they\'ve solved the puzzle. Math, chess, and coding are their natural playground.' },
+            'Analytical+Achiever': { name: 'Focused Achiever', icon: '🎯', description: '[name] is driven, disciplined, and loves a good challenge. They set goals and hit them. Structured subjects like math and coding bring out their best.' },
+            'Analytical+Warm-Up Kid': { name: 'Quiet Problem-Solver', icon: '🧩', description: '[name] needs a moment to settle in, but once they engage with a logical challenge, they\'re fully locked in. They benefit from patient tutors who let them find their rhythm.' },
+            'Expressive+Explorer': { name: 'Curious Performer', icon: '🎭', description: '[name] is full of energy and loves to try everything. They light up when they can move, perform, and express themselves. Music, art, and interactive classes are their sweet spot.' },
+            'Expressive+Deep-Diver': { name: 'Passionate Artist', icon: '🎼', description: '[name] goes all-in on their passions. Whether it\'s music, art, or performance — when they love something, they commit deeply and make remarkable progress.' },
+            'Practical+Explorer': { name: 'Real-World Explorer', icon: '🌍', description: '[name] is curious about how the world works. They love connecting what they learn to real life. A mix of practical subjects keeps them engaged and growing.' },
+            'Practical+Deep-Diver': { name: 'Steady Learner', icon: '📚', description: '[name] likes to understand things thoroughly and connects learning to the real world. They prefer depth over breadth and do well with consistent, structured classes.' },
+            'default': { name: 'Versatile Learner', icon: '🌟', description: '[name] is adaptable and open to different ways of learning. They do well across subjects and formats — the key is finding what sparks their interest right now.' },
+        };
+
+        const subjectIcons = { math: '🧮', english: '🇬🇧', art: '🎨', chess: '♟️', coding: '💻', music: '🎵' };
+        const subjectNames = { math: 'Math & logical thinking', english: 'English language', art: 'Art & creativity', chess: 'Chess & strategic thinking', coding: 'Coding & tech skills', music: 'Music' };
+
+        const subjectReasons = {
+            math: {
+                pain_falling_behind: "Help [name] catch up and build confidence with numbers",
+                pain_bored: "Challenge [name] with problems that actually make them think",
+                default: "Build a strong foundation in logical thinking and math skills",
+            },
+            english: {
+                pain_falling_behind: "Strengthen [name]'s language skills for school success",
+                social_group: "Perfect for [name]'s social nature — learning through conversation",
+                default: "Develop communication skills that open doors everywhere",
+            },
+            art: {
+                energy_create: "A natural fit for [name]'s love of creating from scratch",
+                pain_screen_time: "A creative outlet that's way more fun than scrolling",
+                default: "A space to experiment, express, and create freely",
+            },
+            chess: {
+                energy_challenge: "The ultimate thinking game for [name]'s competitive side",
+                pain_screen_time: "Strategic thinking that beats any screen game",
+                default: "Train focus, patience, and strategic thinking",
+            },
+            coding: {
+                energy_create: "Turn [name]'s creativity into real projects they can show off",
+                decision_experiment: "Perfect for [name]'s learn-by-doing style",
+                default: "Build tech skills while having fun creating games and apps",
+            },
+            music: {
+                energy_perform: "A stage for [name]'s expressive energy",
+                decision_intuitive: "Music speaks to [name]'s intuitive, feeling-driven nature",
+                default: "Develop rhythm, creativity, and a skill that lasts a lifetime",
+            },
+        };
+
+        function trackEvent(eventName, data) {
+            // Placeholder for analytics
+            console.log(`[Event] ${eventName}`, data);
+            // if (typeof fbq === 'function') fbq('trackCustom', eventName, data);
+        }
+
+        /***********************************************************
+         * ALGORITHMS
+         ***********************************************************/
+        function getLearnerType(state) {
+            const energy = traitMap[state.energy];
+            const focus = traitMap[state.focus];
+            const key = energy + '+' + focus;
+            const type = learnerTypes[key] || learnerTypes['default'];
+            const n = state.childName || 'Your child';
+            return {
+                ...type,
+                name: type.name.replaceAll('[name]', n),
+                description: type.description.replaceAll('[name]', n),
+                traits: [traitMap[state.social], traitMap[state.energy], traitMap[state.decision], traitMap[state.focus]].filter(Boolean),
+            };
+        }
+
+        function getRecommendedSubjects(state) {
+            const scores = { math: 0, english: 0, art: 0, chess: 0, coding: 0, music: 0 };
+            const painScores = {
+                pain_falling_behind: { math: 3, english: 3 },
+                pain_bored: { chess: 3, coding: 3, music: 1 },
+                pain_screen_time: { art: 2, chess: 2, music: 2 },
+                pain_no_access: { math: 1, english: 1, art: 1, chess: 1, coding: 1, music: 1 },
+            };
+            const socialScores = {
+                social_group: { english: 2, music: 2 },
+                social_1on1: { math: 2, chess: 2 },
+                social_solo: { coding: 2, art: 2 },
+            };
+            const energyScores = {
+                energy_create: { art: 3, music: 2, coding: 2 },
+                energy_challenge: { chess: 3, math: 2, coding: 2 },
+                energy_realworld: { english: 2, math: 2 },
+                energy_perform: { music: 3, art: 2 },
+            };
+            const decisionScores = {
+                decision_logical: { math: 2, chess: 2, coding: 2 },
+                decision_intuitive: { art: 2, music: 2 },
+                decision_social: { english: 2, music: 2 },
+                decision_experiment: { coding: 2, art: 2 },
+            };
+            const focusScores = {
+                focus_deep: { math: 1, chess: 1 },
+                focus_explorer: { art: 1, coding: 1, music: 1 },
+                focus_disciplined: { math: 1, chess: 1, coding: 1 },
+            };
+
+            for (const table of [painScores, socialScores, energyScores, decisionScores, focusScores]) {
+                const key = Object.keys(table).find(k =>
+                    k === state.pain || k === state.social || k === state.energy ||
+                    k === state.decision || k === state.focus
+                );
+                if (key && table[key]) {
+                    for (const [subj, pts] of Object.entries(table[key])) {
+                        scores[subj] += pts;
+                    }
+                }
+            }
+
+            for (const s of state.subjects) {
+                const subj = s.replace('subj_', '');
+                if (scores[subj] !== undefined) scores[subj] += 5;
+            }
+
+            const sorted = Object.entries(scores)
+                .sort((a, b) => b[1] - a[1])
+                .filter(([_, score]) => score > 0);
+
+            return sorted.slice(0, Math.max(2, Math.min(4, sorted.filter(([_, s]) => s >= sorted[1][1]).length)));
+        }
+
+        function getSubjectReasonStr(subject, state) {
+            const reasons = subjectReasons[subject];
+            const n = state.childName || 'Your child';
+            for (const key of [state.pain, state.social, state.energy, state.decision, state.focus]) {
+                if (reasons[key]) return reasons[key].replaceAll('[name]', n);
+            }
+            return reasons.default.replaceAll('[name]', n);
+        }
+
+        /***********************************************************
+         * SCREEN CREATION ENGINE
+         ***********************************************************/
+        const s = []; // Array of screen configs
+
+        // S0
+        s.push({
+            id: 0, html: `
+            <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:center;">
+                <h1>Screens aren't the problem. The problem is that nothing else feels exciting enough.</h1>
+                <p>Let's fix that. Take a 2-minute quiz and discover the classes your child will love so much, they'll put the phone down on their own.</p>
+                <div class="cta-bottom">
+                    <button class="btn" onclick="nextScreen()">Take the quiz →</button>
+                    <div class="trust-line">Classes taught by experienced tutors with 5+ years in education</div>
+                </div>
+            </div>`
+        });
+
+        // S1
+        s.push({
+            id: 1, type: 'q', key: 'age', qTotal: true, html: `
+            <h2>How old is your child?</h2>
+            <div class="options-list">
+                <div class="option-card" onclick="selectSingle(this, 'age', 'age_5_6')">5–6 years old</div>
+                <div class="option-card" onclick="selectSingle(this, 'age', 'age_7_8')">7–8 years old</div>
+                <div class="option-card" onclick="selectSingle(this, 'age', 'age_9_10')">9–10 years old</div>
+                <div class="option-card" onclick="selectSingle(this, 'age', 'age_11_12')">11–12 years old</div>
+            </div>`
+        });
+
+        // S2
+        s.push({
+            id: 2, type: 'q', key: 'social', qTotal: true, html: `
+            <h2>When learning something new, my child usually...</h2>
+            <div class="options-list">
+                <div class="option-card" onclick="selectSingle(this, 'social', 'social_group')">Loves doing it with others — the more people, the better</div>
+                <div class="option-card" onclick="selectSingle(this, 'social', 'social_1on1')">Prefers working one-on-one with someone they trust</div>
+                <div class="option-card" onclick="selectSingle(this, 'social', 'social_solo')">Likes to figure things out on their own first</div>
+                <div class="option-card" onclick="selectSingle(this, 'social', 'social_flex')">It depends on what they're learning</div>
+            </div>`
+        });
+
+        // S3
+        s.push({
+            id: 3, type: 'q', key: 'pain', qTotal: true, html: `
+            <h2>What worries you most about your child's development?</h2>
+            <div class="options-list">
+                <div class="option-card" onclick="selectSingle(this, 'pain', 'pain_falling_behind')">They're falling behind in school</div>
+                <div class="option-card" onclick="selectSingle(this, 'pain', 'pain_bored')">They're not challenged enough — bored and understimulated</div>
+                <div class="option-card" onclick="selectSingle(this, 'pain', 'pain_screen_time')">Too much screen time, not enough meaningful activity</div>
+                <div class="option-card" onclick="selectSingle(this, 'pain', 'pain_no_access')">It's hard to find quality teachers where we live</div>
+            </div>`
+        });
+
+        // S4 DYNAMIC INFO
+        s.push({
+            id: 4, type: 'info', onRender: (el) => {
+                let stat, label, txt;
+                if (quizState.pain === 'pain_falling_behind') { stat = "68%"; label = "of parents report their child struggles to keep up — especially when school curriculum doesn't match their level."; txt = "The good news? Targeted support in just 2–3 subjects can close that gap in weeks, not months."; }
+                else if (quizState.pain === 'pain_bored') { stat = "3x"; label = "more likely to disengage from learning by age 10 — that's the risk for curious kids who aren't challenged early."; txt = "The right challenge at the right time can turn boredom into passion. That's exactly what we help with."; }
+                else if (quizState.pain === 'pain_screen_time') { stat = "4.5 hrs"; label = "of screen time per day for kids aged 5–12. But only 25 minutes on anything educational."; txt = "What if you could turn just 45 minutes of that into a live class they actually look forward to?"; }
+                else { stat = "73%"; label = "of families living abroad say finding a good teacher in their area is their #1 education challenge."; txt = "With KARAKULI, your child gets access to top tutors from anywhere — no geography limits."; }
+                el.innerHTML = `
+                <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:center;">
+                    <div class="big-stat anim-pop">${stat}</div>
+                    <div class="stat-label">${label}</div>
+                    <p>${txt}</p>
+                    <button class="btn" style="margin-top:24px;" onclick="nextScreen()">Continue →</button>
+                </div>`;
+            }
+        });
+
+        // S5
+        s.push({
+            id: 5, type: 'q', key: 'energy', qTotal: true, html: `
+            <h2>My child gets most excited when they can...</h2>
+            <div class="options-list">
+                <div class="option-card" onclick="selectSingle(this, 'energy', 'energy_create')">Create something from scratch — draw, build, compose</div>
+                <div class="option-card" onclick="selectSingle(this, 'energy', 'energy_challenge')">Solve a puzzle or win a challenge</div>
+                <div class="option-card" onclick="selectSingle(this, 'energy', 'energy_realworld')">Learn about real-world things they see around them</div>
+                <div class="option-card" onclick="selectSingle(this, 'energy', 'energy_perform')">Move, act, or perform</div>
+            </div>`
+        });
+
+        // S6 INFO STATIC
+        s.push({
+            id: 6, type: 'info', html: `
+            <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:center;">
+                <h2>What if after-school hours became the highlight of their day?</h2>
+                <p>KARAKULI is an online school where kids choose classes they love — from math and chess to art and music.</p>
+                <ul class="feature-list">
+                    <li>Live 1-on-1 and group classes with experienced tutors</li>
+                    <li>45-minute classes that fit any schedule</li>
+                    <li>6 subjects to mix and match</li>
+                    <li>One simple subscription — use credits for any class</li>
+                </ul>
+                <button class="btn" onclick="nextScreen()">Continue →</button>
+            </div>`
+        });
+
+        // S7
+        s.push({
+            id: 7, type: 'q', key: 'decision', qTotal: true, html: `
+            <div class="micro">You're halfway there!</div>
+            <h2>When your child faces a challenge, they usually...</h2>
+            <div class="options-list">
+                <div class="option-card" onclick="selectSingle(this, 'decision', 'decision_logical')">Try to think it through logically, step by step</div>
+                <div class="option-card" onclick="selectSingle(this, 'decision', 'decision_intuitive')">Go with their gut feeling and follow their intuition</div>
+                <div class="option-card" onclick="selectSingle(this, 'decision', 'decision_social')">Talk it out with someone and look for support</div>
+                <div class="option-card" onclick="selectSingle(this, 'decision', 'decision_experiment')">Jump in and experiment until something works</div>
+            </div>`
+        });
+
+        // S8 Multi
+        s.push({
+            id: 8, type: 'q', key: 'subjects', qTotal: true, html: `
+            <h2>Which skills matter most to you for your child? Pick all that apply.</h2>
+            <div class="multi-grid">
+                <div class="multi-card" id="subj_math" onclick="toggleMulti(this, 'subj_math')"><div class="emoji">🧮</div><span>Math & logical thinking</span></div>
+                <div class="multi-card" id="subj_english" onclick="toggleMulti(this, 'subj_english')"><div class="emoji">🇬🇧</div><span>English language</span></div>
+                <div class="multi-card" id="subj_art" onclick="toggleMulti(this, 'subj_art')"><div class="emoji">🎨</div><span>Art & creativity</span></div>
+                <div class="multi-card" id="subj_chess" onclick="toggleMulti(this, 'subj_chess')"><div class="emoji">♟️</div><span>Chess & strategic thinking</span></div>
+                <div class="multi-card" id="subj_coding" onclick="toggleMulti(this, 'subj_coding')"><div class="emoji">💻</div><span>Coding & tech skills</span></div>
+                <div class="multi-card" id="subj_music" onclick="toggleMulti(this, 'subj_music')"><div class="emoji">🎵</div><span>Music</span></div>
             </div>
-        </div>
+            <button class="btn" id="multi-btn" onclick="nextScreen()" disabled>These look great →</button>
+            `
+        });
 
-        <!-- Screen 8: Loading -->
-        <div class="screen" id="screen-loading">
-            <div class="quiz-content">
+        // S9 EMAIL
+        s.push({
+            id: 9, type: 'email', html: `
+            <h2>Almost there! Where should we send the learning plan?</h2>
+            <p>We'll email you the full personalized recommendation and your child's learner profile.</p>
+            <div style="flex-grow:1;">
+                <label class="input-label">Email address</label>
+                <input type="email" id="emailInput" placeholder="your@email.com" required>
+                <label class="input-label">Optional — for WhatsApp updates</label>
+                <input type="tel" id="phoneInput" placeholder="+X XXX XXX XXXX">
+            </div>
+            <div class="cta-bottom">
+                <button class="btn" onclick="submitEmail()">Send me the plan →</button>
+                <a class="skip-link" onclick="skipEmail()">Skip for now</a>
+                <div class="micro" id="email-msg" style="margin-top:16px;"></div>
+            </div>`
+        });
+
+        // S10 INFO TUTOR
+        s.push({
+            id: 10, type: 'info', html: `
+            <div style="display:flex; flex-direction:column; flex-grow:1; justify-content:center;">
+                <h2>Meet some of our tutors</h2>
+                <p>Every KARAKULI tutor has 5+ years of teaching experience and is trained to make learning feel like play.</p>
+                <div class="tutor-carousel">
+                    <div class="tutor-card">
+                        <h3>Kate K.</h3>
+                        <div class="subj">Math & English</div>
+                        <div class="quote">"I turn 'I hate math' into 'Can we do one more problem?'"</div>
+                    </div>
+                    <div class="tutor-card">
+                        <h3>Antonia S.</h3>
+                        <div class="subj">Coding & Math</div>
+                        <div class="quote">"We build real games in every class — kids don't even realize they're learning"</div>
+                    </div>
+                    <div class="tutor-card">
+                        <h3>Artem T.</h3>
+                        <div class="subj">Art & Music</div>
+                        <div class="quote">"Creativity isn't a talent, it's a muscle. I help kids train it."</div>
+                    </div>
+                </div>
+                <p style="font-size:14px;">After signing up, you can browse all our tutors and pick the one that feels right. We're here to help you choose.</p>
+                <button class="btn" onclick="nextScreen()">Continue →</button>
+            </div>`
+        });
+
+        // S11
+        s.push({
+            id: 11, type: 'q', key: 'online', qTotal: true, html: `
+            <h2>Has your child tried online classes before?</h2>
+            <div class="options-list">
+                <div class="option-card" onclick="selectSingle(this, 'online', 'online_positive')">Yes, and they loved it</div>
+                <div class="option-card" onclick="selectSingle(this, 'online', 'online_negative')">Yes, but it didn't work out</div>
+                <div class="option-card" onclick="selectSingle(this, 'online', 'online_open')">No, but I'd like to try</div>
+                <div class="option-card" onclick="selectSingle(this, 'online', 'online_skeptical')">No, and I'm not sure about online learning</div>
+            </div>`
+        });
+
+        // S12 DYNAMIC INFO
+        s.push({
+            id: 12, type: 'info', onRender: (el) => {
+                let title, txt;
+                if (quizState.online === 'online_positive') { title = "Great — your child already knows the format!"; txt = "KARAKULI goes further: your child picks the subjects they love, the tutor they click with, and the schedule that works. Every class is built around their pace and interests — not a one-size-fits-all curriculum."; }
+                else if (quizState.online === 'online_negative') { title = "We get it — most online classes aren't great"; txt = "Big group calls where kids zone out? That's not real learning. At KARAKULI, classes are small and personal. Your child gets a tutor who knows their name, their level, and what makes them tick. 94% of kids who try a class ask to come back."; }
+                else if (quizState.online === 'online_open') { title = "First time? You're in good hands"; txt = "KARAKULI classes are designed to feel fun, not like homework. Your child picks what to learn, works with a tutor who adapts to them, and can switch subjects anytime. And if it's not a fit — you don't pay for what you don't use."; }
+                else { title = "Not sure about online? Here's what changes minds"; txt = "We hear this a lot — until parents see their kids beg for \"just 5 more minutes.\" The difference is that KARAKULI isn't a lecture. It's a live session with a tutor who makes every class feel like a game. Try it for $15 — if your child doesn't love it, that's okay."; }
+                el.innerHTML = `
+                <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:center;">
+                    <h2>${title}</h2>
+                    <p>${txt}</p>
+                    <button class="btn" onclick="nextScreen()">Continue →</button>
+                </div>`;
+            }
+        });
+
+        // S13
+        s.push({
+            id: 13, type: 'q', key: 'focus', qTotal: true, html: `
+            <h2>When it comes to hobbies and activities, my child...</h2>
+            <div class="options-list">
+                <div class="option-card" onclick="selectSingle(this, 'focus', 'focus_deep')">Likes to go deep into one thing</div>
+                <div class="option-card" onclick="selectSingle(this, 'focus', 'focus_explorer')">Gets excited about new things but moves on quickly</div>
+                <div class="option-card" onclick="selectSingle(this, 'focus', 'focus_slow_start')">Needs a push to start, but then really gets into it</div>
+                <div class="option-card" onclick="selectSingle(this, 'focus', 'focus_disciplined')">Is naturally disciplined and follows through</div>
+            </div>`
+        });
+
+        // S14
+        s.push({
+            id: 14, type: 'q', key: 'barrier', qTotal: true, html: `
+            <h2>What's the biggest thing holding you back from enrolling your child in classes?</h2>
+            <div class="options-list">
+                <div class="option-card" onclick="selectSingle(this, 'barrier', 'barrier_price')">Price — quality classes are expensive</div>
+                <div class="option-card" onclick="selectSingle(this, 'barrier', 'barrier_teacher')">Can't find the right teacher</div>
+                <div class="option-card" onclick="selectSingle(this, 'barrier', 'barrier_schedule')">Scheduling is a nightmare</div>
+                <div class="option-card" onclick="selectSingle(this, 'barrier', 'barrier_interest')">My child loses interest too fast</div>
+            </div>`
+        });
+
+        // S15 STATIC INFO
+        s.push({
+            id: 15, type: 'info', html: `
+            <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:center;">
+                <h2>One subscription. Total freedom.</h2>
+                <p>Forget rigid schedules and overpriced single classes. With KARAKULI:</p>
+                <ul class="feature-list">
+                    <li>Every month, you get credits — spend them on any subject you want</li>
+                    <li>Mix and match — Math on Monday, Art on Wednesday, Chess on Friday</li>
+                    <li>Set up regular classes or try new ones — completely up to you</li>
+                    <li>Clear pricing — you always know exactly how many credits each class costs</li>
+                </ul>
+                <div style="background:white; padding:16px; border-radius:12px; border:1px solid var(--card-border); margin-bottom:24px; font-style:italic;">
+                    "This week, Anna (8) spent her credits on 2 Math classes and 1 Art class. Next week she wants to try Coding — no problem, same credits."
+                </div>
+                <button class="btn" onclick="nextScreen()">Continue →</button>
+            </div>`
+        });
+
+        // S16 LAST Q
+        s.push({
+            id: 16, type: 'q', key: 'childName', qTotal: true, onRender: (el) => {
+                el.innerHTML = `
+                <h2>Last question — what's your child's first name?</h2>
+                <p>We'll use it to create their personalized learning plan and learner profile.</p>
+                <div style="flex-grow:1;">
+                    <input type="text" id="nameInput" placeholder="e.g. Sofia, Daniel, Mia..." onkeyup="updateNameBtn()">
+                </div>
+                <button class="btn" id="nameBtn" onclick="submitName()">See the plan →</button>
+                `;
+            }
+        });
+
+        // S17 LOADING
+        s.push({
+            id: 17, type: 'loading', onRender: (el) => {
+                const n = quizState.childName || 'Your child';
+                el.innerHTML = `
                 <div class="loading-ring"></div>
-                <div class="loading-text" id="loading-text">Analysing learning style...</div>
-            </div>
-        </div>
+                <div class="loading-lines">
+                    <div class="loading-line" id="ll1">Analysing ${n}'s learning style...</div>
+                    <div class="loading-line" id="ll2">Matching to available classes...</div>
+                    <div class="loading-line" id="ll3">Building ${n}'s learning profile...</div>
+                    <div class="loading-line" id="ll4">Creating ${n}'s learning plan...</div>
+                </div>`;
+            }
+        });
 
-        <!-- Screen 9: Result Page (Scrollable) -->
-        <div class="screen" id="screen-result" style="display: block; position: static; height: auto;">
-            <!-- Populated by JS -->
-        </div>
+        // S18 RESULTS
+        s.push({
+            id: 18, type: 'results', onRender: (el) => {
+                const n = quizState.childName || 'Your child';
+                const lType = getLearnerType(quizState);
+                const recSubjs = getRecommendedSubjects(quizState);
 
-    </div>
+                let bTitle, bTxt;
+                if (quizState.barrier === 'barrier_price') { bTitle = "Classes that fit your budget"; bTxt = "Start with a trial for just $15 — that gives you 50 credits, enough for 2 full classes. See if your child loves it before committing to anything bigger."; }
+                else if (quizState.barrier === 'barrier_teacher') { bTitle = "You choose the tutor"; bTxt = `Browse tutor profiles, read about their experience, and pick the one that feels right. Not a fit? Switch anytime. We're here to help you find the best match for ${n}.`; }
+                else if (quizState.barrier === 'barrier_schedule') { bTitle = "Learning on your family's schedule"; bTxt = "Book classes any day, any time. Reschedule easily. No penalties, no rigid commitments. Life happens — we get it."; }
+                else { bTitle = "Classes kids don't want to leave"; bTxt = "Our tutors are trained to keep kids engaged from minute 1 to minute 45. With 6 subjects to rotate through, boredom doesn't stand a chance."; }
 
-    <!-- Insight Popup -->
-    <div class="insight-card" id="insight-card">
-        <div class="insight-label">Did you know</div>
-        <div style="font-size: 18px; line-height: 1.5;" id="insight-text"></div>
-    </div>
+                const stripeLink = `${STRIPE_URL}?prefilled_email=${encodeURIComponent(quizState.email || '')}&client_reference_id=${encodeURIComponent(n)}`;
 
-    <script src="quiz.js"></script>
+                let subjsHtml = '';
+                recSubjs.forEach(([skey]) => {
+                    subjsHtml += `
+                    <div class="subject-rec">
+                        <div class="subject-icon">${subjectIcons[skey]}</div>
+                        <div>
+                            <h3>${subjectNames[skey]}</h3>
+                            <p>${getSubjectReasonStr(skey, quizState)}</p>
+                        </div>
+                    </div>`;
+                });
+
+                el.innerHTML = `
+                <!-- Sec 1 Learner -->
+                <div class="result-section bg-lavender">
+                    <h2>Meet ${n} — the ${lType.name}!</h2>
+                    <div class="learner-badge">
+                        <div class="learner-icon">${lType.icon}</div>
+                        <h3>${lType.name}</h3>
+                        <p style="text-align:left; margin-top:16px;">${lType.description}</p>
+                        <div class="trait-tags">
+                            ${lType.traits.map(t => `<div class="trait-tag">${t}</div>`).join('')}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sec 2 Recs -->
+                <div class="result-section bg-light">
+                    <h2>Based on ${n}'s profile, here are the classes we recommend:</h2>
+                    <div style="margin-top:24px;">${subjsHtml}</div>
+                </div>
+
+                <!-- Sec 3 Schedule -->
+                <div class="result-section bg-lavender">
+                    <h2>Suggested Weekly Schedule</h2>
+                    <p>This is just a suggestion — you choose the days, times, and tutors that work for your family.</p>
+                    <div class="schedule-card">
+                        <div class="schedule-item"><span>Tuesday 5:00 PM</span><span style="font-weight:600;">Art</span></div>
+                        <div class="schedule-item"><span>Thursday 4:00 PM</span><span style="font-weight:600;">Coding</span></div>
+                        <div class="schedule-item"><span>Saturday 11:00 AM</span><span style="font-weight:600;">Chess</span></div>
+                    </div>
+                </div>
+
+                <!-- Sec 4 Barrier -->
+                <div class="result-section bg-light">
+                    <h2>${bTitle}</h2>
+                    <p style="margin:0;">${bTxt}</p>
+                </div>
+
+                <!-- Sec 5 Subscription -->
+                <div class="result-section bg-lavender">
+                    <h2>Start ${n}'s learning journey today</h2>
+                    <div class="plan-comparison">
+                        <div class="plan-card highlight">
+                            <div class="plan-title">TRIAL</div>
+                            <div class="plan-price">$15 <span style="font-size:14px; color:var(--text-secondary); font-weight:400;">one-time</span></div>
+                            <div class="plan-desc">50 credits (~2 classes)</div>
+                            <div class="plan-desc">Starts immediately</div>
+                        </div>
+                        <div class="plan-card">
+                            <div class="plan-title">MONTHLY PLAN</div>
+                            <div class="plan-price">$120<span style="font-size:14px; color:var(--text-secondary); font-weight:400;">/mo</span></div>
+                            <div class="plan-desc">150 credits/month (~6 classes)</div>
+                            <div class="plan-desc">After trial credits used</div>
+                        </div>
+                    </div>
+                    <a href="${stripeLink}" class="btn">Start for $10 — 3 classes included →</a>
+                    <div class="fine-print">Cancel anytime. No commitment. You choose what to spend credits on.</div>
+                </div>
+
+                <!-- Sec 6 Trust -->
+                <div class="result-section bg-light">
+                    <h2>Why parents choose KARAKULI</h2>
+                    <ul class="feature-list" style="margin-top:24px;">
+                        <li>Experienced tutors with 5+ years in education</li>
+                        <li>6 subjects — from math to music</li>
+                        <li>Flexible credits — spend them on what your child loves</li>
+                        <li>Cancel anytime, no lock-in</li>
+                    </ul>
+                </div>
+                `;
+
+                // Final logging
+                console.log("=== QUIZ COMPLETED ===");
+                console.log("Quiz State:", quizState);
+
+                // Webhook send (non-blocking)
+                try {
+                    fetch(WEBHOOK_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(quizState)
+                    });
+                } catch (e) { }
+            }
+        });
+
+        /***********************************************************
+         * APP LOGIC
+         ***********************************************************/
+        const app = document.getElementById('screens-container');
+        const topNav = document.getElementById('top-nav');
+        const pBar = document.getElementById('progress-bar');
+        const sCounter = document.getElementById('screen-counter');
+        const backBtn = document.querySelector('.back-btn');
+
+        // Init DOM
+        s.forEach(conf => {
+            const el = document.createElement('div');
+            el.className = `screen sc-${conf.type}`;
+            if (conf.type === 'info' || conf.type === 'loading') el.classList.add(`${conf.type}-screen`);
+            else if (conf.type === 'results') el.classList.add('results-screen');
+            el.id = `screen_${conf.id}`;
+            if (conf.html) el.innerHTML = conf.html;
+            app.appendChild(el);
+        });
+
+        const qScreensTotal = s.filter(x => x.qTotal).length; // should be 10
+
+        function updateNav() {
+            const conf = s[currentScreenIndex];
+            if (conf.id === 0 || conf.type === 'loading' || conf.type === 'results') {
+                topNav.style.display = 'none';
+            } else {
+                topNav.style.display = 'flex';
+                backBtn.style.display = currentScreenIndex > 0 ? 'inline-block' : 'none';
+
+                const pct = (questionCounter / qScreensTotal) * 100;
+                pBar.style.width = pct + '%';
+
+                if (conf.type === 'q') {
+                    sCounter.innerText = `${questionCounter} / 10`;
+                    sCounter.style.display = 'block';
+                } else {
+                    sCounter.style.display = 'none';
+                }
+            }
+        }
+
+        function showScreen(idx, dir = 'fwd') {
+            document.querySelectorAll('.screen').forEach(el => {
+                el.classList.remove('active', 'slide-in');
+            });
+            const el = document.getElementById(`screen_${idx}`);
+            const conf = s[idx];
+
+            if (dir === 'fwd' && conf.type === 'q') {
+                questionCounter++;
+            } else if (dir === 'back' && s[idx + 1] && s[idx + 1].type === 'q') {
+                questionCounter--;
+            }
+
+            if (conf.onRender) conf.onRender(el);
+            updateNav();
+
+            if (topNav.style.display !== 'none') el.classList.add('has-nav');
+
+            el.classList.add('active');
+            if (dir === 'fwd' && idx > 0) el.classList.add('slide-in');
+
+            if (conf.type === 'loading') {
+                runLoadingAnim();
+            } else if (conf.type !== 'results') {
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function nextScreen() {
+            if (currentScreenIndex < s.length - 1) {
+                trackEvent('quiz_screen_view', { screen: s[currentScreenIndex + 1].key || s[currentScreenIndex + 1].type });
+                currentScreenIndex++;
+                showScreen(currentScreenIndex, 'fwd');
+            }
+        }
+
+        function goBack() {
+            if (currentScreenIndex > 0) {
+                currentScreenIndex--;
+                showScreen(currentScreenIndex, 'back');
+            }
+        }
+
+        function selectSingle(el, key, val) {
+            quizState[key] = val;
+            // update UI
+            const container = document.getElementById(`screen_${currentScreenIndex}`);
+            container.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+            el.classList.add('selected');
+            // short delay for ux
+            setTimeout(nextScreen, 250);
+        }
+
+        function toggleMulti(el, val) {
+            if (quizState.subjects.includes(val)) {
+                quizState.subjects = quizState.subjects.filter(x => x !== val);
+                el.classList.remove('selected');
+            } else {
+                quizState.subjects.push(val);
+                el.classList.add('selected');
+            }
+            document.getElementById('multi-btn').disabled = quizState.subjects.length === 0;
+        }
+
+        function submitEmail() {
+            const em = document.getElementById('emailInput').value;
+            const ph = document.getElementById('phoneInput').value;
+            if (!em || !em.includes('@')) {
+                alert("Please enter a valid email.");
+                return;
+            }
+            quizState.email = em;
+            quizState.phone = ph;
+            document.getElementById('email-msg').innerText = "Your results are saved — no spam, ever.";
+            trackEvent('email_captured', { email: em });
+            setTimeout(nextScreen, 500);
+        }
+
+        function skipEmail() {
+            trackEvent('email_skipped');
+            nextScreen();
+        }
+
+        function updateNameBtn() {
+            const v = document.getElementById('nameInput').value.trim();
+            document.getElementById('nameBtn').innerText = v ? `See ${v}'s plan →` : `See the plan →`;
+        }
+
+        function submitName() {
+            const v = document.getElementById('nameInput').value.trim();
+            if (!v) { alert("Please enter a name."); return; }
+            quizState.childName = v;
+            nextScreen();
+        }
+
+        function runLoadingAnim() {
+            const lines = [
+                document.getElementById('ll1'),
+                document.getElementById('ll2'),
+                document.getElementById('ll3'),
+                document.getElementById('ll4')
+            ];
+            let t = 0;
+            lines.forEach((l, i) => {
+                setTimeout(() => { l.classList.add('visible'); }, t);
+                t += 800; // 0.8s
+            });
+            setTimeout(nextScreen, t + 800);
+        }
+
+        // Start
+        trackEvent('quiz_loaded');
+        showScreen(0);
+
+    </script>
 </body>
 
 </html>
