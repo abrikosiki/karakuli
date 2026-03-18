@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karakuli - Subjects</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .subject-section {
+            padding: 96px 0;
+        }
+
+        .subject-grid {
+            display: grid;
+            gap: 64px;
+        }
+
+        @media (min-width: 768px) {
+            .subject-grid {
+                grid-template-columns: 1fr 1fr;
+                align-items: start;
+            }
+        }
+
+        .mini-card {
+            background: white;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-card);
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+
+        .mini-card:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SHARED NAVIGATION -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="brand-logo" style="display: flex; align-items: center;">
+                <img src="photo/KaraKuli.svg" alt="Karakuli" style="height: 28px; width: auto;">
+            </a>
+            <div class="nav-links">
+                <a href="classes.html">Classes</a>
+                <a href="tutors.html">Tutors</a>
+                <a href="subjects.html" style="color: var(--primary);">Subjects</a>
+                <a href="/#pricing">Pricing</a>
+                <a href="#stripe-link" class="btn btn-primary btn-small">Start for $10</a>
+            </div>
+            <button class="hamburger" id="hamburger">☰</button>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="classes.html">Classes</a>
+            <a href="tutors.html">Tutors</a>
+            <a href="subjects.html">Subjects</a>
+            <a href="/#pricing">Pricing</a>
+            <a href="#stripe-link" class="btn btn-primary btn-small btn-full">Start for $10</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="bg-offwhite section " style="padding: 64px 0 48px;">
+        <div class="container text-center">
+            <h1>What your child can learn</h1>
+            <p class="text-large text-secondary">Five subjects. Weekly classes. Real tutors who love what they teach.
+            </p>
+        </div>
+    </section>
+
+    <!-- MATH SECTION -->
+    <section class="subject-section bg-white" id="math">
+        <div class="container subject-grid">
+            <div>
+                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+                    <h2 style="margin: 0;">Math</h2>
+                    <span class="pill subj-math">Ages 6–16</span>
+                </div>
+                <p class="text-large text-secondary mb-32">Math at Karakuli isn't about drilling formulas — it's about
+                    learning to think. Our classes work on problem-solving, logical reasoning and number confidence in
+                    small groups where every question is welcome. Whether your child is ahead of their grade or just
+                    needs to catch up, we have a class that meets them where they are. Students leave our sessions not
+                    just knowing more math, but actually enjoying it.</p>
+                <a href="classes.html" class="btn btn-primary">See Math classes →</a>
+            </div>
+            <div>
+                <!-- Mini cards -->
+                <div class="mini-card shadow-sm">
+                    <div class="text-label text-secondary mb-8">Every Mon 5:00 PM</div>
+                    <h3 style="font-size: 20px;">Math Problem Solving</h3>
+                    <div class="text-small text-secondary mt-16">5 spots left</div>
+                </div>
+                <div class="mini-card shadow-sm">
+                    <div class="text-label text-secondary mb-8">Every Fri 4:00 PM</div>
+                    <h3 style="font-size: 20px;">Times Tables & Beyond</h3>
+                    <div class="text-small text-secondary mt-16">2 spots left</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ENGLISH SECTION -->
+    <section class="subject-section bg-offwhite" id="english">
+        <div class="container subject-grid">
+            <div>
+                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+                    <h2 style="margin: 0;">English</h2>
+                    <span class="pill subj-english">Ages 5–14</span>
+                </div>
+                <p class="text-large text-secondary mb-32">Reading, writing and speaking confidently in English opens
+                    every other door. Our English classes are conversation-rich, creative and built around real language
+                    use — not worksheets. From early readers to confident writers, we work with kids at every level in a
+                    warm, low-pressure group setting.</p>
+                <a href="classes.html" class="btn btn-primary">See English classes →</a>
+            </div>
+            <div>
+                <div class="mini-card shadow-sm">
+                    <div class="text-label text-secondary mb-8">Every Wed 4:00 PM</div>
+                    <h3 style="font-size: 20px;">Creative Writing Club</h3>
+                    <div class="text-small text-secondary mt-16">3 spots left</div>
+                </div>
+                <div class="mini-card shadow-sm">
+                    <div class="text-label text-secondary mb-8">Every Mon 4:00 PM</div>
+                    <h3 style="font-size: 20px;">English for Beginners</h3>
+                    <div class="text-small text-secondary mt-16">5 spots left</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CODING SECTION -->
+    <section class="subject-section bg-white" id="coding">
+        <div class="container subject-grid">
+            <div>
+                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+                    <h2 style="margin: 0;">Coding</h2>
+                    <span class="pill subj-coding">Ages 8–16</span>
+                </div>
+                <p class="text-large text-secondary mb-32">In our coding classes, kids build real things from the very
+                    first session — games, animations, small apps. We teach Scratch for younger learners and Python for
+                    older ones, always through projects that feel meaningful to the child. Coding isn't just a future
+                    skill. For most of our students, it quickly becomes their favourite part of the week.</p>
+                <a href="classes.html" class="btn btn-primary">See Coding classes →</a>
+            </div>
+            <div>
+                <div class="mini-card shadow-sm">
+                    <div class="text-label text-secondary mb-8">Every Tue 4:30 PM</div>
+                    <h3 style="font-size: 20px;">Build Your First Game</h3>
+                    <div class="text-small text-secondary mt-16">4 spots left</div>
+                </div>
+                <div class="mini-card shadow-sm">
+                    <div class="text-label text-secondary mb-8">Every Thu 4:30 PM</div>
+                    <h3 style="font-size: 20px;">Python for Kids</h3>
+                    <div class="text-small text-secondary mt-16">3 spots left</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHESS SECTION -->
+    <section class="subject-section bg-offwhite" id="chess">
+        <div class="container subject-grid">
+            <div>
+                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+                    <h2 style="margin: 0;">Chess</h2>
+                    <span class="pill subj-chess">Ages 6–14</span>
+                </div>
+                <p class="text-large text-secondary mb-32">Chess is one of the best tools we have for teaching kids to
+                    think ahead, stay calm under pressure and make decisions carefully. Our chess classes welcome
+                    complete beginners and work all the way up to tournament preparation. Every session mixes strategy,
+                    puzzles and actual games — because learning should feel like playing.</p>
+                <a href="classes.html" class="btn btn-primary">See Chess classes →</a>
+            </div>
+            <div>
+                <div class="mini-card shadow-sm">
+                    <div class="text-label text-secondary mb-8">Every Tue 5:00 PM</div>
+                    <h3 style="font-size: 20px;">Chess for Beginners</h3>
+                    <div class="text-small text-secondary mt-16">5 spots left</div>
+                </div>
+                <div class="mini-card shadow-sm">
+                    <div class="text-label text-secondary mb-8">Every Thu 5:30 PM</div>
+                    <h3 style="font-size: 20px;">Intermediate Tactics</h3>
+                    <div class="text-small text-secondary mt-16">2 spots left</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ART SECTION -->
+    <section class="subject-section bg-white" id="art">
+        <div class="container subject-grid">
+            <div>
+                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+                    <h2 style="margin: 0;">Art</h2>
+                    <span class="pill subj-art">Ages 5–14</span>
+                </div>
+                <p class="text-large text-secondary mb-32">Our art classes aren't about copying — they're about seeing.
+                    We teach kids to observe the world, translate what they see onto paper and develop their own visual
+                    voice. Sessions cover drawing, composition and color in a relaxed creative environment where there
+                    are no wrong answers, only interesting choices.</p>
+                <a href="classes.html" class="btn btn-primary">See Art classes →</a>
+            </div>
+            <div>
+                <div class="mini-card shadow-sm">
+                    <div class="text-label text-secondary mb-8">Every Thu 5:00 PM</div>
+                    <h3 style="font-size: 20px;">Drawing From Imagination</h3>
+                    <div class="text-small text-secondary mt-16">5 spots left</div>
+                </div>
+                <div class="mini-card shadow-sm">
+                    <div class="text-label text-secondary mb-8">Every Tue 3:30 PM</div>
+                    <h3 style="font-size: 20px;">Sketch & Color</h3>
+                    <div class="text-small text-secondary mt-16">5 spots left</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHARED FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div>
+                    <div class="footer-logo">Karakuli</div>
+                    <p class="text-body text-secondary" style="color: rgba(255,255,255,0.8);">Live classes for curious
+                        kids</p>
+                </div>
+                <div class="footer-links">
+                    <a href="classes.html">Classes</a>
+                    <a href="tutors.html">Tutors</a>
+                    <a href="subjects.html">Subjects</a>
+                    <a href="index.html#faq">FAQ</a>
+                    <a href="privacy.html">Privacy</a>
+                </div>
+            </div>
+            <div class="footer-bottom text-center">
+                © 2025 Karakuli · karakuli.art@gmail.com
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+
+</html>

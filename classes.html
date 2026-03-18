@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karakuli - Class Schedule</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .filter-bar {
+            position: sticky;
+            top: 61px;
+            /* Below navbar */
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            z-index: 90;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .filter-group::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-btn {
+            background: var(--bg-tertiary);
+            border: 1px solid transparent;
+            padding: 6px 16px;
+            border-radius: var(--radius-pill);
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            background: #E8E4DF;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .filter-row-labels {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .filter-label {
+            font-weight: 600;
+            font-size: 14px;
+            min-width: 60px;
+        }
+
+        .class-card {
+            transition: opacity 0.3s ease;
+        }
+
+        .class-card.hidden {
+            display: none;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 64px 0;
+            color: var(--text-muted);
+            display: none;
+        }
+
+        .no-results.active {
+            display: block;
+        }
+
+        .tutor-img-class {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SHARED NAVIGATION -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="brand-logo" style="display: flex; align-items: center;">
+                <img src="photo/KaraKuli.svg" alt="Karakuli" style="height: 28px; width: auto;">
+            </a>
+            <div class="nav-links">
+                <a href="classes.html" style="color: var(--primary);">Classes</a>
+                <a href="tutors.html">Tutors</a>
+                <a href="subjects.html">Subjects</a>
+                <a href="/#pricing">Pricing</a>
+                <a href="#stripe-link" class="btn btn-primary btn-small">Start for $10</a>
+            </div>
+            <button class="hamburger" id="hamburger">☰</button>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="classes.html">Classes</a>
+            <a href="tutors.html">Tutors</a>
+            <a href="subjects.html">Subjects</a>
+            <a href="/#pricing">Pricing</a>
+            <a href="#stripe-link" class="btn btn-primary btn-small btn-full">Start for $10</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="bg-offwhite section " style="padding: 64px 0 48px;">
+        <div class="container text-center">
+            <h1>This week's classes</h1>
+            <p class="text-large text-secondary">All classes repeat weekly. Book any slot, come back every week.</p>
+        </div>
+    </section>
+
+    <!-- FILTERS -->
+    <div class="filter-bar">
+        <div class="container">
+            <div class="filter-row-labels">
+                <div class="filter-label">Subject</div>
+                <div class="filter-group" id="filter-subject">
+                    <button class="filter-btn active" data-val="all">All</button>
+                    <button class="filter-btn" data-val="Math">Math</button>
+                    <button class="filter-btn" data-val="English">English</button>
+                    <button class="filter-btn" data-val="Coding">Coding</button>
+                    <button class="filter-btn" data-val="Chess">Chess</button>
+                    <button class="filter-btn" data-val="Art">Art</button>
+                </div>
+            </div>
+            <div class="filter-row-labels">
+                <div class="filter-label">Age</div>
+                <div class="filter-group" id="filter-age">
+                    <button class="filter-btn active" data-val="all">All</button>
+                    <button class="filter-btn" data-val="5-8">Ages 5–8</button>
+                    <button class="filter-btn" data-val="9-12">Ages 9–12</button>
+                    <button class="filter-btn" data-val="13-16">Ages 13–16</button>
+                </div>
+            </div>
+            <div class="filter-row-labels" style="margin-bottom: 0;">
+                <div class="filter-label">Day</div>
+                <div class="filter-group" id="filter-day">
+                    <button class="filter-btn active" data-val="all">All</button>
+                    <button class="filter-btn" data-val="Mon">Mon</button>
+                    <button class="filter-btn" data-val="Tue">Tue</button>
+                    <button class="filter-btn" data-val="Wed">Wed</button>
+                    <button class="filter-btn" data-val="Thu">Thu</button>
+                    <button class="filter-btn" data-val="Fri">Fri</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CLASSES GRID -->
+    <section class="bg-white section " style="min-height: 50vh;">
+        <div class="container">
+            <div class="grid-3" id="classes-grid">
+
+                <!-- Class 1 -->
+                <div class="card class-card card-math" data-subject="Math" data-age="9-12" data-day="Mon">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <span class="pill subj-math">Math</span>
+                        <span class="text-label text-secondary">Mon & Wed 5:00 PM · 45m</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                        <img src="photo/Katya.webp" alt="Katya" class="tutor-img-class">
+                        <span class="text-label">Tutor: Katya</span>
+                    </div>
+                    <h3>Math Problem Solving</h3>
+                    <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Logic puzzles and
+                        real-world problems for confident learners.</p>
+                    <div class="card-illustration mb-24">
+                        <div class="blob-inner blob-inner-1"></div><div class="blob-inner blob-inner-2"></div>
+                    </div>
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+                        <span class="text-label text-secondary">5 spots · 30 cr</span>
+                        <a href="#stripe-link" class="btn btn-primary btn-small">Book class →</a>
+                    </div>
+                </div>
+
+                <!-- Class 2 -->
+                <div class="card class-card card-coding" data-subject="Coding" data-age="9-12" data-day="Tue">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <span class="pill subj-coding">Coding</span>
+                        <span class="text-label text-secondary">Tue & Thu 4:30 PM · 45m</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                        <img src="photo/Nastya.webp" alt="Nastya" class="tutor-img-class">
+                        <span class="text-label">Tutor: Nastya</span>
+                    </div>
+                    <h3>Build Your First Game</h3>
+                    <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Kids learn
+                        Scratch by building a real playable game together.</p>
+                    <div class="card-illustration mb-24">
+                        <div class="blob-inner blob-inner-1"></div><div class="blob-inner blob-inner-2"></div>
+                    </div>
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+                        <span class="text-label text-secondary">4 spots · 30 cr</span>
+                        <a href="#stripe-link" class="btn btn-primary btn-small">Book class →</a>
+                    </div>
+                </div>
+
+                <!-- Class 3 -->
+                <div class="card class-card card-chess" data-subject="Chess" data-age="5-8" data-day="Tue">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <span class="pill subj-chess">Chess</span>
+                        <span class="text-label text-secondary">Tue & Thu 5:00 PM · 30m</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                        <img src="photo/Nika.webp" alt="Nika" class="tutor-img-class">
+                        <span class="text-label">Tutor: Nika</span>
+                    </div>
+                    <h3>Chess for Beginners</h3>
+                    <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">From rules to
+                        first strategies — a fun intro to the game of thinking.</p>
+                    <div class="card-illustration mb-24">
+                        <div class="blob-inner blob-inner-1"></div><div class="blob-inner blob-inner-2"></div>
+                    </div>
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+                        <span class="text-label text-secondary">5 spots · 30 cr</span>
+                        <a href="#stripe-link" class="btn btn-primary btn-small">Book class →</a>
+                    </div>
+                </div>
+
+                <!-- Class 4 -->
+                <div class="card class-card card-english" data-subject="English" data-age="9-12" data-day="Wed">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <span class="pill subj-english">English</span>
+                        <span class="text-label text-secondary">Wed & Fri 4:00 PM · 45m</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                        <img src="photo/Anna.webp" alt="Anna" class="tutor-img-class">
+                        <span class="text-label">Tutor: Anna</span>
+                    </div>
+                    <h3>Creative Writing Club</h3>
+                    <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Kids write short
+                        stories, share them, and build confidence in English.</p>
+                    <div class="card-illustration mb-24">
+                        <div class="blob-inner blob-inner-1"></div><div class="blob-inner blob-inner-2"></div>
+                    </div>
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+                        <span class="text-label text-secondary">3 spots · 30 cr</span>
+                        <a href="#stripe-link" class="btn btn-primary btn-small">Book class →</a>
+                    </div>
+                </div>
+
+                <!-- Class 5 -->
+                <div class="card class-card card-art" data-subject="Art" data-age="9-12" data-day="Thu">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <span class="pill subj-art">Art</span>
+                        <span class="text-label text-secondary">Thu & Tue 5:00 PM · 45m</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                        <img src="photo/Lena.webp" alt="Lena" class="tutor-img-class">
+                        <span class="text-label">Tutor: Lena</span>
+                    </div>
+                    <h3>Drawing From Imagination</h3>
+                    <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Learn to draw
+                        characters, scenes and worlds from your own mind.</p>
+                    <div class="card-illustration mb-24">
+                        <div class="blob-inner blob-inner-1"></div><div class="blob-inner blob-inner-2"></div>
+                    </div>
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+                        <span class="text-label text-secondary">5 spots · 30 cr</span>
+                        <a href="#stripe-link" class="btn btn-primary btn-small">Book class →</a>
+                    </div>
+                </div>
+
+                <!-- Class 6 -->
+                <div class="card class-card card-math" data-subject="Math" data-age="5-8" data-day="Fri">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <span class="pill subj-math">Math</span>
+                        <span class="text-label text-secondary">Fri & Wed 4:00 PM · 30m</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                        <img src="photo/Sasha.webp" alt="Sasha" class="tutor-img-class">
+                        <span class="text-label">Tutor: Sasha</span>
+                    </div>
+                    <h3>Times Tables & Beyond</h3>
+                    <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Multiplication,
+                        division and number sense — made actually fun.</p>
+                    <div class="card-illustration mb-24">
+                        <div class="blob-inner blob-inner-1"></div><div class="blob-inner blob-inner-2"></div>
+                    </div>
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+                        <span class="text-label text-secondary">2 spots · 30 cr</span>
+                        <a href="#stripe-link" class="btn btn-primary btn-small">Book class →</a>
+                    </div>
+                </div>
+
+                <!-- Class 7 -->
+                <div class="card class-card card-english" data-subject="English" data-age="5-8" data-day="Mon">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <span class="pill subj-english">English</span>
+                        <span class="text-label text-secondary">Mon & Wed 4:00 PM · 30m</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                        <img src="photo/Katya.webp" alt="Katya" class="tutor-img-class">
+                        <span class="text-label">Tutor: Katya</span>
+                    </div>
+                    <h3>English for Beginners</h3>
+                    <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">First steps in
+                        reading and speaking English, for ages 5–8.</p>
+                    <div class="card-illustration mb-24">
+                        <div class="blob-inner blob-inner-1"></div><div class="blob-inner blob-inner-2"></div>
+                    </div>
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+                        <span class="text-label text-secondary">5 spots · 30 cr</span>
+                        <a href="#stripe-link" class="btn btn-primary btn-small">Book class →</a>
+                    </div>
+                </div>
+
+                <!-- Class 8 -->
+                <div class="card class-card card-math" data-subject="Math" data-age="9-12" data-day="Wed">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <span class="pill subj-math">Math</span>
+                        <span class="text-label text-secondary">Wed & Fri 5:30 PM · 45m</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                        <img src="photo/Anna.webp" alt="Anna" class="tutor-img-class">
+                        <span class="text-label">Tutor: Anna</span>
+                    </div>
+                    <h3>Pre-Algebra Prep</h3>
+                    <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Getting ready for
+                        middle school math — patterns, variables, confidence.</p>
+                    <div class="card-illustration mb-24">
+                        <div class="blob-inner blob-inner-1"></div><div class="blob-inner blob-inner-2"></div>
+                    </div>
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+                        <span class="text-label text-secondary">4 spots · 30 cr</span>
+                        <a href="#stripe-link" class="btn btn-primary btn-small">Book class →</a>
+                    </div>
+                </div>
+
+                <!-- Class 9 -->
+                <div class="card class-card card-art" data-subject="Art" data-age="9-12" data-day="Tue">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <span class="pill subj-art">Art</span>
+                        <span class="text-label text-secondary">Tue & Thu 3:30 PM · 45m</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                        <img src="photo/Lena.webp" alt="Lena" class="tutor-img-class">
+                        <span class="text-label">Tutor: Lena</span>
+                    </div>
+                    <h3>Sketch & Color</h3>
+                    <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Pencil techniques
+                        and watercolor basics in a relaxed creative session.</p>
+                    <div class="card-illustration mb-24">
+                        <div class="blob-inner blob-inner-1"></div><div class="blob-inner blob-inner-2"></div>
+                    </div>
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+                        <span class="text-label text-secondary">5 spots · 30 cr</span>
+                        <a href="#stripe-link" class="btn btn-primary btn-small">Book class →</a>
+                    </div>
+                </div>
+
+                <!-- Class 10 -->
+                <div class="card class-card card-coding" data-subject="Coding" data-age="13-16" data-day="Thu">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <span class="pill subj-coding">Coding</span>
+                        <span class="text-label text-secondary">Thu & Tue 4:30 PM · 45m</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                        <img src="photo/Nastya.webp" alt="Nastya" class="tutor-img-class">
+                        <span class="text-label">Tutor: Nastya</span>
+                    </div>
+                    <h3>Python for Kids</h3>
+                    <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Text-based coding
+                        for older kids — loops, functions, small projects.</p>
+                    <div class="card-illustration mb-24">
+                        <div class="blob-inner blob-inner-1"></div><div class="blob-inner blob-inner-2"></div>
+                    </div>
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+                        <span class="text-label text-secondary">3 spots · 30 cr</span>
+                        <a href="#stripe-link" class="btn btn-primary btn-small">Book class →</a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="no-results" class="no-results">
+                <h3 class="mb-16">No exact matches found</h3>
+                <p>Try adjusting your filters or <a href="#" style="color: var(--primary); text-decoration: underline;"
+                        onclick="resetFilters(event)">resetting them</a> to see more options.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SHARED FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div>
+                    <div class="footer-logo">Karakuli</div>
+                    <p class="text-body text-secondary" style="color: rgba(255,255,255,0.8);">Live classes for curious
+                        kids</p>
+                </div>
+                <div class="footer-links">
+                    <a href="classes.html">Classes</a>
+                    <a href="tutors.html">Tutors</a>
+                    <a href="subjects.html">Subjects</a>
+                    <a href="index.html#faq">FAQ</a>
+                    <a href="privacy.html">Privacy</a>
+                </div>
+            </div>
+            <div class="footer-bottom text-center">
+                © 2025 Karakuli · karakuli.art@gmail.com
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+    <script src="classes.js"></script>
+</body>
+
+</html>

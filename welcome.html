@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karakuli - Welcome</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: var(--bg-secondary);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .welcome-header {
+            padding: 24px 32px;
+        }
+
+        .welcome-main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 24px;
+        }
+
+        .welcome-container {
+            max-width: 560px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .welcome-card {
+            background: white;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-card);
+            padding: 32px;
+            text-align: left;
+            margin-top: 48px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-btn);
+            font-family: var(--font-body);
+            font-size: 15px;
+            color: var(--text-primary);
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .welcome-footer {
+            padding: 32px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        #success-state {
+            display: none;
+            text-align: center;
+            padding: 32px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Minimal Header -->
+    <div class="welcome-header">
+        <a href="index.html" class="brand-logo" style="display: flex; align-items: center;">
+            <img src="photo/KaraKuli.svg" alt="Karakuli" style="height: 28px; width: auto;">
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="welcome-main">
+        <div class="welcome-container">
+
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"
+                style="margin-bottom: 24px;">
+                <circle cx="32" cy="32" r="32" fill="#E8612A" />
+                <path d="M18 32L28 42L46 22" stroke="white" stroke-width="4" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+
+            <h1 class="heading-font" style="font-size: 40px; margin-bottom: 16px;">You're in. Welcome to Karakuli.</h1>
+            <p class="text-large text-secondary">Payment confirmed. We'll reach out within 2 hours to help you book your
+                first class.</p>
+
+            <div class="welcome-card" id="onboarding-form">
+                <p class="text-small text-muted mb-24">Tell us a little about your child so we can match you with the
+                    right class:</p>
+
+                <form onsubmit="handleWelcomeSubmit(event)">
+                    <div class="input-group">
+                        <label class="input-label">Child's first name</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label">Child's age</label>
+                        <select class="form-control" required>
+                            <option value="" disabled selected>Select age</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                            <option>13</option>
+                            <option>14</option>
+                            <option>15</option>
+                            <option>16</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label">Subject they're most interested in</label>
+                        <select class="form-control" required>
+                            <option value="" disabled selected>Select subject</option>
+                            <option>Math</option>
+                            <option>English</option>
+                            <option>Coding</option>
+                            <option>Chess</option>
+                            <option>Art</option>
+                            <option>Not sure yet</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label">Preferred class day</label>
+                        <select class="form-control" required>
+                            <option value="" disabled selected>Select day</option>
+                            <option>Monday</option>
+                            <option>Tuesday</option>
+                            <option>Wednesday</option>
+                            <option>Thursday</option>
+                            <option>Friday</option>
+                            <option>Any day</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label">Your WhatsApp number</label>
+                        <input type="tel" class="form-control" placeholder="+972..." required>
+                    </div>
+
+                    <div class="input-group" style="margin-bottom: 32px;">
+                        <label class="input-label">How did you hear about us?</label>
+                        <select class="form-control" required>
+                            <option value="" disabled selected>Select option</option>
+                            <option>Instagram</option>
+                            <option>Facebook</option>
+                            <option>Friend</option>
+                            <option>Google</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full">Send my details →</button>
+                </form>
+            </div>
+
+            <!-- Success State -->
+            <div class="welcome-card" id="success-state">
+                <div style="font-size: 48px; margin-bottom: 16px;">✨</div>
+                <p class="text-large" style="margin-bottom: 32px;">Perfect — we'll WhatsApp you shortly. In the
+                    meantime, browse this week's schedule:</p>
+                <a href="classes.html" class="btn btn-secondary">See all classes →</a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Minimal Footer -->
+    <div class="welcome-footer">
+        © 2025 Karakuli
+    </div>
+
+    <script>
+        function handleWelcomeSubmit(e) {
+            e.preventDefault();
+            document.getElementById('onboarding-form').style.display = 'none';
+            document.getElementById('success-state').style.display = 'block';
+        }
+    </script>
+</body>
+
+</html>

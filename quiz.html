@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karakuli - Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="quiz.css">
+</head>
+
+<body class="quiz-body">
+
+    <div class="progress-bar-container" id="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <div class="quiz-header" id="quiz-header" style="display: none;">
+        <button class="back-btn" id="back-btn">←</button>
+        <div class="question-counter" id="question-counter">1 / 7</div>
+    </div>
+
+    <div class="quiz-container">
+
+        <!-- Screen 0: Intro -->
+        <div class="screen active" id="screen-0">
+            <div class="quiz-content" style="text-align: center;">
+                <h1 class="quiz-h1">Discover your child's learning superpower</h1>
+                <p class="quiz-sub">7 questions · 2 minutes · personalized class recommendations</p>
+                <button class="btn btn-primary" style="font-size: 18px; padding: 16px 32px;" onclick="startQuiz()">Let's
+                    find out →</button>
+                <p class="text-small text-secondary mt-16" style="color: #666666;">No email required to start</p>
+            </div>
+        </div>
+
+        <!-- Questions 1-6 are dynamically injected by Javascript -->
+        <div id="questions-container"></div>
+
+        <!-- Screen 7: Email Gate -->
+        <div class="screen" id="screen-email">
+            <div class="quiz-content">
+                <h2 class="quiz-q-h2" style="font-size: 36px;">Your child's learning profile is ready</h2>
+                <p style="color: #999999; margin-bottom: 32px;">Where should we send it — along with your matched class
+                    recommendations?</p>
+                <input type="email" class="input-dark" placeholder="Email address" id="quiz-email">
+                <input type="text" class="input-dark" placeholder="WhatsApp: +972... (optional)">
+                <button class="btn btn-primary btn-full" style="font-size: 16px; margin-bottom: 16px;"
+                    onclick="submitQuiz()">Show me the results →</button>
+                <p style="color: #555555; font-size: 12px;">No spam. We'll send one email with your results and class
+                    picks.</p>
+            </div>
+        </div>
+
+        <!-- Screen 8: Loading -->
+        <div class="screen" id="screen-loading">
+            <div class="quiz-content">
+                <div class="loading-ring"></div>
+                <div class="loading-text" id="loading-text">Analysing learning style...</div>
+            </div>
+        </div>
+
+        <!-- Screen 9: Result Page (Scrollable) -->
+        <div class="screen" id="screen-result" style="display: block; position: static; height: auto;">
+            <!-- Populated by JS -->
+        </div>
+
+    </div>
+
+    <!-- Insight Popup -->
+    <div class="insight-card" id="insight-card">
+        <div class="insight-label">Did you know</div>
+        <div style="font-size: 18px; line-height: 1.5;" id="insight-text"></div>
+    </div>
+
+    <script src="quiz.js"></script>
+</body>
+
+</html>

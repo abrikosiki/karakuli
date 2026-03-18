@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karakuli - Live online group classes for curious kids</title>
+  <meta name="description"
+    content="Small groups. Real tutors. Scheduled classes in math, coding, chess, art and English — for kids ages 5 to 16.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='white'/><text y='50%' x='50%' dominant-baseline='middle' text-anchor='middle' font-family='Fraunces' font-size='64' font-weight='700' fill='%23E8612A'>K</text></svg>">
+  <style>
+    /* Specific Home Styles */
+    .hero {
+      padding: 96px 0 64px;
+    }
+
+    @media (min-width: 768px) {
+      .hero {
+        padding: 120px 0 96px;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 64px;
+        align-items: center;
+      }
+    }
+
+    .trust-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      margin-top: 32px;
+    }
+
+    .trust-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .subjects-row {
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      padding-bottom: 24px;
+      scroll-snap-type: x mandatory;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .subjects-row::-webkit-scrollbar {
+      display: none;
+    }
+
+    .subjects-row>.card-gray {
+      min-width: 280px;
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+    }
+
+    @media (min-width: 1024px) {
+      .subjects-row {
+        grid-template-columns: repeat(5, 1fr);
+        display: grid;
+        overflow: visible;
+      }
+
+      .subjects-row>.card-gray {
+        min-width: auto;
+      }
+    }
+
+    .pricing-grid {
+      display: grid;
+      gap: 24px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .pricing-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .pricing-card ul {
+      margin: 24px 0;
+      flex-grow: 1;
+    }
+
+    .pricing-card li {
+      margin-bottom: 12px;
+      color: var(--text-secondary);
+      font-size: 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .pricing-card li::before {
+      content: '✓';
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .quiz-section {
+      background-color: var(--secondary);
+      color: white;
+    }
+
+    .quiz-grid {
+      display: grid;
+      gap: 48px;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .quiz-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .quiz-preview-card {
+      background: white;
+      color: var(--text-primary);
+      border-radius: var(--radius-card);
+      padding: 32px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      transform: rotate(2deg);
+    }
+
+    .faq-container {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .final-cta {
+      background-color: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 96px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-cta h2 {
+      color: white;
+    }
+
+    .tutor-img-class {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0;
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SHARED NAVIGATION -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="brand-logo" style="display: flex; align-items: center;">
+        <img src="photo/KaraKuli.svg" alt="Karakuli" style="height: 28px; width: auto;">
+      </a>
+      <div class="nav-links">
+        <a href="classes.html">Classes</a>
+        <a href="tutors.html">Tutors</a>
+        <a href="subjects.html">Subjects</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#stripe-link" class="btn btn-primary btn-small">Start for $10</a>
+      </div>
+      <button class="hamburger" id="hamburger">☰</button>
+    </div>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="classes.html">Classes</a>
+      <a href="tutors.html">Tutors</a>
+      <a href="subjects.html">Subjects</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#stripe-link" class="btn btn-primary btn-small btn-full">Start for $10</a>
+    </div>
+  </nav>
+
+  <!-- SECTION 1: HERO -->
+  <section class="section bg-offwhite hero">
+    <div class="container hero-grid">
+      <div>
+        <h1>Live classes for <span class="hand-drawn-underline" style="color: var(--primary);">curious kids</span></h1>
+        <p class="text-large text-secondary mb-32">Small groups. Real tutors. Scheduled classes in math, coding, chess,
+          art and English — for kids ages 5 to 16.</p>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+          <a href="classes.html" class="btn btn-primary">Browse this week's classes</a>
+          <a href="#stripe-link" class="btn btn-secondary">Start for $10</a>
+        </div>
+        <div class="trust-strip text-muted text-label mt-32">
+          <span class="trust-item">✦ Ages 5–16</span>
+          <span class="trust-item">✦ Max 5 kids per class</span>
+          <span class="trust-item">✦ Live on Zoom</span>
+          
+        </div>
+      </div>
+      <!-- Real GIF wrapper -->
+      <div class="hero-visual" aria-hidden="true" style="background: transparent;">
+        <img src="photo/video.gif" alt="Happy kids learning"
+          >
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: HOW IT WORKS -->
+  <!-- SECTION 3: UPCOMING CLASSES -->
+  <section class="section bg-offwhite">
+    <div class="container">
+      <h2>What's on this week</h2>
+      <p class="text-body text-secondary mb-48">All classes repeat weekly. Book once, come back every week.</p>
+
+      <div class="grid-3 mb-48">
+        <!-- Class 1 -->
+        <div class="card card-math">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <span class="pill subj-math">Math</span>
+            <span class="text-label text-secondary">Mon & Wed 5:00 PM · 45m</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <img src="photo/Katya.webp" alt="Katya" class="tutor-img-class">
+            <span class="text-label">Tutor: Katya</span>
+          </div>
+          <h3>Math Problem Solving</h3>
+          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Logic puzzles and
+            real-world problems for confident learners.</p>
+          <div class="card-illustration mb-24">
+            <div class="blob-inner blob-inner-1"></div>
+            <div class="blob-inner blob-inner-2"></div>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+            <span class="text-label text-secondary">5 spots · 30 cr</span>
+            <a href="#stripe-link" class="btn btn-primary btn-small">Book class →</a>
+          </div>
+        </div>
+        <!-- Class 2 -->
+        <div class="card card-coding">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <span class="pill subj-coding">Coding</span>
+            <span class="text-label text-secondary">Tue & Thu 4:30 PM · 45m</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <img src="photo/Nastya.webp" alt="Nastya" class="tutor-img-class">
+            <span class="text-label">Tutor: Nastya</span>
+          </div>
+          <h3>Build Your First Game</h3>
+          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Kids learn Scratch by
+            building a real playable game together.</p>
+          <div class="card-illustration mb-24">
+            <div class="blob-inner blob-inner-1"></div>
+            <div class="blob-inner blob-inner-2"></div>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+            <span class="text-label text-secondary">4 spots · 30 cr</span>
+            <a href="#stripe-link" class="btn btn-primary btn-small">Book class →</a>
+          </div>
+        </div>
+        <!-- Class 3 -->
+        <div class="card card-chess">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <span class="pill subj-chess">Chess</span>
+            <span class="text-label text-secondary">Tue & Thu 5:00 PM · 45m</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <img src="photo/Nika.webp" alt="Nika" class="tutor-img-class">
+            <span class="text-label">Tutor: Nika</span>
+          </div>
+          <h3>Chess for Beginners</h3>
+          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">From rules to first
+            strategies — a fun intro to the game of thinking.</p>
+          <div class="card-illustration mb-24">
+            <div class="blob-inner blob-inner-1"></div>
+            <div class="blob-inner blob-inner-2"></div>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+            <span class="text-label text-secondary">5 spots · 30 cr</span>
+            <a href="#stripe-link" class="btn btn-primary btn-small">Book class →</a>
+          </div>
+        </div>
+        <!-- Class 4 -->
+        <div class="card card-english">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <span class="pill subj-english">English</span>
+            <span class="text-label text-secondary">Wed & Fri 4:00 PM · 45m</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <img src="photo/Anna.webp" alt="Anna" class="tutor-img-class">
+            <span class="text-label">Tutor: Anna</span>
+          </div>
+          <h3>Creative Writing Club</h3>
+          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Kids write short stories,
+            share them, and build confidence in English.</p>
+          <div class="card-illustration mb-24">
+            <div class="blob-inner blob-inner-1"></div>
+            <div class="blob-inner blob-inner-2"></div>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+            <span class="text-label text-secondary">3 spots · 30 cr</span>
+            <a href="#stripe-link" class="btn btn-primary btn-small">Book class →</a>
+          </div>
+        </div>
+        <!-- Class 5 -->
+        <div class="card card-art">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <span class="pill subj-art">Art</span>
+            <span class="text-label text-secondary">Thu & Tue 5:00 PM · 45m</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <img src="photo/Lena.webp" alt="Lena" class="tutor-img-class">
+            <span class="text-label">Tutor: Lena</span>
+          </div>
+          <h3>Drawing From Imagination</h3>
+          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Learn to draw characters,
+            scenes and worlds from your own mind.</p>
+          <div class="card-illustration mb-24">
+            <div class="blob-inner blob-inner-1"></div>
+            <div class="blob-inner blob-inner-2"></div>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+            <span class="text-label text-secondary">5 spots · 30 cr</span>
+            <a href="#stripe-link" class="btn btn-primary btn-small">Book class →</a>
+          </div>
+        </div>
+        <!-- Class 6 -->
+        <div class="card card-math">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <span class="pill subj-math">Math</span>
+            <span class="text-label text-secondary">Fri & Wed 4:00 PM · 45m</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <img src="photo/Sasha.webp" alt="Sasha" class="tutor-img-class">
+            <span class="text-label">Tutor: Sasha</span>
+          </div>
+          <h3>Times Tables & Beyond</h3>
+          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Multiplication, division
+            and number sense — made actually fun.</p>
+          <div class="card-illustration mb-24">
+            <div class="blob-inner blob-inner-1"></div>
+            <div class="blob-inner blob-inner-2"></div>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+            <span class="text-label text-secondary">2 spots · 30 cr</span>
+            <a href="#stripe-link" class="btn btn-primary btn-small">Book class →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <a href="classes.html" class="link-accent">See full schedule →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: SUBJECTS -->
+  <section class="section bg-white">
+    <div class="container">
+      <h2 class="mb-48">What your child can learn</h2>
+      <div class="subjects-row">
+        <div class="card-gray" >
+          <div
+            >
+            🔢</div>
+          <h3>Math</h3>
+          <span class="text-label text-secondary mb-16" style="display: block;">Ages 6–16</span>
+          <p class="text-body mb-24">Build the problem-solving skills that matter in every subject.</p>
+          <a href="subjects.html" class="link-accent">See classes →</a>
+        </div>
+        <div class="card-gray" >
+          <div
+            >
+            📖</div>
+          <h3>English</h3>
+          <span class="text-label text-secondary mb-16" style="display: block;">Ages 5–14</span>
+          <p class="text-body mb-24">Read, write and speak with confidence in a supportive group.</p>
+          <a href="subjects.html" class="link-accent">See classes →</a>
+        </div>
+        <div class="card-gray" >
+          <div
+            >
+            💻</div>
+          <h3>Coding</h3>
+          <span class="text-label text-secondary mb-16" style="display: block;">Ages 8–16</span>
+          <p class="text-body mb-24">Learn to build games and apps — creativity meets logic.</p>
+          <a href="subjects.html" class="link-accent">See classes →</a>
+        </div>
+        <div class="card-gray" >
+          <div
+            >
+            ♟</div>
+          <h3>Chess</h3>
+          <span class="text-label text-secondary mb-16" style="display: block;">Ages 6–14</span>
+          <p class="text-body mb-24">The game that teaches patience, focus and strategic thinking.</p>
+          <a href="subjects.html" class="link-accent">See classes →</a>
+        </div>
+        <div class="card-gray" >
+          <div
+            >
+            🎨</div>
+          <h3>Art</h3>
+          <span class="text-label text-secondary mb-16" style="display: block;">Ages 5–14</span>
+          <p class="text-body mb-24">Express ideas visually and develop a creative eye.</p>
+          <a href="subjects.html" class="link-accent">See classes →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: TUTORS PREVIEW -->
+  <section class="section bg-offwhite">
+    <div class="container">
+      <h2>Meet the tutors</h2>
+      <p class="text-body text-secondary mb-48">Every tutor is vetted, experienced and genuinely great with kids.</p>
+
+      <div class="grid-3 mb-48">
+        <!-- Tutor: Katya -->
+        <div class="card card-math">
+          <div class="tutor-avatar-wrapper"><img src="photo/Katya.webp" alt="Katya"></div>
+          <h3>Katya</h3>
+          <div class="mb-16" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <span class="pill subj-math">Math</span>
+            <span class="pill subj-english">English</span>
+            <span class="pill bg-gray text-secondary">8 years</span>
+          </div>
+          <p class="text-body mb-24">Experienced and structured tutor who helps children truly understand math and speak
+            English confidently.</p>
+          <a href="tutors.html" class="link-accent" style="margin-top: auto;">See classes →</a>
+        </div>
+        <!-- Tutor: Anna -->
+        <div class="card card-english">
+          <div class="tutor-avatar-wrapper"><img src="photo/Anna.webp" alt="Anna"></div>
+          <h3>Anna</h3>
+          <div class="mb-16" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <span class="pill subj-math">Math</span>
+            <span class="pill subj-english">English</span>
+            <span class="pill bg-gray text-secondary">3 years</span>
+          </div>
+          <p class="text-body mb-24">Warm and patient tutor who makes math and English easy to understand.</p>
+          <a href="tutors.html" class="link-accent" style="margin-top: auto;">See classes →</a>
+        </div>
+        <!-- Tutor: Sasha -->
+        <div class="card card-math">
+          <div class="tutor-avatar-wrapper"><img src="photo/Sasha.webp" alt="Sasha"></div>
+          <h3>Sasha</h3>
+          <div class="mb-16" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <span class="pill subj-math">Math</span>
+            <span class="pill subj-english">English</span>
+            <span class="pill bg-gray text-secondary">5 years</span>
+          </div>
+          <p class="text-body mb-24">Energetic and friendly tutor who turns learning into an exciting process.</p>
+          <a href="tutors.html" class="link-accent" style="margin-top: auto;">See classes →</a>
+        </div>
+        <!-- Tutor: Lena -->
+        <div class="card card-art">
+          <div class="tutor-avatar-wrapper"><img src="photo/Lena.webp" alt="Lena"></div>
+          <h3>Lena</h3>
+          <div class="mb-16" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <span class="pill subj-art">Art</span>
+            <span class="pill bg-gray text-secondary">5 years</span>
+          </div>
+          <p class="text-body mb-24">Creative art tutor specializing in anime-style drawing. Helps kids express
+            themselves.</p>
+          <a href="tutors.html" class="link-accent" style="margin-top: auto;">See classes →</a>
+        </div>
+        <!-- Tutor: Nastya -->
+        <div class="card card-coding">
+          <div class="tutor-avatar-wrapper"><img src="photo/Nastya.webp" alt="Nastya"></div>
+          <h3>Nastya</h3>
+          <div class="mb-16" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <span class="pill subj-coding">Coding</span>
+            <span class="pill bg-gray text-secondary">4 years</span>
+          </div>
+          <p class="text-body mb-24">Coding tutor who teaches kids how to create, not just consume technology.</p>
+          <a href="tutors.html" class="link-accent" style="margin-top: auto;">See classes →</a>
+        </div>
+        <!-- Tutor: Nika -->
+        <div class="card card-chess">
+          <div class="tutor-avatar-wrapper"><img src="photo/Nika.webp" alt="Nika"></div>
+          <h3>Nika</h3>
+          <div class="mb-16" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <span class="pill subj-chess">Chess</span>
+            <span class="pill bg-gray text-secondary">4 years</span>
+          </div>
+          <p class="text-body mb-24">Chess tutor who makes every lesson engaging while helping kids think several steps
+            ahead.</p>
+          <a href="tutors.html" class="link-accent" style="margin-top: auto;">See classes →</a>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <a href="tutors.html" class="btn btn-secondary">Meet all tutors →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: PRICING -->
+  <section id="pricing" class="section bg-white">
+    <div class="container text-center">
+      <h2>Simple pricing</h2>
+      <p class="text-body text-secondary mb-48" style="max-width: 600px; margin-left: auto; margin-right: auto;">Buy
+        credits, spend them on any class. No
+        subscriptions required — unless you want one.</p>
+
+      <div class="pricing-grid text-left">
+        <!-- Trial Card -->
+        <div class="pricing-card">
+          <div><span class="pill bg-accent">Start here</span></div>
+          <h3 class="mt-24" style="font-size: 40px; margin-bottom: 0;">$10</h3>
+          <div class="text-label text-secondary mb-16">100 credits <span style="opacity: 0.5;">= 3 classes</span></div>
+          <p class="text-body text-secondary">Try three classes with any tutor. No commitment, no auto-renewal.</p>
+          <ul>
+            <li>100 credits (expires in 30 days)</li>
+            <li>Any subject, any tutor</li>
+            <li>3 group classes (30 cr each)</li>
+            <li>Tutor recap after every lesson</li>
+          </ul>
+          <a href="#stripe-link" class="btn btn-primary btn-full">Get started for $10</a>
+        </div>
+
+        <!-- Monthly Card -->
+        <div class="pricing-card pricing-card-monthly">
+          <div><span class="pill bg-navy">Most popular</span></div>
+          <h3 class="mt-24" style="font-size: 40px; margin-bottom: 0;">$300<span
+              style="font-size: 16px; font-weight: 400; font-family: var(--font-body); color: var(--text-secondary);">/month</span>
+          </h3>
+          <div class="text-label text-secondary mb-16">600 credits <span style="opacity: 0.5;">= 20 classes</span></div>
+          <p class="text-body text-secondary">Full month of learning. Credits refresh every month. Cancel anytime.</p>
+          <ul>
+            <li>600 credits per month</li>
+            <li>All subjects and tutors</li>
+            <li>Up to 20 group classes</li>
+            <li>Priority booking on new classes</li>
+            <li>Monthly progress summary</li>
+          </ul>
+          <a href="#stripe-link" class="btn btn-primary btn-full">Buy 600 credits</a>
+        </div>
+      </div>
+
+      <p class="text-label text-muted mt-32">1 group class = 30 credits · Credits don't roll over but never expire
+        mid-month</p>
+    </div>
+  </section>
+
+  <!-- SECTION 7: QUIZ TEASER -->
+  <section class="section quiz-section">
+    <div class="container quiz-grid">
+      <div>
+        <h2>Not sure which class is right for your child?</h2>
+        <p class="text-large text-secondary mb-32" style="color: rgba(255,255,255,0.8);">Take our 2-minute quiz. We'll
+          figure out your child's learning style and recommend the best classes for them — from our actual schedule.</p>
+        <a href="quiz.html" class="btn" style="background: white; color: var(--secondary);">Find the right class →</a>
+      </div>
+      <div class="flex-center">
+        <div class="quiz-preview-card">
+          <span class="text-label text-muted">Your child's learning profile</span>
+          <h3 class="heading-font" style="color: var(--text-primary); margin: 8px 0;">The Logical Builder</h3>
+          <p class="text-body text-secondary mb-16">Loves systems and puzzles. We recommend: Math + Coding.</p>
+          <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+            <span class="pill subj-math">Math</span>
+            <span class="pill subj-coding">Coding</span>
+          </div>
+          <span class="text-label text-muted" style="font-size: 11px;">Based on quiz results</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 8: FAQ -->
+  <section id="faq" class="section bg-offwhite">
+    <div class="container faq-container">
+      <h2 class="text-center mb-48">Good questions</h2>
+
+      <!-- FAQ Items -->
+      <div class="faq-item">
+        <div class="faq-question">What if my child doesn't enjoy the class?</div>
+        <div class="faq-answer">Easy — just book a different one next week. With 100 trial credits you have 3 classes to
+          explore. No questions asked.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">How do I know which class to pick?</div>
+        <div class="faq-answer">Take our 2-minute quiz and we'll match your child to the right subject and level. Or
+          just browse the schedule and try something that sounds fun.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Do unused credits expire?</div>
+        <div class="faq-answer">Trial credits expire after 30 days. Monthly subscription credits last until the end of
+          your billing month — we'll remind you before they do.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">What platform do the classes happen on?</div>
+        <div class="faq-answer">Zoom. You'll get a link before every class. No account needed for your child.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Can my child join mid-course?</div>
+        <div class="faq-answer">Yes. All our group classes are designed so kids can join any week. There's no "starting
+          from lesson 1" — every session stands alone.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHARED FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <div class="footer-logo">Karakuli</div>
+          <p class="text-body text-secondary" style="color: rgba(255,255,255,0.8);">Live classes for curious kids</p>
+        </div>
+        <div class="footer-links">
+          <a href="classes.html">Classes</a>
+          <a href="tutors.html">Tutors</a>
+          <a href="subjects.html">Subjects</a>
+          <a href="index.html#faq">FAQ</a>
+          <a href="privacy.html">Privacy</a>
+        </div>
+      </div>
+      <div class="footer-bottom text-center">
+        © 2025 Karakuli · karakuli.art@gmail.com
+      </div>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+
+</html>

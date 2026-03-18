@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karakuli - Our Tutors</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .tutor-card-large {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .tutor-avatar-large {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .tutor-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 24px 0;
+            padding: 24px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tutor-meta-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .tutor-meta-label {
+            width: 80px;
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .tutor-bio {
+            flex-grow: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SHARED NAVIGATION -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="brand-logo" style="display: flex; align-items: center;">
+                <img src="photo/KaraKuli.svg" alt="Karakuli" style="height: 28px; width: auto;">
+            </a>
+            <div class="nav-links">
+                <a href="classes.html">Classes</a>
+                <a href="tutors.html" style="color: var(--primary);">Tutors</a>
+                <a href="subjects.html">Subjects</a>
+                <a href="/#pricing">Pricing</a>
+                <a href="#stripe-link" class="btn btn-primary btn-small">Start for $10</a>
+            </div>
+            <button class="hamburger" id="hamburger">☰</button>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="classes.html">Classes</a>
+            <a href="tutors.html">Tutors</a>
+            <a href="subjects.html">Subjects</a>
+            <a href="/#pricing">Pricing</a>
+            <a href="#stripe-link" class="btn btn-primary btn-small btn-full">Start for $10</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="bg-offwhite section " style="padding: 64px 0 48px;">
+        <div class="container text-center">
+            <h1>Our tutors</h1>
+            <p class="text-large text-secondary">Vetted, experienced, and genuinely great with kids. Every tutor has a
+                video intro.</p>
+        </div>
+    </section>
+
+    <!-- TUTORS GRID -->
+    <section class="bg-white section " style="min-height: 50vh;">
+        <div class="container">
+            <div class="grid-3">
+
+                <!-- Tutor: Katya -->
+                <div class="card tutor-card-large card-math">
+                    <img src="photo/Katya.webp" alt="Katya" class="tutor-avatar-large">
+                    <h2 style="font-size: 28px; margin-bottom: 8px;">Katya</h2>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;">
+                        <span class="pill subj-math">Math</span>
+                        <span class="pill subj-english">English</span>
+                        <span class="text-label text-secondary">8 years experience</span>
+                    </div>
+                    <p class="text-body text-secondary tutor-bio">Experienced and structured tutor who helps children
+                        truly understand math and speak English confidently. Katya combines academic rigor with a
+                        supportive teaching style.</p>
+
+                    <div class="tutor-meta">
+                        <div class="tutor-meta-row">
+                            <div class="tutor-meta-label">Ages</div>
+                            <div class="text-body text-secondary">5–16 years old</div>
+                        </div>
+                        <div class="tutor-meta-row">
+                            <div class="tutor-meta-label">Subjects</div>
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                <span class="pill subj-math">Math</span>
+                                <span class="pill subj-english">English</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="classes.html" class="btn btn-secondary btn-full">See their classes →</a>
+                </div>
+        <!-- Tutor: Anna -->
+                <div class="card tutor-card-large card-math">
+                    <img src="photo/Anna.webp" alt="Anna" class="tutor-avatar-large">
+                    <h2 style="font-size: 28px; margin-bottom: 8px;">Anna</h2>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;">
+                        <span class="pill subj-math">Math</span>
+                        <span class="pill subj-english">English</span>
+                        <span class="text-label text-secondary">3 years experience</span>
+                    </div>
+                    <p class="text-body text-secondary tutor-bio">Warm and patient tutor who makes math and English easy
+                        to understand. Anna focuses on building confidence in young learners through clear explanations
+                        and engaging lessons.</p>
+
+                    <div class="tutor-meta">
+                        <div class="tutor-meta-row">
+                            <div class="tutor-meta-label">Ages</div>
+                            <div class="text-body text-secondary">5–16 years old</div>
+                        </div>
+                        <div class="tutor-meta-row">
+                            <div class="tutor-meta-label">Subjects</div>
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                <span class="pill subj-math">Math</span>
+                                <span class="pill subj-english">English</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="classes.html" class="btn btn-secondary btn-full">See their classes →</a>
+                </div>
+        <!-- Tutor: Sasha -->
+                <div class="card tutor-card-large card-math">
+                    <img src="photo/Sasha.webp" alt="Sasha" class="tutor-avatar-large">
+                    <h2 style="font-size: 28px; margin-bottom: 8px;">Sasha</h2>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;">
+                        <span class="pill subj-math">Math</span>
+                        <span class="pill subj-english">English</span>
+                        <span class="text-label text-secondary">5 years experience</span>
+                    </div>
+                    <p class="text-body text-secondary tutor-bio">Energetic and friendly tutor who turns learning into
+                        an exciting process. Sasha helps kids build strong foundations in math and improve their English
+                        naturally.</p>
+
+                    <div class="tutor-meta">
+                        <div class="tutor-meta-row">
+                            <div class="tutor-meta-label">Ages</div>
+                            <div class="text-body text-secondary">5–16 years old</div>
+                        </div>
+                        <div class="tutor-meta-row">
+                            <div class="tutor-meta-label">Subjects</div>
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                <span class="pill subj-math">Math</span>
+                                <span class="pill subj-english">English</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="classes.html" class="btn btn-secondary btn-full">See their classes →</a>
+                </div>
+        <!-- Tutor: Lena -->
+                <div class="card tutor-card-large card-art">
+                    <img src="photo/Lena.webp" alt="Lena" class="tutor-avatar-large">
+                    <h2 style="font-size: 28px; margin-bottom: 8px;">Lena</h2>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;">
+                        <span class="pill subj-art">Art</span>
+                        <span class="text-label text-secondary">5 years experience</span>
+                    </div>
+                    <p class="text-body text-secondary tutor-bio">Creative art tutor specializing in anime-style
+                        drawing. Lena helps kids express themselves through art while learning techniques step by step.
+                    </p>
+
+                    <div class="tutor-meta">
+                        <div class="tutor-meta-row">
+                            <div class="tutor-meta-label">Ages</div>
+                            <div class="text-body text-secondary">5–16 years old</div>
+                        </div>
+                        <div class="tutor-meta-row">
+                            <div class="tutor-meta-label">Subjects</div>
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                <span class="pill subj-art" style="background:#E6C0DB; color:#5D2952;">Anime
+                                    Drawing</span>
+                                <span class="pill subj-art">Art</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="classes.html" class="btn btn-secondary btn-full">See their classes →</a>
+                </div>
+        <!-- Tutor: Nastya -->
+                <div class="card tutor-card-large card-coding">
+                    <img src="photo/Nastya.webp" alt="Nastya" class="tutor-avatar-large">
+                    <h2 style="font-size: 28px; margin-bottom: 8px;">Nastya</h2>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;">
+                        <span class="pill subj-coding">Coding</span>
+                        <span class="text-label text-secondary">4 years experience</span>
+                    </div>
+                    <p class="text-body text-secondary tutor-bio">Coding tutor who teaches kids how to create, not just
+                        consume technology. Nastya makes programming simple, fun, and practical from the very first
+                        lesson.</p>
+
+                    <div class="tutor-meta">
+                        <div class="tutor-meta-row">
+                            <div class="tutor-meta-label">Ages</div>
+                            <div class="text-body text-secondary">8–16 years old</div>
+                        </div>
+                        <div class="tutor-meta-row">
+                            <div class="tutor-meta-label">Subjects</div>
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                <span class="pill subj-coding">Coding</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="classes.html" class="btn btn-secondary btn-full">See their classes →</a>
+                </div>
+        <!-- Tutor: Nika -->
+                <div class="card tutor-card-large card-chess">
+                    <img src="photo/Nika.webp" alt="Nika" class="tutor-avatar-large">
+                    <h2 style="font-size: 28px; margin-bottom: 8px;">Nika</h2>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;">
+                        <span class="pill subj-chess">Chess</span>
+                        <span class="text-label text-secondary">4 years experience</span>
+                    </div>
+                    <p class="text-body text-secondary tutor-bio">Chess tutor who develops strategic thinking and focus
+                        in children. Nika makes every lesson engaging while helping kids think several steps ahead.</p>
+
+                    <div class="tutor-meta">
+                        <div class="tutor-meta-row">
+                            <div class="tutor-meta-label">Ages</div>
+                            <div class="text-body text-secondary">6–16 years old</div>
+                        </div>
+                        <div class="tutor-meta-row">
+                            <div class="tutor-meta-label">Subjects</div>
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                <span class="pill subj-chess">Chess</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="classes.html" class="btn btn-secondary btn-full">See their classes →</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SHARED FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div>
+                    <div class="footer-logo">Karakuli</div>
+                    <p class="text-body text-secondary" style="color: rgba(255,255,255,0.8);">Live classes for curious
+                        kids</p>
+                </div>
+                <div class="footer-links">
+                    <a href="classes.html">Classes</a>
+                    <a href="tutors.html">Tutors</a>
+                    <a href="subjects.html">Subjects</a>
+                    <a href="index.html#faq">FAQ</a>
+                    <a href="privacy.html">Privacy</a>
+                </div>
+            </div>
+            <div class="footer-bottom text-center">
+                © 2025 Karakuli · karakuli.art@gmail.com
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+
+</html>
