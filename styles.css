@@ -197,6 +197,16 @@ h3 {
   background-color: var(--bg-tertiary);
 }
 
+.btn-white {
+  background-color: #FFFFFF;
+  color: var(--secondary);
+}
+
+.btn-white:hover {
+  background-color: #F5F0FF;
+  color: var(--primary);
+}
+
 .btn-small {
   padding: 8px 16px;
   font-size: 14px;
@@ -801,12 +811,19 @@ h3 {
   max-height: 300px;
   /* arbitrary max-height for animation */
 }
+
 /* Card Hover Animations */
-.card, .card-gray, .pricing-card, .mini-card {
+.card,
+.card-gray,
+.pricing-card,
+.mini-card {
   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.2), box-shadow 0.3s ease;
 }
 
-.card:hover, .card-gray:hover, .pricing-card:hover, .mini-card:hover {
+.card:hover,
+.card-gray:hover,
+.pricing-card:hover,
+.mini-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
 }
