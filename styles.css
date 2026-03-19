@@ -801,3 +801,12 @@ h3 {
   max-height: 300px;
   /* arbitrary max-height for animation */
 }
+/* Card Hover Animations */
+.card, .card-gray, .pricing-card, .mini-card {
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.2), box-shadow 0.3s ease;
+}
+
+.card:hover, .card-gray:hover, .pricing-card:hover, .mini-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+}
