@@ -2,179 +2,179 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karakuli - Class Schedule</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        .filter-bar {
-            position: sticky;
-            top: 61px;
-            /* Below navbar */
-            background: white;
-            padding: 16px 0;
-            z-index: 90;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karakuli - Class Schedule</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .filter-bar {
+      position: sticky;
+      top: 61px;
+      /* Below navbar */
+      background: white;
+      padding: 16px 0;
+      z-index: 90;
+    }
 
-        .filter-group {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 8px;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+    .filter-group {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
 
-        .filter-group::-webkit-scrollbar {
-            display: none;
-        }
+    .filter-group::-webkit-scrollbar {
+      display: none;
+    }
 
-        .filter-btn {
-            background: #F5F0FF;
-            border: 1px solid transparent;
-            padding: 6px 16px;
-            border-radius: var(--radius-pill);
-            color: var(--text-secondary);
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.2s;
-        }
+    .filter-btn {
+      background: #F5F0FF;
+      border: 1px solid transparent;
+      padding: 6px 16px;
+      border-radius: var(--radius-pill);
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
 
-        .filter-btn:hover {
-            background: #EBE0FF;
-        }
+    .filter-btn:hover {
+      background: #EBE0FF;
+    }
 
-        .filter-btn.active {
-            background: var(--primary);
-            color: white;
-        }
+    .filter-btn.active {
+      background: var(--primary);
+      color: white;
+    }
 
-        .filter-row-labels {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 12px;
-        }
+    .filter-row-labels {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
 
-        .filter-label {
-            font-weight: 600;
-            font-size: 14px;
-            min-width: 60px;
-        }
+    .filter-label {
+      font-weight: 600;
+      font-size: 14px;
+      min-width: 60px;
+    }
 
-        .class-card {
-            transition: opacity 0.3s ease;
-        }
+    .class-card {
+      transition: opacity 0.3s ease;
+    }
 
-        .class-card.hidden {
-            display: none;
-        }
+    .class-card.hidden {
+      display: none;
+    }
 
-        .no-results {
-            text-align: center;
-            padding: 64px 0;
-            color: var(--text-muted);
-            display: none;
-        }
+    .no-results {
+      text-align: center;
+      padding: 64px 0;
+      color: var(--text-muted);
+      display: none;
+    }
 
-        .no-results.active {
-            display: block;
-        }
+    .no-results.active {
+      display: block;
+    }
 
-        .tutor-img-class {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 0;
-            display: block;
-        }
-    </style>
+    .tutor-img-class {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0;
+      display: block;
+    }
+  </style>
 </head>
 
 <body>
 
-    <!-- SHARED NAVIGATION -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="index.html" class="brand-logo" style="display: flex; align-items: center;">
-                <img src="photo/KaraKuli.svg" alt="Karakuli" style="height: 28px; width: auto;">
-            </a>
-            <div class="nav-links">
-                <a href="classes.html" style="color: var(--primary);">Classes</a>
-                <a href="tutors.html">Tutors</a>
-                <a href="subjects.html">Subjects</a>
-                <a href="/#pricing">Pricing</a>
-                <a href="#stripe-link" class="btn btn-primary btn-small">Start for $10</a>
-            </div>
-            <button class="hamburger" id="hamburger">☰</button>
-        </div>
-        <!-- Mobile Menu -->
-        <div class="mobile-menu" id="mobile-menu">
-            <a href="classes.html">Classes</a>
-            <a href="tutors.html">Tutors</a>
-            <a href="subjects.html">Subjects</a>
-            <a href="/#pricing">Pricing</a>
-            <a href="#stripe-link" class="btn btn-primary btn-small btn-full">Start for $10</a>
-        </div>
-    </nav>
-
-    <!-- HERO -->
-    <section class="bg-offwhite section " style="padding: 64px 0 48px;">
-        <div class="container text-center">
-            <h1>This week's classes</h1>
-            <p class="text-large text-secondary">All classes repeat weekly. Book any slot, come back every week.</p>
-        </div>
-    </section>
-
-    <!-- FILTERS -->
-    <div class="filter-bar">
-        <div class="container">
-            <div class="filter-row-labels">
-                <div class="filter-label">Subject</div>
-                <div class="filter-group" id="filter-subject">
-                    <button class="filter-btn active" data-val="all">All</button>
-                    <button class="filter-btn" data-val="Math">Math</button>
-                    <button class="filter-btn" data-val="English">English</button>
-                    <button class="filter-btn" data-val="Coding">Coding</button>
-                    <button class="filter-btn" data-val="Music">Music</button>
-                    <button class="filter-btn" data-val="Art">Art</button>
-                </div>
-            </div>
-            <div class="filter-row-labels">
-                <div class="filter-label">Age</div>
-                <div class="filter-group" id="filter-age">
-                    <button class="filter-btn active" data-val="all">All</button>
-                    <button class="filter-btn" data-val="5-8">Ages 5–8</button>
-                    <button class="filter-btn" data-val="9-12">Ages 9–12</button>
-                    <button class="filter-btn" data-val="13-16">Ages 13–16</button>
-                </div>
-            </div>
-            <div class="filter-row-labels" style="margin-bottom: 0;">
-                <div class="filter-label">Day</div>
-                <div class="filter-group" id="filter-day">
-                    <button class="filter-btn active" data-val="all">All</button>
-                    <button class="filter-btn" data-val="Mon">Mon</button>
-                    <button class="filter-btn" data-val="Tue">Tue</button>
-                    <button class="filter-btn" data-val="Wed">Wed</button>
-                    <button class="filter-btn" data-val="Thu">Thu</button>
-                    <button class="filter-btn" data-val="Fri">Fri</button>
-                </div>
-            </div>
-        </div>
+  <!-- SHARED NAVIGATION -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="brand-logo" style="display: flex; align-items: center;">
+        <img src="photo/KaraKuli.svg" alt="Karakuli" style="height: 28px; width: auto;">
+      </a>
+      <div class="nav-links">
+        <a href="classes.html" style="color: var(--primary);">Classes</a>
+        <a href="tutors.html">Tutors</a>
+        <a href="subjects.html">Subjects</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="#stripe-link" class="btn btn-primary btn-small">Start for $10</a>
+      </div>
+      <button class="hamburger" id="hamburger">☰</button>
     </div>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="classes.html">Classes</a>
+      <a href="tutors.html">Tutors</a>
+      <a href="subjects.html">Subjects</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="#stripe-link" class="btn btn-primary btn-small btn-full">Start for $10</a>
+    </div>
+  </nav>
 
-    <!-- CLASSES GRID -->
-    <section class="bg-offwhite section " style="min-height: 50vh;">
-        <div class="container">
-            <div class="grid-3" id="classes-grid">
+  <!-- HERO -->
+  <section class="bg-offwhite section " style="padding: 64px 0 48px;">
+    <div class="container text-center">
+      <h1>This week's classes</h1>
+      <p class="text-large text-secondary">All classes repeat weekly. Book any slot, come back every week.</p>
+    </div>
+  </section>
+
+  <!-- FILTERS -->
+  <div class="filter-bar">
+    <div class="container">
+      <div class="filter-row-labels">
+        <div class="filter-label">Subject</div>
+        <div class="filter-group" id="filter-subject">
+          <button class="filter-btn active" data-val="all">All</button>
+          <button class="filter-btn" data-val="Math">Math</button>
+          <button class="filter-btn" data-val="English">English</button>
+          <button class="filter-btn" data-val="Coding">Coding</button>
+          <button class="filter-btn" data-val="Music">Music</button>
+          <button class="filter-btn" data-val="Art">Art</button>
+        </div>
+      </div>
+      <div class="filter-row-labels">
+        <div class="filter-label">Age</div>
+        <div class="filter-group" id="filter-age">
+          <button class="filter-btn active" data-val="all">All</button>
+          <button class="filter-btn" data-val="5-8">Ages 5–8</button>
+          <button class="filter-btn" data-val="9-12">Ages 9–12</button>
+          <button class="filter-btn" data-val="13-16">Ages 13–16</button>
+        </div>
+      </div>
+      <div class="filter-row-labels" style="margin-bottom: 0;">
+        <div class="filter-label">Day</div>
+        <div class="filter-group" id="filter-day">
+          <button class="filter-btn active" data-val="all">All</button>
+          <button class="filter-btn" data-val="Mon">Mon</button>
+          <button class="filter-btn" data-val="Tue">Tue</button>
+          <button class="filter-btn" data-val="Wed">Wed</button>
+          <button class="filter-btn" data-val="Thu">Thu</button>
+          <button class="filter-btn" data-val="Fri">Fri</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLASSES GRID -->
+  <section class="bg-offwhite section " style="min-height: 50vh;">
+    <div class="container">
+      <div class="grid-3" id="classes-grid">
 
         <!-- Class 1: Math 5-8 -->
         <div class="card card-math">
@@ -187,9 +187,12 @@
             <span class="text-label">Tutor: Katya</span>
           </div>
           <h3>Counting & Numbers</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Learning counting and basic math through fun, interactive games.</p>
-          <img src="photo/math.webp" class="card-illustration mb-24" style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
-          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Learning counting and basic
+            math through fun, interactive games.</p>
+          <img src="photo/math.webp" class="card-illustration mb-24"
+            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
             <span class="text-label text-secondary">4 spots · 25 cr</span>
             <a href="#stripe-link" class="btn btn-primary btn-small">Try for $10 →</a>
           </div>
@@ -206,9 +209,12 @@
             <span class="text-label">Tutor: Sasha</span>
           </div>
           <h3>Multiplication Games</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Learning multiplication and times tables through engaging games.</p>
-          <img src="photo/math.webp" class="card-illustration mb-24" style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
-          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Learning multiplication and
+            times tables through engaging games.</p>
+          <img src="photo/math.webp" class="card-illustration mb-24"
+            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
             <span class="text-label text-secondary">3 spots · 25 cr</span>
             <a href="#stripe-link" class="btn btn-primary btn-small">Try for $10 →</a>
           </div>
@@ -225,9 +231,12 @@
             <span class="text-label">Tutor: Nastya</span>
           </div>
           <h3>Scratch Creators</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Animations, click games, and interactive stories. Every lesson a new project!</p>
-          <img src="photo/code.webp" class="card-illustration mb-24" style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
-          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Animations, click games,
+            and interactive stories. Every lesson a new project!</p>
+          <img src="photo/code.webp" class="card-illustration mb-24"
+            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
             <span class="text-label text-secondary">5 spots · 25 cr</span>
             <a href="#stripe-link" class="btn btn-primary btn-small">Try for $10 →</a>
           </div>
@@ -244,9 +253,12 @@
             <span class="text-label">Tutor: Nika</span>
           </div>
           <h3>Roblox Game Design</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Build real games: Obby courses, coin collectors, tycoons, and 3D mazes!</p>
-          <img src="photo/code.webp" class="card-illustration mb-24" style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
-          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Build real games: Obby
+            courses, coin collectors, tycoons, and 3D mazes!</p>
+          <img src="photo/code.webp" class="card-illustration mb-24"
+            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
             <span class="text-label text-secondary">2 spots · 25 cr</span>
             <a href="#stripe-link" class="btn btn-primary btn-small">Try for $10 →</a>
           </div>
@@ -263,9 +275,12 @@
             <span class="text-label">Tutor: Anna</span>
           </div>
           <h3>Speaking Club A2</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Practice real English conversation through games and discussions at the A2 level.</p>
-          <img src="photo/english.webp" class="card-illustration mb-24" style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
-          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Practice real English
+            conversation through games and discussions at the A2 level.</p>
+          <img src="photo/english.webp" class="card-illustration mb-24"
+            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
             <span class="text-label text-secondary">4 spots · 25 cr</span>
             <a href="#stripe-link" class="btn btn-primary btn-small">Try for $10 →</a>
           </div>
@@ -282,9 +297,12 @@
             <span class="text-label">Tutor: Anna</span>
           </div>
           <h3>Speaking Club B1</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Advanced speaking practice and storytelling at the B1 level.</p>
-          <img src="photo/english.webp" class="card-illustration mb-24" style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
-          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Advanced speaking practice
+            and storytelling at the B1 level.</p>
+          <img src="photo/english.webp" class="card-illustration mb-24"
+            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
             <span class="text-label text-secondary">2 spots · 25 cr</span>
             <a href="#stripe-link" class="btn btn-primary btn-small">Try for $10 →</a>
           </div>
@@ -301,9 +319,12 @@
             <span class="text-label">Tutor: Lena</span>
           </div>
           <h3>Anime Drawing</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Anime-style drawing lessons where kids draw something new and exciting every week.</p>
-          <img src="photo/art.webp" class="card-illustration mb-24" style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
-          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Anime-style drawing lessons
+            where kids draw something new and exciting every week.</p>
+          <img src="photo/art.webp" class="card-illustration mb-24"
+            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
             <span class="text-label text-secondary">5 spots · 25 cr</span>
             <a href="#stripe-link" class="btn btn-primary btn-small">Try for $10 →</a>
           </div>
@@ -311,88 +332,66 @@
 
         <!-- Class 8: 1:1 Math Tutoring -->
         <div class="card card-math" style="position: relative;">
-          <div style="position: absolute; top: 16px; right: 16px; background: #F5F0FF; color: #2D4A8A; font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 100px; z-index: 10;">1:1 · On Demand</div>
-          <div class="card-illustration mb-24" style="display: flex; justify-content: center; align-items: center; background: #FFF8E1; border-radius: 16px; width: 100%; height: 160px; overflow: hidden; padding: 0; margin-top: -16px; margin-left: -16px; width: calc(100% + 32px);">
-             <img src="photo/math.webp" style="object-fit: cover; width: 100%; height: 100%; display: block;" alt="Math Class">
+          <div
+            style="position: absolute; top: 16px; right: 16px; background: white; color: #2D4A8A; font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 100px; z-index: 10; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            1:1 · On Demand</div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <span class="pill subj-math">Math</span>
+            <span class="text-label text-secondary">Ages 5–12</span>
           </div>
-          <div class="mb-16" style="display: flex; justify-content: space-between; align-items: center;">
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span class="pill subj-math">Math</span>
-              <span class="text-label text-secondary">Ages 5–12</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-               <img src="photo/Katya.webp" alt="Kate" style="width: 24px; height: 24px; border-radius: 50%;">
-               <span class="text-label text-secondary">Kate</span>
-            </div>
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <img src="photo/Katya.webp" alt="Katya" class="tutor-img-class">
+            <span class="text-label">Tutor: Katya</span>
           </div>
-          <h3 class="mb-8">1-on-1 Math Tutoring: Personalized for Your Child</h3>
-          <p class="text-small text-secondary mb-24">A fully personalized math session built around your child's level and goals. After booking, you'll connect with the tutor directly to choose a time that works for you.</p>
-          <div class="text-label text-secondary mb-16">Schedule directly with tutor</div>
-          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
-             <span class="text-label text-secondary">On Demand</span>
-             <a href="#stripe-link" class="btn btn-primary btn-small">Book · 50 cr</a>
+          <h3>1-on-1 Math Tutoring</h3>
+          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">A fully personalized math
+            session built around your child's level and goals.</p>
+          <img src="photo/math.webp" class="card-illustration mb-24"
+            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+            <span class="text-label text-secondary">Schedule directly</span>
+            <a href="#stripe-link" class="btn btn-primary btn-small">Book · 50 cr</a>
           </div>
         </div>
       </div>
 
-            <div id="no-results" class="no-results">
-                <h3 class="mb-16">No exact matches found</h3>
-                <p>Try adjusting your filters or <a href="#" style="color: var(--primary); text-decoration: underline;"
-                        onclick="resetFilters(event)">resetting them</a> to see more options.</p>
-            
+      <div id="no-results" class="no-results">
+        <h3 class="mb-16">No exact matches found</h3>
+        <p>Try adjusting your filters or <a href="#" style="color: var(--primary); text-decoration: underline;"
+            onclick="resetFilters(event)">resetting them</a> to see more options.</p>
 
-        <div class="card-class" style="position: relative; display: flex; flex-direction: column;">
-          <div style="position: absolute; top: 16px; right: 16px; background: #F5F0FF; color: #2D4A8A; font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 100px; z-index: 10;">1:1 · On Demand</div>
-          <div class="card-illustration mb-24" style="display: flex; justify-content: center; align-items: center; background: #FFF8E1; border-radius: 16px;">
-             <img src="photo/math.webp" style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Math Class">
-          </div>
-          <div class="mb-16" style="display: flex; justify-content: space-between; align-items: center;">
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span class="pill" style="background: #E6F1FB; color: #0C447C; font-weight: 500;">Math</span>
-              <span class="text-label text-secondary">Ages 5–12</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-               <img src="photo/Katya.webp" alt="Kate" style="width: 24px; height: 24px; border-radius: 50%;">
-               <span class="text-label text-secondary">Kate</span>
-            </div>
-          </div>
-          <h3 class="mb-8">1-on-1 Math Tutoring: Personalized for Your Child</h3>
-          <p class="text-small text-secondary mb-24">A fully personalized math session built around your child's level and goals. After booking, you'll connect with the tutor directly to choose a time that works for you.</p>
-          <div class="text-label text-secondary mb-16">Schedule directly with tutor</div>
-          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
-             <span class="text-label text-secondary">On Demand</span>
-             <a href="#stripe-link" class="btn btn-primary btn-small">Book · 50 cr</a>
-          </div>
+
+
+
+      </div>
+  </section>
+
+  <!-- SHARED FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <div class="footer-logo">Karakuli</div>
+          <p class="text-body text-secondary" style="color: rgba(255,255,255,0.8);">Where kids learn, grow, and show up
+            every week</p>
         </div>
-</div>
-
+        <div class="footer-links">
+          <a href="classes.html">Classes</a>
+          <a href="tutors.html">Tutors</a>
+          <a href="subjects.html">Subjects</a>
+          <a href="index.html#faq">FAQ</a>
+          <a href="privacy.html">Privacy</a>
         </div>
-    </section>
+      </div>
+      <div class="footer-bottom text-center">
+        © 2025 Karakuli · karakuli.art@gmail.com
+      </div>
+    </div>
+  </footer>
 
-    <!-- SHARED FOOTER -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-top">
-                <div>
-                    <div class="footer-logo">Karakuli</div>
-                    <p class="text-body text-secondary" style="color: rgba(255,255,255,0.8);">Where kids learn, grow, and show up every week</p>
-                </div>
-                <div class="footer-links">
-                    <a href="classes.html">Classes</a>
-                    <a href="tutors.html">Tutors</a>
-                    <a href="subjects.html">Subjects</a>
-                    <a href="index.html#faq">FAQ</a>
-                    <a href="privacy.html">Privacy</a>
-                </div>
-            </div>
-            <div class="footer-bottom text-center">
-                © 2025 Karakuli · karakuli.art@gmail.com
-            </div>
-        </div>
-    </footer>
-
-    <script src="scripts.js"></script>
-    <script src="classes.js"></script>
+  <script src="scripts.js"></script>
+  <script src="classes.js"></script>
 </body>
 
 </html>
