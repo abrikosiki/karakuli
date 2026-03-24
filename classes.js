@@ -22,7 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
         cards.forEach(card => {
             const matchSubject = filterGroups.subject === 'all' || card.getAttribute('data-subject') === filterGroups.subject;
             const matchAge = filterGroups.age === 'all' || card.getAttribute('data-age') === filterGroups.age;
-            const matchDay = filterGroups.day === 'all' || card.getAttribute('data-day') === filterGroups.day;
+            const cardDay = card.getAttribute('data-day');
+            const matchDay = filterGroups.day === 'all' || cardDay === filterGroups.day || cardDay === 'all';
 
             if (matchSubject && matchAge && matchDay) {
                 card.classList.remove('hidden');

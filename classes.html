@@ -155,7 +155,8 @@
           <button class="filter-btn" data-val="Tue">Tue</button>
           <button class="filter-btn" data-val="Wed">Wed</button>
           <button class="filter-btn" data-val="Thu">Thu</button>
-          <button class="filter-btn" data-val="Fri">Fri</button>
+          <button class="filter-btn" data-val="Sat">Sat</button>
+          <button class="filter-btn" data-val="Sun">Sun</button>
         </div>
       </div>
     </div>
@@ -166,156 +167,88 @@
     <div class="container">
       <div class="grid-3" id="classes-grid">
 
-        <!-- Class 1: Math 5-8 -->
-        <div class="card card-math">
+        <!-- Class 1: English A2 -->
+        <div class="card class-card card-english" data-subject="English" data-age="A2" data-day="Mon">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <span class="pill subj-math">Math</span>
-            <span class="text-label text-secondary">Ages 5–12</span>
+            <span class="pill subj-english">English</span>
+            <span class="text-label text-secondary">A2</span>
           </div>
           <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
             <img src="photo/Kate.webp" alt="Kate" class="tutor-img-class">
             <span class="text-label">Tutor: Kate</span>
           </div>
-          <h3>Counting & Numbers</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Learning counting and basic
-            math through fun, interactive games.</p>
+          <h3>Speak &amp; Play</h3>
+          <p class="text-small text-secondary mb-24" style="height: 72px; overflow: hidden;">Fun, guided conversations for kids who already know the basics. We help them start speaking more confidently through games, topics, and real-life situations.</p>
+          <img src="photo/english.png" class="card-illustration mb-24"
+            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+            <span class="text-label text-secondary">Mon 16:00</span>
+            </div>
+        </div>
+
+        <!-- Class 2: Math 5-8 -->
+        <div class="card class-card card-math" data-subject="Math" data-age="5-8" data-day="Sat">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <span class="pill subj-math">Math</span>
+            <span class="text-label text-secondary">Ages 5–8</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <img src="photo/Giang.webp" alt="Giang" class="tutor-img-class">
+            <span class="text-label">Tutor: Giang</span>
+          </div>
+          <h3>Math Explorers</h3>
+          <p class="text-small text-secondary mb-24" style="height: 72px; overflow: hidden;">Each lesson is a fun, self-contained challenge — from patterns and counting to shapes and simple logic. Kids learn through games, visuals, and interaction.</p>
           <img src="photo/math.webp" class="card-illustration mb-24"
             style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
           <div
             style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
-            <span class="text-label text-secondary">3 spots · 25 credits</span>
+            <span class="text-label text-secondary">Sat 12:00</span>
             </div>
         </div>
 
-        <!-- Class 2: Math 9-12 -->
-        <div class="card card-math">
+        <!-- Class 3: Coding 5-8 -->
+        <div class="card class-card card-coding" data-subject="Coding" data-age="5-8" data-day="Wed">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <span class="pill subj-math">Math</span>
-            <span class="text-label text-secondary">Ages 5–12</span>
+            <span class="pill subj-coding">Coding</span>
+            <span class="text-label text-secondary">Ages 5–8</span>
           </div>
           <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
             <img src="photo/Antonia.webp" alt="Antonia" class="tutor-img-class">
             <span class="text-label">Tutor: Antonia</span>
           </div>
-          <h3>Multiplication Games</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Learning multiplication and
-            times tables through engaging games.</p>
+          <h3>Scratch Creators</h3>
+          <p class="text-small text-secondary mb-24" style="height: 72px; overflow: hidden;">Kids create simple animations and games using Scratch. Every lesson ends with something they built themselves — fun, visual, and interactive.</p>
+          <img src="photo/code.webp" class="card-illustration mb-24"
+            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+            <span class="text-label text-secondary">Wed 11:00</span>
+            </div>
+        </div>
+
+        <!-- Class 4: Math 9-12 -->
+        <div class="card class-card card-math" data-subject="Math" data-age="9-12" data-day="Thu">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <span class="pill subj-math">Math</span>
+            <span class="text-label text-secondary">Ages 9–12</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <img src="photo/Giang.webp" alt="Giang" class="tutor-img-class">
+            <span class="text-label">Tutor: Giang</span>
+          </div>
+          <h3>Math Challenge Club</h3>
+          <p class="text-small text-secondary mb-24" style="height: 72px; overflow: hidden;">From multiplication to problem solving, each lesson focuses on one topic and builds real understanding through puzzles, challenges, and real-life examples.</p>
           <img src="photo/math.webp" class="card-illustration mb-24"
             style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
           <div
             style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
-            <span class="text-label text-secondary">3 spots · 25 credits</span>
+            <span class="text-label text-secondary">Thu 10:00</span>
             </div>
         </div>
 
-        <!-- Class 3: Coding Scratch 5-8 -->
-        <div class="card card-coding">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <span class="pill subj-coding">Coding</span>
-            <span class="text-label text-secondary">Ages 5–12</span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-            <img src="photo/Giang.webp" alt="Giang" class="tutor-img-class">
-            <span class="text-label">Tutor: Giang</span>
-          </div>
-          <h3>Scratch Creators</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Animations, click games,
-            and interactive stories. Every lesson a new project!</p>
-          <img src="photo/code.webp" class="card-illustration mb-24"
-            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
-          <div
-            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
-            <span class="text-label text-secondary">3 spots · 25 credits</span>
-            </div>
-        </div>
-
-        <!-- Class 4: Coding Roblox 9-12 -->
-        <div class="card card-coding">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <span class="pill subj-coding">Coding</span>
-            <span class="text-label text-secondary">Ages 5–12</span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-            <img src="photo/Giang.webp" alt="Giang" class="tutor-img-class">
-            <span class="text-label">Tutor: Giang</span>
-          </div>
-          <h3>Roblox Game Design</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Build real games: Obby
-            courses, coin collectors, tycoons, and 3D mazes!</p>
-          <img src="photo/code.webp" class="card-illustration mb-24"
-            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
-          <div
-            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
-            <span class="text-label text-secondary">3 spots · 25 credits</span>
-            </div>
-        </div>
-
-        <!-- Class 5: English A2 -->
-        <div class="card card-english">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <span class="pill subj-english">English</span>
-            <span class="text-label text-secondary">Ages 5–12</span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-            <img src="photo/Kate.webp" alt="Kate" class="tutor-img-class">
-            <span class="text-label">Tutor: Kate</span>
-          </div>
-          <h3>Speaking Club A2</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Practice real English
-            conversation through games and discussions at the A2 level.</p>
-          <img src="photo/english.png" class="card-illustration mb-24"
-            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
-          <div
-            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
-            <span class="text-label text-secondary">3 spots · 25 credits</span>
-            </div>
-        </div>
-
-        <!-- Class 6: English B1 -->
-        <div class="card card-english">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <span class="pill subj-english">English</span>
-            <span class="text-label text-secondary">Ages 5–12</span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-            <img src="photo/Kate.webp" alt="Kate" class="tutor-img-class">
-            <span class="text-label">Tutor: Kate</span>
-          </div>
-          <h3>Speaking Club B1</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Advanced speaking practice
-            and storytelling at the B1 level.</p>
-          <img src="photo/english.png" class="card-illustration mb-24"
-            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
-          <div
-            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
-            <span class="text-label text-secondary">3 spots · 25 credits</span>
-            </div>
-        </div>
-
-        <!-- Class 7: Art -->
-        <div class="card card-art">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <span class="pill subj-art">Art</span>
-            <span class="text-label text-secondary">Ages 5–12</span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-            <img src="photo/Giang.webp" alt="Giang" class="tutor-img-class">
-            <span class="text-label">Tutor: Giang</span>
-          </div>
-          <h3>Anime Drawing</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Anime-style drawing lessons
-            where kids draw something new and exciting every week.</p>
-          <img src="photo/art.png" class="card-illustration mb-24"
-            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
-          <div
-            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
-            <span class="text-label text-secondary">3 spots · 25 credits</span>
-            </div>
-        </div>
-
-        
-        <!-- Class 8.5: Music -->
-        <div class="card card-music" data-subject="Music" data-age="5-12" data-day="Tue">
+        <!-- Class 5: Music -->
+        <div class="card class-card card-music" data-subject="Music" data-age="5-12" data-day="Tue">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
             <span class="pill subj-music">Music</span>
             <span class="text-label text-secondary">Ages 5–12</span>
@@ -324,20 +257,76 @@
             <img src="photo/Nina.webp" alt="Nina" class="tutor-img-class">
             <span class="text-label">Tutor: Nina</span>
           </div>
-          <img src="photo/music.png" class="card-illustration mb-24" style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Music Illustration">
-          <h3>Music Foundation</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Discovering voice and rhythm through fun musical exercises.</p>
-          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto; border-top: 1px solid var(--border-color);">
-            <div style="display: flex; flex-direction: column;">
-              <span class="text-label text-secondary">Tue 10:00 AM</span>
-              <span class="text-label text-secondary">3 spots · 25 credits</span>
+          <h3>Kids Singing Club</h3>
+          <p class="text-small text-secondary mb-24" style="height: 72px; overflow: hidden;">A fun and relaxed space where kids sing together, explore their voice, and enjoy music. No pressure — just confidence, creativity, and performance.</p>
+          <img src="photo/music.png" class="card-illustration mb-24"
+            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+            <span class="text-label text-secondary">Tue 10:00</span>
             </div>
-            <a href="/quiz" class="btn btn-primary btn-small">Discover your child's learner type →</a>
-          </div>
         </div>
 
-        <!-- Class 8: 1:1 Math Tutoring -->
-        <div class="card card-math" style="position: relative;">
+        <!-- Class 6: Coding 9-12 -->
+        <div class="card class-card card-coding" data-subject="Coding" data-age="9-12" data-day="Mon">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <span class="pill subj-coding">Coding</span>
+            <span class="text-label text-secondary">Ages 9–12</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <img src="photo/Antonia.webp" alt="Antonia" class="tutor-img-class">
+            <span class="text-label">Tutor: Antonia</span>
+          </div>
+          <h3>Roblox Game Design</h3>
+          <p class="text-small text-secondary mb-24" style="height: 72px; overflow: hidden;">Build real games in Roblox Studio and learn how coding works in practice. Each lesson is a mini-project kids can play and improve.</p>
+          <img src="photo/code.webp" class="card-illustration mb-24"
+            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+            <span class="text-label text-secondary">Mon 14:00</span>
+            </div>
+        </div>
+
+        <!-- Class 7: English B1 -->
+        <div class="card class-card card-english" data-subject="English" data-age="B1" data-day="Wed">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <span class="pill subj-english">English</span>
+            <span class="text-label text-secondary">B1</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <img src="photo/Kate.webp" alt="Kate" class="tutor-img-class">
+            <span class="text-label">Tutor: Kate</span>
+          </div>
+          <h3>Confident Speakers Club</h3>
+          <p class="text-small text-secondary mb-24" style="height: 72px; overflow: hidden;">For kids who want to speak freely and confidently. We focus on real conversations, opinions, and expressing ideas — not just grammar.</p>
+          <img src="photo/english.png" class="card-illustration mb-24"
+            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+            <span class="text-label text-secondary">Wed 16:00</span>
+            </div>
+        </div>
+
+        <!-- Class 8: Art -->
+        <div class="card class-card card-art" data-subject="Art" data-age="5-12" data-day="Sun">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <span class="pill subj-art">Art</span>
+            <span class="text-label text-secondary">Ages 5–12</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <img src="photo/Nina.webp" alt="Nina" class="tutor-img-class">
+            <span class="text-label">Tutor: Nina</span>
+          </div>
+          <h3>Anime Creators</h3>
+          <p class="text-small text-secondary mb-24" style="height: 72px; overflow: hidden;">Kids draw what they love — anime, game characters, or their own ideas. Every lesson ends with a finished drawing and a lot of creativity.</p>
+          <img src="photo/art.png" class="card-illustration mb-24" style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Art Illustration">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
+            <span class="text-label text-secondary">Sun 11:00</span>
+            </div>
+        </div>
+
+        <!-- Class 9: 1:1 Math Tutoring -->
+        <div class="card class-card card-math" data-subject="Math" data-age="5-12" data-day="all" style="position: relative;">
           <div
             style="position: absolute; top: 16px; right: 16px; background: white; color: #2D4A8A; font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 100px; z-index: 10; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
             1:1 · On Demand</div>
@@ -346,8 +335,8 @@
             <span class="text-label text-secondary">Ages 5–12</span>
           </div>
           <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-            <img src="photo/Kate%20K.webp" alt="Kate K" class="tutor-img-class">
-            <span class="text-label">Tutor: Kate K</span>
+            <img src="photo/Catherine.webp" alt="Catherine" class="tutor-img-class">
+            <span class="text-label">Tutor: Catherine</span>
           </div>
           <h3>1-on-1 Math Tutoring</h3>
           <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">A fully personalized math
