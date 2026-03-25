@@ -1346,31 +1346,7 @@
         }
 
         function toggleMulti(el, val) {
-            // Music is given together with drawing (Art).
-            // If user selects either `subj_art` or `subj_music`, we toggle both.
-            const ART = 'subj_art';
-            const MUSIC = 'subj_music';
-            const isArtOrMusic = val === ART || val === MUSIC;
-
-            if (isArtOrMusic) {
-                const other = val === ART ? MUSIC : ART;
-                const isSelected = quizState.subjects.includes(val);
-
-                const addOrRemove = (subject, shouldAdd) => {
-                    const cardEl = document.getElementById(subject);
-                    if (shouldAdd) {
-                        if (!quizState.subjects.includes(subject)) quizState.subjects.push(subject);
-                        if (cardEl) cardEl.classList.add('selected');
-                    } else {
-                        quizState.subjects = quizState.subjects.filter(x => x !== subject);
-                        if (cardEl) cardEl.classList.remove('selected');
-                    }
-                };
-
-                // Toggle pair together.
-                addOrRemove(val, !isSelected);
-                addOrRemove(other, !isSelected);
-            } else if (quizState.subjects.includes(val)) {
+            if (quizState.subjects.includes(val)) {
                 quizState.subjects = quizState.subjects.filter(x => x !== val);
                 el.classList.remove('selected');
             } else {
