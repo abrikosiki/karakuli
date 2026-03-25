@@ -1425,9 +1425,11 @@
         }
 
         function getOrCreateLeadId() {
-            // Always create a fresh lead id.
-            // This prevents updating/overwriting a previous row when the user submits contact info multiple times.
-            const id = (crypto && typeof crypto.randomUUID === 'function')
+            // Reuse the same lead_id for the whole quiz flow (2-step create+update).
+            let id = getStoredLeadId();
+            if (id) return id;
+
+            id = (crypto && typeof crypto.randomUUID === 'function')
                 ? crypto.randomUUID()
                 : `lead_${Date.now()}_${Math.random()}`;
             try { localStorage.setItem(LEAD_ID_KEY, id); } catch (e) { }
@@ -1593,48 +1595,10 @@
             document.getElementById('nameBtn').innerText = v ? `See ${v}'s plan →` : `See the plan →`;
         }
 
-        async function submitName() {
+        function submitName() {
             const v = document.getElementById('nameInput').value.trim();
             if (!v) { alert("Please enter a name."); return; }
             quizState.childName = v;
-
-            // Create a new lead row only once we actually know child_name.
-            // This ensures the "child_name" column is populated.
-            const leadId = getOrCreateLeadId();
-            const ageLabel = {
-                age_5_6: '5-6',
-                age_7_8: '7-8',
-                age_9_10: '9-10',
-                age_11_12: '11-12',
-            }[quizState.age] || (quizState.age || '');
-
-            const createPayload = {
-                action: 'create_lead',
-                lead_id: leadId,
-                child_name: v,
-                child_age: ageLabel,
-                email: quizState.email || '',
-                phone: quizState.phone || '',
-            };
-
-            console.log('[GoogleSheets] create_lead (on childName submit) request', {
-                leadId,
-                createPayload,
-            });
-
-            try {
-                await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify(createPayload),
-                    mode: 'no-cors',
-                    keepalive: true,
-                });
-                console.log('[GoogleSheets] create_lead (on childName submit) sent', { leadId });
-            } catch (e) {
-                console.error('[GoogleSheets] create_lead (on childName submit) failed', e, { leadId });
-            }
-
             nextScreen();
         }
 
