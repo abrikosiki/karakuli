@@ -1260,6 +1260,18 @@
                             action: 'update_result',
                             lead_id: leadId,
                             result: lType.name,
+                            // Some implementations only update the "result" column.
+                            // Sending these again helps fill child_name/result reliably.
+                            child_name: quizState.childName || '',
+                            child_age: {
+                                age_5_6: '5-6',
+                                age_7_8: '7-8',
+                                age_9_10: '9-10',
+                                age_11_12: '11-12',
+                            }[quizState.age] || (quizState.age || ''),
+                            email: quizState.email || '',
+                            phone: quizState.phone || '',
+                            timestamp: new Date().toISOString(),
                         };
 
                         console.log('[GoogleSheets] update_result request', {
