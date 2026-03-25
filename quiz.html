@@ -1002,10 +1002,10 @@
         // S9 EMAIL
         s.push({
             id: 9, type: 'email', html: `
-            <h2>Contact info</h2>
-            <p>We'll send you the full personalized recommendation and your child's learner profile.</p>
+            <h2>Save your progress</h2>
+            <p>Leave your email so you can come back to your results anytime.</p>
             <div style="flex-grow:1;">
-                <label class="input-label">Email address</label>
+                <label class="input-label">Contact info</label>
                 <input type="email" id="emailInput" placeholder="your@email.com" autocomplete="email">
                 <div class="field-error" id="emailError">Please enter a valid email address</div>
                 <label class="input-label">WhatsApp number</label>
@@ -1013,7 +1013,7 @@
                 <div class="field-error" id="phoneError">Please enter a valid phone number</div>
             </div>
             <div class="cta-bottom">
-                <button class="btn" onclick="submitEmail()">Send me the plan →</button>
+                <button class="btn" onclick="submitEmail()">Save & continue →</button>
                 <div class="micro" id="email-msg" style="margin-top:16px;"></div>
             </div>`
         });
