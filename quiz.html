@@ -669,7 +669,7 @@
          * CONSTANTS & STATE
          ***********************************************************/
         const WEBHOOK_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
-        const STRIPE_URL = 'YOUR_STRIPE_PAYMENT_LINK';
+        const STRIPE_URL = 'https://buy.stripe.com/cNi7sMblT4CPgDs46q18e3a';
 
         let currentScreenIndex = 0;
         let questionCounter = 0; // To track progress out of 10
@@ -1144,7 +1144,7 @@
                 const recSubjs = getRecommendedSubjects(quizState);
 
                 let bTitle, bTxt;
-                if (quizState.barrier === 'barrier_price') { bTitle = "Classes that fit your budget"; bTxt = "Start with a trial for just $15 — that gives you 50 credits, enough for 2 full classes. See if your child loves it before committing to anything bigger."; }
+                if (quizState.barrier === 'barrier_price') { bTitle = "Classes that fit your budget"; bTxt = "Start with a trial for just $10 — that gives you 50 credits, enough for 2 full classes. See if your child loves it before committing to anything bigger."; }
                 else if (quizState.barrier === 'barrier_teacher') { bTitle = "You choose the tutor"; bTxt = `Browse tutor profiles, read about their experience, and pick the one that feels right. Not a fit? Switch anytime. We're here to help you find the best match for ${n}.`; }
                 else if (quizState.barrier === 'barrier_schedule') { bTitle = "Learning on your family's schedule"; bTxt = "Book classes any day, any time. Reschedule easily. No penalties, no rigid commitments. Life happens — we get it."; }
                 else { bTitle = "Classes kids don't want to leave"; bTxt = "Our tutors are trained to keep kids engaged from minute 1 to minute 45. With 5 subjects to rotate through, boredom doesn't stand a chance."; }
@@ -1189,9 +1189,8 @@
                     <h2>Suggested Weekly Schedule</h2>
                     <p>This is just a suggestion — you choose the days, times, and tutors that work for your family.</p>
                     <div class="schedule-card">
-                        <div class="schedule-item"><span>Tuesday 5:00 PM</span><span style="font-weight:600;">Drawing</span></div>
-                        <div class="schedule-item"><span>Thursday 4:00 PM</span><span style="font-weight:600;">Coding</span></div>
-                        <div class="schedule-item"><span>Saturday 11:00 AM</span><span style="font-weight:600;">Music</span></div>
+                        <div class="schedule-item"><span>Mon 5:00 PM</span><span style="font-weight:600;">Math</span></div>
+                        <div class="schedule-item"><span>Thu 4:30 PM</span><span style="font-weight:600;">Coding</span></div>
                     </div>
                 </div>
 
@@ -1207,19 +1206,18 @@
                     <div class="plan-comparison">
                         <div class="plan-card highlight">
                             <div class="plan-title">TRIAL</div>
-                            <div class="plan-price">$15 <span style="font-size:14px; color:var(--text-secondary); font-weight:400;">one-time</span></div>
+                            <div class="plan-price">$10 <span style="font-size:14px; color:var(--text-secondary); font-weight:400;">one-time</span></div>
                             <div class="plan-desc">50 credits (~2 classes)</div>
                             <div class="plan-desc">Starts immediately</div>
                         </div>
                         <div class="plan-card">
                             <div class="plan-title">MONTHLY PLAN</div>
                             <div class="plan-price">$120<span style="font-size:14px; color:var(--text-secondary); font-weight:400;">/mo</span></div>
-                            <div class="plan-desc">150 credits/month (~6 classes)</div>
+                            <div class="plan-desc">125 credits/month (~5 lessons)</div>
                             <div class="plan-desc">After trial credits used</div>
                         </div>
                     </div>
                     <a href="${stripeLink}" class="btn">Start for $10 — 2 classes included →</a>
-                    <div class="fine-print">Cancel anytime. No commitment. You choose what to spend credits on.</div>
                 </div>
 
                 <!-- Sec 6 Trust -->
@@ -1229,7 +1227,6 @@
                         <li>Experienced tutors with 5+ years in education</li>
                         <li>5 subjects — from math to music</li>
                         <li>Flexible credits — spend them on what your child loves</li>
-                        <li>Cancel anytime, no lock-in</li>
                     </ul>
                 </div>
                 `;
