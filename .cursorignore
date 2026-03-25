@@ -1,0 +1,27 @@
+# Ignore dependencies and system files
+node_modules
+.git
+.next
+dist
+build
+
+# Ignore logs and configs
+*.log
+*.lock
+*.json
+
+# Ignore all images and media (to save index space)
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.svg
+*.mp4
+*.mov
+
+# Ignore any assets folders
+assets
+public/images
+public/assets
+images
