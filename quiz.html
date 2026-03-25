@@ -701,8 +701,8 @@
             'Creative+Deep-Diver': { name: 'Imaginative Builder', icon: '🧱', description: '[name] gets deeply immersed in creative projects. Give them a canvas, a keyboard, or an instrument, and they\'ll lose track of time. They love building things from scratch and seeing the result of their effort.' },
             'Creative+Achiever': { name: 'Creative Achiever', icon: '🌟', description: '[name] combines imagination with discipline. They don\'t just dream up ideas — they follow through and make them real. They thrive in creative subjects with clear milestones.' },
             'Creative+Warm-Up Kid': { name: 'Thoughtful Creator', icon: '💭', description: '[name] takes a moment to warm up, but once they start creating, there\'s no stopping them. They need a gentle nudge and a supportive environment to unlock their full creative potential.' },
-            'Analytical+Explorer': { name: 'Curious Strategist', icon: '🔍', description: '[name] loves puzzles, challenges, and figuring things out — but also gets excited about jumping to the next thing. They need variety within structured thinking: chess one day, coding the next.' },
-            'Analytical+Deep-Diver': { name: 'Strategic Thinker', icon: '♟️', description: '[name] loves to go deep into logical challenges. They\'re the kind of kid who won\'t stop until they\'ve solved the puzzle. Math, chess, and coding are their natural playground.' },
+            'Analytical+Explorer': { name: 'Curious Strategist', icon: '🔍', description: '[name] loves puzzles, challenges, and figuring things out — but also gets excited about jumping to the next thing. They need variety within structured thinking: puzzles one day, coding the next.' },
+            'Analytical+Deep-Diver': { name: 'Strategic Thinker', icon: '🧠', description: '[name] loves to go deep into logical challenges. They\'re the kind of kid who won\'t stop until they\'ve solved the puzzle. Math, puzzles, and coding are their natural playground.' },
             'Analytical+Achiever': { name: 'Focused Achiever', icon: '🎯', description: '[name] is driven, disciplined, and loves a good challenge. They set goals and hit them. Structured subjects like math and coding bring out their best.' },
             'Analytical+Warm-Up Kid': { name: 'Quiet Problem-Solver', icon: '🧩', description: '[name] needs a moment to settle in, but once they engage with a logical challenge, they\'re fully locked in. They benefit from patient tutors who let them find their rhythm.' },
             'Expressive+Explorer': { name: 'Curious Performer', icon: '🎭', description: '[name] is full of energy and loves to try everything. They light up when they can move, perform, and express themselves. Music, art, and interactive classes are their sweet spot.' },
@@ -729,8 +729,8 @@
             'default': 'versatile_learner',
         };
 
-        const subjectIcons = { math: '🧮', english: '🇬🇧', art: '🎨', chess: '♟️', coding: '💻', music: '🎵' };
-        const subjectNames = { math: 'Math & logical thinking', english: 'English language', art: 'Art & creativity', chess: 'Chess & strategic thinking', coding: 'Coding & tech skills', music: 'Music' };
+        const subjectIcons = { math: '🧮', english: '🇬🇧', art: '🎨', coding: '💻', music: '🎵' };
+        const subjectNames = { math: 'Math & logical thinking', english: 'English language', art: 'Drawing & creativity', coding: 'Coding & tech skills', music: 'Music' };
 
         const subjectReasons = {
             math: {
@@ -747,11 +747,6 @@
                 energy_create: "A natural fit for [name]'s love of creating from scratch",
                 pain_screen_time: "A creative outlet that's way more fun than scrolling",
                 default: "A space to experiment, express, and create freely",
-            },
-            chess: {
-                energy_challenge: "The ultimate thinking game for [name]'s competitive side",
-                pain_screen_time: "Strategic thinking that beats any screen game",
-                default: "Train focus, patience, and strategic thinking",
             },
             coding: {
                 energy_create: "Turn [name]'s creativity into real projects they can show off",
@@ -796,34 +791,34 @@
         }
 
         function getRecommendedSubjects(state) {
-            const scores = { math: 0, english: 0, art: 0, chess: 0, coding: 0, music: 0 };
+            const scores = { math: 0, english: 0, art: 0, coding: 0, music: 0 };
             const painScores = {
                 pain_falling_behind: { math: 3, english: 3 },
-                pain_bored: { chess: 3, coding: 3, music: 1 },
-                pain_screen_time: { art: 2, chess: 2, music: 2 },
-                pain_no_access: { math: 1, english: 1, art: 1, chess: 1, coding: 1, music: 1 },
+                pain_bored: { coding: 3, music: 1 },
+                pain_screen_time: { art: 2, music: 2 },
+                pain_no_access: { math: 1, english: 1, art: 1, coding: 1, music: 1 },
             };
             const socialScores = {
                 social_group: { english: 2, music: 2 },
-                social_1on1: { math: 2, chess: 2 },
+                social_1on1: { math: 2 },
                 social_solo: { coding: 2, art: 2 },
             };
             const energyScores = {
                 energy_create: { art: 3, music: 2, coding: 2 },
-                energy_challenge: { chess: 3, math: 2, coding: 2 },
+                energy_challenge: { math: 2, coding: 2 },
                 energy_realworld: { english: 2, math: 2 },
                 energy_perform: { music: 3, art: 2 },
             };
             const decisionScores = {
-                decision_logical: { math: 2, chess: 2, coding: 2 },
+                decision_logical: { math: 2, coding: 2 },
                 decision_intuitive: { art: 2, music: 2 },
                 decision_social: { english: 2, music: 2 },
                 decision_experiment: { coding: 2, art: 2 },
             };
             const focusScores = {
-                focus_deep: { math: 1, chess: 1 },
+                focus_deep: { math: 1 },
                 focus_explorer: { art: 1, coding: 1, music: 1 },
-                focus_disciplined: { math: 1, chess: 1, coding: 1 },
+                focus_disciplined: { math: 1, coding: 1 },
             };
 
             for (const table of [painScores, socialScores, energyScores, decisionScores, focusScores]) {
@@ -951,11 +946,11 @@
             <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:flex-start;">
                 <img src="/photo/quiz/kid_does_everything_and_more.webp" alt="Child switching between coding, music, and art activities" class="quiz-screen-image" onerror="this.onerror=null;this.src='/photo/classes/code.webp';">
                 <h2>What if after-school hours became the highlight of their day?</h2>
-                <p>KARAKULI is an online school where kids choose classes they love — from math and chess to art and music.</p>
+                <p>KARAKULI is an online school where kids choose classes they love — from math and coding to art and music.</p>
                 <ul class="feature-list">
                     <li>Live 1-on-1 and group classes with experienced tutors</li>
                     <li>45-minute classes that fit any schedule</li>
-                    <li>6 subjects to mix and match</li>
+                    <li>5 subjects to mix and match</li>
                     <li>One simple subscription — use credits for any class</li>
                 </ul>
                 <button class="btn cta-sticky" onclick="nextScreen()">Continue →</button>
@@ -982,8 +977,7 @@
             <div class="multi-grid">
                 <div class="multi-card" id="subj_math" onclick="toggleMulti(this, 'subj_math')"><div class="emoji">🧮</div><span>Math & logical thinking</span></div>
                 <div class="multi-card" id="subj_english" onclick="toggleMulti(this, 'subj_english')"><div class="emoji">🇬🇧</div><span>English language</span></div>
-                <div class="multi-card" id="subj_art" onclick="toggleMulti(this, 'subj_art')"><div class="emoji">🎨</div><span>Art & creativity</span></div>
-                <div class="multi-card" id="subj_chess" onclick="toggleMulti(this, 'subj_chess')"><div class="emoji">♟️</div><span>Chess & strategic thinking</span></div>
+                <div class="multi-card" id="subj_art" onclick="toggleMulti(this, 'subj_art')"><div class="emoji">🎨</div><span>Drawing & creativity</span></div>
                 <div class="multi-card" id="subj_coding" onclick="toggleMulti(this, 'subj_coding')"><div class="emoji">💻</div><span>Coding & tech skills</span></div>
                 <div class="multi-card" id="subj_music" onclick="toggleMulti(this, 'subj_music')"><div class="emoji">🎵</div><span>Music</span></div>
             </div>
@@ -1029,7 +1023,7 @@
                     </div>
                     <div class="tutor-card">
                         <h3>Nina</h3>
-                        <div class="subj">Music & Art</div>
+                        <div class="subj">Music & Drawing</div>
                         <div class="quote">"I help children discover confidence and creativity through music and art."</div>
                     </div>
                 </div>
@@ -1096,12 +1090,12 @@
         s.push({
             id: 15, type: 'info', html: `
             <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:flex-start;">
-                <img src="/photo/quiz/kid_lego_chess_music_offline.webp" alt="Child exploring multiple activities like lego, chess, and music" class="quiz-screen-image" onerror="this.onerror=null;this.src='/photo/classes/music.webp';">
+                <img src="/photo/quiz/kid_does_everything_and_more.webp" alt="Child exploring multiple activities like lego, music, and art" class="quiz-screen-image" onerror="this.onerror=null;this.src='/photo/classes/music.webp';">
                 <h2>One subscription. Total freedom.</h2>
                 <p>Forget rigid schedules and overpriced single classes. With KARAKULI:</p>
                 <ul class="feature-list">
                     <li>Every month, you get credits — spend them on any subject you want</li>
-                    <li>Mix and match — Math on Monday, Art on Wednesday, Chess on Friday</li>
+                    <li>Mix and match — Math on Monday, Drawing on Wednesday, Music on Friday</li>
                     <li>Set up regular classes or try new ones — completely up to you</li>
                     <li>Clear pricing — you always know exactly how many credits each class costs</li>
                 </ul>
@@ -1153,7 +1147,7 @@
                 if (quizState.barrier === 'barrier_price') { bTitle = "Classes that fit your budget"; bTxt = "Start with a trial for just $15 — that gives you 50 credits, enough for 2 full classes. See if your child loves it before committing to anything bigger."; }
                 else if (quizState.barrier === 'barrier_teacher') { bTitle = "You choose the tutor"; bTxt = `Browse tutor profiles, read about their experience, and pick the one that feels right. Not a fit? Switch anytime. We're here to help you find the best match for ${n}.`; }
                 else if (quizState.barrier === 'barrier_schedule') { bTitle = "Learning on your family's schedule"; bTxt = "Book classes any day, any time. Reschedule easily. No penalties, no rigid commitments. Life happens — we get it."; }
-                else { bTitle = "Classes kids don't want to leave"; bTxt = "Our tutors are trained to keep kids engaged from minute 1 to minute 45. With 6 subjects to rotate through, boredom doesn't stand a chance."; }
+                else { bTitle = "Classes kids don't want to leave"; bTxt = "Our tutors are trained to keep kids engaged from minute 1 to minute 45. With 5 subjects to rotate through, boredom doesn't stand a chance."; }
 
                 const stripeLink = `${STRIPE_URL}?prefilled_email=${encodeURIComponent(quizState.email || '')}&client_reference_id=${encodeURIComponent(n)}`;
 
@@ -1195,9 +1189,9 @@
                     <h2>Suggested Weekly Schedule</h2>
                     <p>This is just a suggestion — you choose the days, times, and tutors that work for your family.</p>
                     <div class="schedule-card">
-                        <div class="schedule-item"><span>Tuesday 5:00 PM</span><span style="font-weight:600;">Art</span></div>
+                        <div class="schedule-item"><span>Tuesday 5:00 PM</span><span style="font-weight:600;">Drawing</span></div>
                         <div class="schedule-item"><span>Thursday 4:00 PM</span><span style="font-weight:600;">Coding</span></div>
-                        <div class="schedule-item"><span>Saturday 11:00 AM</span><span style="font-weight:600;">Chess</span></div>
+                        <div class="schedule-item"><span>Saturday 11:00 AM</span><span style="font-weight:600;">Music</span></div>
                     </div>
                 </div>
 
@@ -1233,7 +1227,7 @@
                     <h2>Why parents choose KARAKULI</h2>
                     <ul class="feature-list" style="margin-top:24px;">
                         <li>Experienced tutors with 5+ years in education</li>
-                        <li>6 subjects — from math to music</li>
+                        <li>5 subjects — from math to music</li>
                         <li>Flexible credits — spend them on what your child loves</li>
                         <li>Cancel anytime, no lock-in</li>
                     </ul>
@@ -1352,7 +1346,31 @@
         }
 
         function toggleMulti(el, val) {
-            if (quizState.subjects.includes(val)) {
+            // Music is given together with drawing (Art).
+            // If user selects either `subj_art` or `subj_music`, we toggle both.
+            const ART = 'subj_art';
+            const MUSIC = 'subj_music';
+            const isArtOrMusic = val === ART || val === MUSIC;
+
+            if (isArtOrMusic) {
+                const other = val === ART ? MUSIC : ART;
+                const isSelected = quizState.subjects.includes(val);
+
+                const addOrRemove = (subject, shouldAdd) => {
+                    const cardEl = document.getElementById(subject);
+                    if (shouldAdd) {
+                        if (!quizState.subjects.includes(subject)) quizState.subjects.push(subject);
+                        if (cardEl) cardEl.classList.add('selected');
+                    } else {
+                        quizState.subjects = quizState.subjects.filter(x => x !== subject);
+                        if (cardEl) cardEl.classList.remove('selected');
+                    }
+                };
+
+                // Toggle pair together.
+                addOrRemove(val, !isSelected);
+                addOrRemove(other, !isSelected);
+            } else if (quizState.subjects.includes(val)) {
                 quizState.subjects = quizState.subjects.filter(x => x !== val);
                 el.classList.remove('selected');
             } else {
