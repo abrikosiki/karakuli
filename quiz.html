@@ -659,6 +659,58 @@
             text-align: center;
             margin-bottom: 8px;
         }
+
+        /* Mobile layout fixes */
+        @media (max-width: 480px) {
+            /* 2 block after quiz (recommended subjects) */
+            .subject-rec {
+                align-items: flex-start;
+            }
+
+            .subject-rec .subject-icon {
+                flex: 0 0 auto;
+            }
+
+            /* Allow the text column to shrink and wrap (avoid right-side truncation) */
+            .subject-rec > div {
+                flex: 1 1 auto;
+                min-width: 0;
+            }
+
+            .subject-rec p {
+                line-height: 1.35;
+                overflow-wrap: anywhere;
+            }
+
+            /* Suggested Weekly Schedule -> horizontal swipe */
+            .schedule-card {
+                display: flex;
+                flex-direction: row;
+                gap: 12px;
+                overflow-x: auto;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+                scroll-snap-type: x mandatory;
+                padding-bottom: 8px;
+            }
+
+            .schedule-item {
+                flex: 0 0 auto;
+                min-width: 260px;
+                border-bottom: none;
+                padding: 16px 0;
+                scroll-snap-align: start;
+            }
+
+            .schedule-item:last-child {
+                border-bottom: none;
+            }
+
+            /* Make day/time stay on one line inside card */
+            .schedule-item span:first-child {
+                white-space: nowrap;
+            }
+        }
     </style>
   <link rel="icon" type="image/webp" href="photo/favicon.webp">
 </head>
