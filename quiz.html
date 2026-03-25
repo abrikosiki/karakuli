@@ -1310,12 +1310,18 @@
 
             if (topNav.style.display !== 'none') el.classList.add('has-nav');
 
-            // Each screen scrolls inside itself (`.screen { overflow-y: auto }`).
-            // Force scroll position to top so the next step doesn't open mid-page.
-            el.scrollTop = 0;
-
             el.classList.add('active');
             if (dir === 'fwd' && idx > 0) el.classList.add('slide-in');
+
+            // Each screen scrolls inside itself (`.screen { overflow-y: auto }`).
+            // On iOS/Safari the element can be `display:none` until it's activated,
+            // so setting scrollTop before `.active` may be ignored. Do it after activation.
+            requestAnimationFrame(() => {
+                try {
+                    el.scrollTop = 0;
+                    if (typeof el.scrollTo === 'function') el.scrollTo(0, 0);
+                } catch (e) { }
+            });
 
             if (conf.type === 'loading') {
                 runLoadingAnim();
