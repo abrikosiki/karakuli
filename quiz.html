@@ -168,9 +168,13 @@
             top: 0;
             left: 0;
             height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             overflow-x: hidden;
+            padding-top: calc(24px + env(safe-area-inset-top));
+            padding-bottom: calc(24px + env(safe-area-inset-bottom));
+            min-height: 0;
         }
 
         .screen.has-nav {
@@ -229,6 +233,15 @@
         .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+        }
+
+        /* Mobile: keep Continue visible without scrolling */
+        .cta-sticky {
+            position: sticky;
+            bottom: calc(16px + env(safe-area-inset-bottom));
+            z-index: 6;
+            margin-top: auto !important;
+            margin-bottom: 0 !important;
         }
 
         /* Inputs */
@@ -910,12 +923,12 @@
                 else if (quizState.pain === 'pain_screen_time') { stat = "4.5 hrs"; label = "of screen time per day for kids aged 5–12. But only 25 minutes on anything educational."; txt = "What if you could turn just 45 minutes of that into a live class they actually look forward to?"; }
                 else { stat = "73%"; label = "of families living abroad say finding a good teacher in their area is their #1 education challenge."; txt = "With KARAKULI, your child gets access to top tutors from anywhere — no geography limits."; }
                 el.innerHTML = `
-                <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:center;">
+                <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:flex-start;">
                     <img src="/photo/quiz/kid_happy_in_online_math_class.webp" alt="Child happily learning math in an online class" class="quiz-screen-image" onerror="this.onerror=null;this.src='/photo/classes/math.webp';">
                     <div class="big-stat anim-pop">${stat}</div>
                     <div class="stat-label">${label}</div>
                     <p>${txt}</p>
-                    <button class="btn" style="margin-top:24px;" onclick="nextScreen()">Continue →</button>
+                    <button class="btn cta-sticky" onclick="nextScreen()">Continue →</button>
                 </div>`;
             }
         });
@@ -935,7 +948,7 @@
         // S6 INFO STATIC
         s.push({
             id: 6, type: 'info', html: `
-            <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:center;">
+            <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:flex-start;">
                 <img src="/photo/quiz/kid_does_everything_and_more.webp" alt="Child switching between coding, music, and art activities" class="quiz-screen-image" onerror="this.onerror=null;this.src='/photo/classes/code.webp';">
                 <h2>What if after-school hours became the highlight of their day?</h2>
                 <p>KARAKULI is an online school where kids choose classes they love — from math and chess to art and music.</p>
@@ -945,7 +958,7 @@
                     <li>6 subjects to mix and match</li>
                     <li>One simple subscription — use credits for any class</li>
                 </ul>
-                <button class="btn" onclick="nextScreen()">Continue →</button>
+                <button class="btn cta-sticky" onclick="nextScreen()">Continue →</button>
             </div>`
         });
 
@@ -1021,7 +1034,7 @@
                     </div>
                 </div>
                 <p style="font-size:14px;">After signing up, you can browse all our tutors and pick the one that feels right. We're here to help you choose.</p>
-                <button class="btn" style="margin-top:auto;" onclick="nextScreen()">Continue →</button>
+                <button class="btn cta-sticky" onclick="nextScreen()">Continue →</button>
             </div>`
         });
 
@@ -1050,7 +1063,7 @@
                     <img src="/photo/quiz/kid_shows_math_other_kids_and_tutor_in_zoom.webp" alt="Child proudly showing solved math work to tutor and classmates on Zoom" class="quiz-screen-image" onerror="this.onerror=null;this.src='/photo/classes/math.webp';">
                     <h2>${title}</h2>
                     <p>${txt}</p>
-                    <button class="btn" style="margin-top:auto;" onclick="nextScreen()">Continue →</button>
+                    <button class="btn cta-sticky" onclick="nextScreen()">Continue →</button>
                 </div>`;
             }
         });
@@ -1095,7 +1108,7 @@
                 <div style="background:white; padding:16px; border-radius:12px; border:1px solid var(--card-border); margin-bottom:24px; font-style:italic;">
                     "This week, Anna (8) spent her credits on 2 Math classes and 1 Art class. Next week she wants to try Coding — no problem, same credits."
                 </div>
-                <button class="btn" style="margin-top:auto;" onclick="nextScreen()">Continue →</button>
+                <button class="btn cta-sticky" onclick="nextScreen()">Continue →</button>
             </div>`
         });
 
@@ -1396,6 +1409,13 @@
         }
 
         // Start
+        function setVh() {
+            // Fix for iOS Safari where 100vh doesn't match the visible viewport.
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        setVh();
+        window.addEventListener('resize', setVh);
         trackEvent('quiz_loaded');
         showScreen(0);
 
