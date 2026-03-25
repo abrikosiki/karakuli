@@ -682,7 +682,7 @@
         /***********************************************************
          * CONSTANTS & STATE
          ***********************************************************/
-        const WEBHOOK_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxiX_jq-UFHJW-v05Xe7g9A9NCq6RjdlFEu5dQHR51YY10xB6ltAjo-2T_G9XcjeXfA/exec';
         const STRIPE_URL = 'https://buy.stripe.com/cNi7sMblT4CPgDs46q18e3a';
 
         let currentScreenIndex = 0;
@@ -1250,14 +1250,31 @@
                 console.log("=== QUIZ COMPLETED ===");
                 console.log("Quiz State:", quizState);
 
-                // Webhook send (non-blocking)
+                // Update the same lead row with final result.
                 try {
-                    fetch(WEBHOOK_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(quizState)
-                    });
+                    const leadId = getStoredLeadId();
+                    if (!leadId) {
+                        console.warn('[GoogleSheets] update_result skipped: missing lead_id in localStorage');
+                    } else {
+                        const updatePayload = {
+                            action: 'update_result',
+                            lead_id: leadId,
+                            result: lType.name,
+                        };
+
+                        fetch(GOOGLE_SCRIPT_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                            body: JSON.stringify(updatePayload),
+                            mode: 'no-cors',
+                        })
+                            .then(() => {
+                                console.log('[GoogleSheets] update_result success (request sent)', { leadId, result: lType.name });
+                            })
+                            .catch((e) => {
+                                console.error('[GoogleSheets] update_result failed', e, { leadId, result: lType.name });
+                            });
+                    }
                 } catch (e) { }
             }
         });
@@ -1382,6 +1399,20 @@
 
         const contactTouched = { email: false, phone: false };
 
+        const LEAD_ID_KEY = 'quiz_lead_id';
+
+        function getStoredLeadId() {
+            try { return localStorage.getItem(LEAD_ID_KEY); } catch (e) { return null; }
+        }
+
+        function getOrCreateLeadId() {
+            let id = getStoredLeadId();
+            if (id) return id;
+            id = (crypto && typeof crypto.randomUUID === 'function') ? crypto.randomUUID() : `lead_${Date.now()}_${Math.random()}`;
+            try { localStorage.setItem(LEAD_ID_KEY, id); } catch (e) { }
+            return id;
+        }
+
         function normalizeEmail(raw) {
             return (raw || '').trim().toLowerCase();
         }
@@ -1486,6 +1517,41 @@
             quizState.phone = ph;
             document.getElementById('email-msg').innerText = "Your results are saved — no spam, ever.";
             trackEvent('email_captured', { email: em });
+
+            // Create lead as soon as contact details are submitted.
+            const leadId = getOrCreateLeadId();
+            const ageLabel = {
+                age_5_6: '5-6',
+                age_7_8: '7-8',
+                age_9_10: '9-10',
+                age_11_12: '11-12',
+            }[quizState.age] || (quizState.age || '');
+
+            const childName = quizState.childName || '';
+            const createPayload = {
+                action: 'create_lead',
+                lead_id: leadId,
+                child_name: childName,
+                child_age: ageLabel,
+                email: em,
+                phone: ph,
+            };
+
+            try {
+                fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(createPayload),
+                    mode: 'no-cors',
+                }).then(() => {
+                    console.log('[GoogleSheets] create_lead success (request sent)', { leadId });
+                }).catch((e) => {
+                    console.error('[GoogleSheets] create_lead failed', e, { leadId });
+                });
+            } catch (e) {
+                console.error('[GoogleSheets] create_lead failed (fetch error)', e, { leadId });
+            }
+
             setTimeout(nextScreen, 500);
         }
 
