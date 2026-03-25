@@ -168,6 +168,8 @@
             top: 0;
             left: 0;
             min-height: 100vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .screen.has-nav {
@@ -215,7 +217,8 @@
             text-decoration: none;
             display: inline-block;
             transition: background 0.2s;
-            margin-top: auto;
+            margin-top: 16px;
+            margin-bottom: 8px;
         }
 
         .btn:hover {
@@ -695,6 +698,23 @@
             'default': { name: 'Versatile Learner', icon: '🌟', description: '[name] is adaptable and open to different ways of learning. They do well across subjects and formats — the key is finding what sparks their interest right now.' },
         };
 
+        /** Archetype key (energy+focus) → image stem in photo/quiz (no .webp). Fix here if a label doesn’t match the file’s illustration. */
+        const LEARNER_TYPE_IMAGE = {
+            'Creative+Explorer': 'creative_explorer',
+            'Creative+Deep-Diver': 'imaginative_builder',
+            'Creative+Achiever': 'creative_achiever',
+            'Creative+Warm-Up Kid': 'thoughtful_creator',
+            'Analytical+Explorer': 'curious_strategist',
+            'Expressive+Explorer': 'curious_performer',
+            'Analytical+Deep-Diver': 'strategic_thinker',
+            'Analytical+Achiever': 'focused_achiever',
+            'Analytical+Warm-Up Kid': 'quiet_problem_solver',
+            'Expressive+Deep-Diver': 'passionate_artist',
+            'Practical+Explorer': 'real_world_explorer',
+            'Practical+Deep-Diver': 'steady_learner',
+            'default': 'versatile_learner',
+        };
+
         const subjectIcons = { math: '🧮', english: '🇬🇧', art: '🎨', chess: '♟️', coding: '💻', music: '🎵' };
         const subjectNames = { math: 'Math & logical thinking', english: 'English language', art: 'Art & creativity', chess: 'Chess & strategic thinking', coding: 'Coding & tech skills', music: 'Music' };
 
@@ -743,15 +763,22 @@
         function getLearnerType(state) {
             const energy = traitMap[state.energy];
             const focus = traitMap[state.focus];
-            const key = energy + '+' + focus;
-            const type = learnerTypes[key] || learnerTypes['default'];
+            const key = energy && focus ? energy + '+' + focus : '';
+            const type = (key && learnerTypes[key]) ? learnerTypes[key] : learnerTypes['default'];
+            const archetypeKey = (key && learnerTypes[key]) ? key : 'default';
             const n = state.childName || 'Your child';
             return {
                 ...type,
+                archetypeKey,
                 name: type.name.replaceAll('[name]', n),
                 description: type.description.replaceAll('[name]', n),
                 traits: [traitMap[state.social], traitMap[state.energy], traitMap[state.decision], traitMap[state.focus]].filter(Boolean),
             };
+        }
+
+        function getLearnerTypeImageUrl(archetypeKey) {
+            const stem = LEARNER_TYPE_IMAGE[archetypeKey] || LEARNER_TYPE_IMAGE['default'];
+            return `/photo/quiz/${stem}.webp`;
         }
 
         function getRecommendedSubjects(state) {
@@ -973,7 +1000,6 @@
             id: 10, type: 'info', html: `
             <div style="display:flex; flex-direction:column; flex-grow:1; justify-content:center;">
                 <img src="/photo/quiz/kid_happy_with_tutor.webp" alt="Child smiling with tutor during a live online lesson" class="quiz-screen-image" onerror="this.onerror=null;this.src='/photo/video.gif';">
-                <img src="/photo/quiz/kid_with_tutor_greeting.webp" alt="Child and tutor greeting each other on a video call" class="quiz-screen-image-secondary" onerror="this.onerror=null;this.src='/photo/Kate.webp';">
                 <h2>Meet some of our tutors</h2>
                 <p>Every KARAKULI tutor has 5+ years of teaching experience and is trained to make learning feel like play.</p>
                 <div class="tutor-carousel">
@@ -1106,6 +1132,7 @@
             id: 18, type: 'results', onRender: (el) => {
                 const n = quizState.childName || 'Your child';
                 const lType = getLearnerType(quizState);
+                const learnerImgSrc = getLearnerTypeImageUrl(lType.archetypeKey);
                 const recSubjs = getRecommendedSubjects(quizState);
 
                 let bTitle, bTxt;
@@ -1131,7 +1158,7 @@
                 el.innerHTML = `
                 <!-- Sec 1 Learner -->
                 <div class="result-section bg-lavender">
-                    <img src="/photo/quiz/kid_shows_achievki_to_grandma.webp" alt="Child proudly showing achievements and project to grandma on video call" class="quiz-screen-image" onerror="this.onerror=null;this.src='/photo/classes/eng.webp';">
+                    <img src="${learnerImgSrc}" alt="${lType.name} learning profile illustration" class="quiz-screen-image" data-archetype="${lType.archetypeKey}" onerror="this.onerror=null;this.src='/photo/quiz/kid_shows_achievki_to_grandma.webp';">
                     <h2>Meet ${n} — the ${lType.name}!</h2>
                     <div class="learner-badge">
                         <div class="learner-icon">${lType.icon}</div>
