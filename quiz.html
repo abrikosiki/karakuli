@@ -999,7 +999,7 @@
         // S10 INFO TUTOR
         s.push({
             id: 10, type: 'info', html: `
-            <div style="display:flex; flex-direction:column; flex-grow:1; justify-content:center;">
+            <div style="display:flex; flex-direction:column; flex-grow:1; justify-content:flex-start;">
                 <img src="/photo/quiz/kid_happy_with_tutor.webp" alt="Child smiling with tutor during a live online lesson" class="quiz-screen-image" onerror="this.onerror=null;this.src='/photo/video.gif';">
                 <h2>Meet some of our tutors</h2>
                 <p>Every KARAKULI tutor has 5+ years of teaching experience and is trained to make learning feel like play.</p>
@@ -1021,7 +1021,7 @@
                     </div>
                 </div>
                 <p style="font-size:14px;">After signing up, you can browse all our tutors and pick the one that feels right. We're here to help you choose.</p>
-                <button class="btn" onclick="nextScreen()">Continue →</button>
+                <button class="btn" style="margin-top:auto;" onclick="nextScreen()">Continue →</button>
             </div>`
         });
 
@@ -1046,11 +1046,11 @@
                 else if (quizState.online === 'online_open') { title = "First time? You're in good hands"; txt = "KARAKULI classes are designed to feel fun, not like homework. Your child picks what to learn, works with a tutor who adapts to them, and can switch subjects anytime. And if it's not a fit — you don't pay for what you don't use."; }
                 else { title = "Not sure about online? Here's what changes minds"; txt = "We hear this a lot — until parents see their kids beg for \"just 5 more minutes.\" The difference is that KARAKULI isn't a lecture. It's a live session with a tutor who makes every class feel like a game. Try it for $15 — if your child doesn't love it, that's okay."; }
                 el.innerHTML = `
-                <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:center;">
+                <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:flex-start;">
                     <img src="/photo/quiz/kid_shows_math_other_kids_and_tutor_in_zoom.webp" alt="Child proudly showing solved math work to tutor and classmates on Zoom" class="quiz-screen-image" onerror="this.onerror=null;this.src='/photo/classes/math.webp';">
                     <h2>${title}</h2>
                     <p>${txt}</p>
-                    <button class="btn" onclick="nextScreen()">Continue →</button>
+                    <button class="btn" style="margin-top:auto;" onclick="nextScreen()">Continue →</button>
                 </div>`;
             }
         });
