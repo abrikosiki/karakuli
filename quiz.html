@@ -244,6 +244,20 @@
             margin-bottom: 0 !important;
         }
 
+        /* Validation */
+        .input-invalid {
+            border-color: var(--primary) !important;
+            background: var(--selected-bg);
+        }
+
+        .field-error {
+            margin-top: -10px;
+            margin-bottom: 14px;
+            font-size: 12px;
+            color: var(--primary);
+            display: none;
+        }
+
         /* Inputs */
         input[type="text"],
         input[type="email"],
@@ -988,17 +1002,18 @@
         // S9 EMAIL
         s.push({
             id: 9, type: 'email', html: `
-            <h2>Almost there! Where should we send the learning plan?</h2>
-            <p>We'll email you the full personalized recommendation and your child's learner profile.</p>
+            <h2>Contact info</h2>
+            <p>We'll send you the full personalized recommendation and your child's learner profile.</p>
             <div style="flex-grow:1;">
                 <label class="input-label">Email address</label>
-                <input type="email" id="emailInput" placeholder="your@email.com" required>
-                <label class="input-label">Optional — for WhatsApp updates</label>
-                <input type="tel" id="phoneInput" placeholder="+X XXX XXX XXXX">
+                <input type="email" id="emailInput" placeholder="your@email.com" autocomplete="email">
+                <div class="field-error" id="emailError">Please enter a valid email address</div>
+                <label class="input-label">WhatsApp number</label>
+                <input type="tel" id="phoneInput" placeholder="+X XXX XXX XXXX" autocomplete="tel">
+                <div class="field-error" id="phoneError">Please enter a valid phone number</div>
             </div>
             <div class="cta-bottom">
                 <button class="btn" onclick="submitEmail()">Send me the plan →</button>
-                <a class="skip-link" onclick="skipEmail()">Skip for now</a>
                 <div class="micro" id="email-msg" style="margin-top:16px;"></div>
             </div>`
         });
@@ -1325,6 +1340,8 @@
             } else if (conf.type !== 'results') {
                 window.scrollTo(0, 0);
             }
+
+            if (conf.id === 9) initContactInfoScreen();
         }
 
         function nextScreen() {
@@ -1363,13 +1380,108 @@
             document.getElementById('multi-btn').disabled = quizState.subjects.length === 0;
         }
 
-        function submitEmail() {
-            const em = document.getElementById('emailInput').value;
-            const ph = document.getElementById('phoneInput').value;
-            if (!em || !em.includes('@')) {
-                alert("Please enter a valid email.");
+        const contactTouched = { email: false, phone: false };
+
+        function normalizeEmail(raw) {
+            return (raw || '').trim().toLowerCase();
+        }
+
+        function isValidEmail(raw) {
+            const v = normalizeEmail(raw);
+            if (!v) return false;
+            if (v.includes(' ')) return false;
+            const parts = v.split('@');
+            if (parts.length !== 2) return false;
+            const [local, domain] = parts;
+            if (!local || !domain) return false;
+            const dot = domain.indexOf('.');
+            if (dot <= 0) return false;
+            if (dot === domain.length - 1) return false;
+            return true;
+        }
+
+        function normalizePhone(raw) {
+            const input = (raw || '').trim();
+            if (!input) return '';
+            const startsValid = input[0] === '+' || (input[0] >= '0' && input[0] <= '9');
+            if (!startsValid) return '';
+
+            const hasPlus = input[0] === '+';
+            const digits = input.replace(/[^\d]/g, '');
+            if (!digits) return '';
+            if (digits.length < 8 || digits.length > 15) return '';
+            return hasPlus ? `+${digits}` : digits;
+        }
+
+        function isValidPhone(raw) {
+            return !!normalizePhone(raw);
+        }
+
+        function setFieldValidity(inputEl, errorEl, isValid, touched) {
+            if (!inputEl || !errorEl) return;
+            if (!touched) {
+                inputEl.classList.remove('input-invalid');
+                errorEl.style.display = 'none';
                 return;
             }
+            if (isValid) {
+                inputEl.classList.remove('input-invalid');
+                errorEl.style.display = 'none';
+            } else {
+                inputEl.classList.add('input-invalid');
+                errorEl.style.display = 'block';
+            }
+        }
+
+        function validateContactFields() {
+            const emailEl = document.getElementById('emailInput');
+            const phoneEl = document.getElementById('phoneInput');
+            const emailErr = document.getElementById('emailError');
+            const phoneErr = document.getElementById('phoneError');
+
+            const emailOk = isValidEmail(emailEl?.value || '');
+            const phoneOk = isValidPhone(phoneEl?.value || '');
+
+            setFieldValidity(emailEl, emailErr, emailOk, contactTouched.email);
+            setFieldValidity(phoneEl, phoneErr, phoneOk, contactTouched.phone);
+
+            return { emailOk, phoneOk };
+        }
+
+        function initContactInfoScreen() {
+            const emailEl = document.getElementById('emailInput');
+            const phoneEl = document.getElementById('phoneInput');
+            if (!emailEl || !phoneEl) return;
+            if (emailEl.dataset.bound === '1') return;
+
+            emailEl.dataset.bound = '1';
+            phoneEl.dataset.bound = '1';
+
+            emailEl.addEventListener('blur', () => {
+                contactTouched.email = true;
+                validateContactFields();
+            });
+            phoneEl.addEventListener('blur', () => {
+                contactTouched.phone = true;
+                validateContactFields();
+            });
+            emailEl.addEventListener('input', () => {
+                if (contactTouched.email) validateContactFields();
+            });
+            phoneEl.addEventListener('input', () => {
+                if (contactTouched.phone) validateContactFields();
+            });
+        }
+
+        function submitEmail() {
+            contactTouched.email = true;
+            contactTouched.phone = true;
+
+            const { emailOk, phoneOk } = validateContactFields();
+            if (!emailOk || !phoneOk) return;
+
+            const em = normalizeEmail(document.getElementById('emailInput').value);
+            const ph = normalizePhone(document.getElementById('phoneInput').value);
             quizState.email = em;
             quizState.phone = ph;
             document.getElementById('email-msg').innerText = "Your results are saved — no spam, ever.";
