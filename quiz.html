@@ -1262,11 +1262,18 @@
                             result: lType.name,
                         };
 
+                        console.log('[GoogleSheets] update_result request', {
+                            leadId,
+                            GOOGLE_SCRIPT_URL: GOOGLE_SCRIPT_URL,
+                            updatePayload,
+                        });
+
                         fetch(GOOGLE_SCRIPT_URL, {
                             method: 'POST',
                             headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                             body: JSON.stringify(updatePayload),
                             mode: 'no-cors',
+                            keepalive: true,
                         })
                             .then(() => {
                                 console.log('[GoogleSheets] update_result success (request sent)', { leadId, result: lType.name });
@@ -1537,12 +1544,19 @@
                 phone: ph,
             };
 
+            console.log('[GoogleSheets] create_lead request', {
+                leadId,
+                GOOGLE_SCRIPT_URL: GOOGLE_SCRIPT_URL,
+                createPayload,
+            });
+
             try {
                 fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify(createPayload),
                     mode: 'no-cors',
+                    keepalive: true,
                 }).then(() => {
                     console.log('[GoogleSheets] create_lead success (request sent)', { leadId });
                 }).catch((e) => {
