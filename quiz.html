@@ -167,9 +167,10 @@
             position: absolute;
             top: 0;
             left: 0;
-            min-height: 100vh;
+            height: 100vh;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            overflow-x: hidden;
         }
 
         .screen.has-nav {
@@ -1081,7 +1082,7 @@
         // S15 STATIC INFO
         s.push({
             id: 15, type: 'info', html: `
-            <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:center;">
+            <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:flex-start;">
                 <img src="/photo/quiz/kid_lego_chess_music_offline.webp" alt="Child exploring multiple activities like lego, chess, and music" class="quiz-screen-image" onerror="this.onerror=null;this.src='/photo/classes/music.webp';">
                 <h2>One subscription. Total freedom.</h2>
                 <p>Forget rigid schedules and overpriced single classes. With KARAKULI:</p>
@@ -1094,7 +1095,7 @@
                 <div style="background:white; padding:16px; border-radius:12px; border:1px solid var(--card-border); margin-bottom:24px; font-style:italic;">
                     "This week, Anna (8) spent her credits on 2 Math classes and 1 Art class. Next week she wants to try Coding — no problem, same credits."
                 </div>
-                <button class="btn" onclick="nextScreen()">Continue →</button>
+                <button class="btn" style="margin-top:auto;" onclick="nextScreen()">Continue →</button>
             </div>`
         });
 
