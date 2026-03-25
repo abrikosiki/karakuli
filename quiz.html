@@ -1425,9 +1425,11 @@
         }
 
         function getOrCreateLeadId() {
-            let id = getStoredLeadId();
-            if (id) return id;
-            id = (crypto && typeof crypto.randomUUID === 'function') ? crypto.randomUUID() : `lead_${Date.now()}_${Math.random()}`;
+            // Always create a fresh lead id.
+            // This prevents updating/overwriting a previous row when the user submits contact info multiple times.
+            const id = (crypto && typeof crypto.randomUUID === 'function')
+                ? crypto.randomUUID()
+                : `lead_${Date.now()}_${Math.random()}`;
             try { localStorage.setItem(LEAD_ID_KEY, id); } catch (e) { }
             return id;
         }
