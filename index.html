@@ -265,7 +265,9 @@
       <h2>What's on this week</h2>
       <p class="text-body text-secondary mb-48">All classes repeat weekly. Book once, come back every week.</p>
 
-      <div class="grid-3 mb-48 weekly-classes">
+      <div class="weekly-carousel-shell mb-48">
+        <div class="grid-3 weekly-classes" id="weekly-classes-carousel"
+          aria-label="Weekly classes. Swipe sideways to see more.">
 
         <!-- Class 1: English A2 -->
         <div class="card card-english">
@@ -447,6 +449,12 @@
             <span class="text-label text-secondary">On Demand</span>
           </div>
         </div>
+        </div>
+        <div class="weekly-scroll-progress" aria-hidden="true">
+          <div class="weekly-scroll-progress-track">
+            <div class="weekly-scroll-progress-fill" id="weekly-scroll-progress-fill"></div>
+          </div>
+        </div>
       </div>
 
       <div class="text-center">
@@ -531,7 +539,7 @@
             <span class="pill subj-coding">Coding</span>
             <span class="pill bg-white text-secondary">10 years</span>
           </div>
-          <p class="text-body mb-24">Game development tutor helping kids build projects in Scratch, Python, Unity, Unreal Engine, and Roblox.</p>
+          <p class="text-body mb-24">I help kids build their own games and projects using Scratch, Python, Unity, Unreal Engine, and Roblox, making learning fun, creative, and easy to understand.</p>
         </div>
         <!-- Tutor: Nina -->
         <div class="card card-music">

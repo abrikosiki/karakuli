@@ -33,4 +33,27 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   });
+
+  // Home: weekly classes horizontal carousel — progress bar (mobile)
+  const weeklyCarousel = document.getElementById('weekly-classes-carousel');
+  const weeklyFill = document.getElementById('weekly-scroll-progress-fill');
+  if (weeklyCarousel && weeklyFill) {
+    const mq = window.matchMedia('(max-width: 767px)');
+    const updateWeeklyCarouselProgress = () => {
+      if (!mq.matches) return;
+      const el = weeklyCarousel;
+      const denom = el.scrollWidth - el.clientWidth;
+      if (denom <= 0) {
+        weeklyFill.style.width = '100%';
+        return;
+      }
+      const viewed = (el.scrollLeft + el.clientWidth) / el.scrollWidth;
+      const pct = Math.min(100, Math.max(0, viewed * 100));
+      weeklyFill.style.width = `${pct}%`;
+    };
+    weeklyCarousel.addEventListener('scroll', updateWeeklyCarouselProgress, { passive: true });
+    window.addEventListener('resize', updateWeeklyCarouselProgress);
+    mq.addEventListener('change', updateWeeklyCarouselProgress);
+    updateWeeklyCarouselProgress();
+  }
 });

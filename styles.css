@@ -724,7 +724,15 @@ h3 {
     overflow: visible !important;
   }
 
-  /* Horizontal swipe ribbon for weekly classes (home only) */
+  /* Weekly classes carousel (home): full-bleed feel, no grey native scrollbar strip */
+  .weekly-carousel-shell {
+    background-color: var(--bg-primary);
+    margin-left: -24px;
+    margin-right: -24px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
   .weekly-classes {
     display: flex !important;
     gap: 24px;
@@ -732,7 +740,16 @@ h3 {
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
-    padding-bottom: 8px;
+    padding-bottom: 0;
+    background-color: var(--bg-primary);
+    /* Hide native horizontal scrollbar (often reads as a grey band on iOS) */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .weekly-classes::-webkit-scrollbar {
+    display: none;
+    height: 0;
   }
 
   .weekly-classes > .card {
@@ -741,6 +758,40 @@ h3 {
     min-width: 100%;
     max-width: 100%;
     scroll-snap-align: start;
+  }
+
+  .weekly-scroll-progress {
+    margin-top: 16px;
+    padding-bottom: 4px;
+  }
+
+  .weekly-scroll-progress-track {
+    position: relative;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(26, 26, 26, 0.08);
+    overflow: hidden;
+  }
+
+  .weekly-scroll-progress-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background-color: var(--primary);
+    transition: width 0.12s ease-out;
+  }
+}
+
+@media (min-width: 768px) {
+  .weekly-scroll-progress {
+    display: none !important;
+  }
+
+  .weekly-carousel-shell {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
