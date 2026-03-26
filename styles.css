@@ -423,6 +423,49 @@ h3 {
   display: block;
 }
 
+/* Catherine & Nina: tighter face crop in circular avatars (homepage) */
+.tutor-avatar-wrapper--face-catherine,
+.tutor-avatar-wrapper--face-nina {
+  overflow: hidden;
+}
+
+.tutor-avatar-wrapper--face-catherine img {
+  transform: scale(2);
+  transform-origin: 50% 30%;
+}
+
+.tutor-avatar-wrapper--face-nina img {
+  transform: scale(2);
+  transform-origin: 50% 24%;
+}
+
+/* Small tutor row in class cards (40px) */
+.tutor-img-zoom-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.tutor-img-zoom-wrap .tutor-img-zoom-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  margin: 0;
+}
+
+.tutor-img-zoom-wrap--catherine .tutor-img-zoom-img {
+  transform: scale(2.1);
+  transform-origin: 50% 32%;
+}
+
+.tutor-img-zoom-wrap--nina .tutor-img-zoom-img {
+  transform: scale(2.1);
+  transform-origin: 50% 26%;
+}
+
 .card-gray {
   background-color: var(--bg-primary);
   border-radius: var(--radius-card);
