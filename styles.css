@@ -727,7 +727,7 @@ h3 {
   /* Horizontal swipe ribbon for weekly classes (home only) */
   .weekly-classes {
     display: flex !important;
-    gap: 16px;
+    gap: 24px;
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
@@ -737,7 +737,9 @@ h3 {
 
   .weekly-classes > .card {
     flex: 0 0 auto;
-    min-width: 280px;
+    flex-basis: 100%;
+    min-width: 100%;
+    max-width: 100%;
     scroll-snap-align: start;
   }
 }
