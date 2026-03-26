@@ -440,6 +440,15 @@
             font-size: 15px;
         }
 
+        .tutor-card-photo {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            margin-bottom: 12px;
+        }
+
         /* Loading Screen */
         .loading-screen {
             background-color: var(--bg-loading) !important;
@@ -681,35 +690,6 @@
                 line-height: 1.35;
                 overflow-wrap: anywhere;
             }
-
-            /* Suggested Weekly Schedule -> horizontal swipe */
-            .schedule-card {
-                display: flex;
-                flex-direction: row;
-                gap: 12px;
-                overflow-x: auto;
-                overflow-y: hidden;
-                -webkit-overflow-scrolling: touch;
-                scroll-snap-type: x mandatory;
-                padding-bottom: 8px;
-            }
-
-            .schedule-item {
-                flex: 0 0 auto;
-                min-width: 260px;
-                border-bottom: none;
-                padding: 16px 0;
-                scroll-snap-align: start;
-            }
-
-            .schedule-item:last-child {
-                border-bottom: none;
-            }
-
-            /* Make day/time stay on one line inside card */
-            .schedule-item span:first-child {
-                white-space: nowrap;
-            }
         }
     </style>
   <link rel="icon" type="image/webp" href="photo/favicon.webp">
@@ -934,7 +914,7 @@
                 <p>Let's fix that. Take a 2-minute quiz and discover the classes your child will love so much, they'll put the phone down on their own.</p>
                 <div class="cta-bottom">
                     <button class="btn" onclick="nextScreen()">Take the quiz →</button>
-                    <div class="trust-line">Classes taught by experienced tutors with 5+ years in education</div>
+                    <div class="trust-line">Classes taught by experienced tutors with 3+ years in education</div>
                 </div>
             </div>`
         });
@@ -1076,19 +1056,22 @@
             <div style="display:flex; flex-direction:column; flex-grow:1; justify-content:flex-start;">
                 <img src="/photo/quiz/kid_happy_with_tutor.webp" alt="Child smiling with tutor during a live online lesson" class="quiz-screen-image" onerror="this.onerror=null;this.src='/photo/video.gif';">
                 <h2>Meet some of our tutors</h2>
-                <p>Every KARAKULI tutor has 5+ years of teaching experience and is trained to make learning feel like play.</p>
+                <p>Every KARAKULI tutor has 3+ years of teaching experience and is trained to make learning feel like play.</p>
                 <div class="tutor-carousel">
                     <div class="tutor-card">
+                        <img src="/photo/Kate K.webp" alt="Catherine" class="tutor-card-photo" width="56" height="56">
                         <h3>Catherine</h3>
                         <div class="subj">Math</div>
                         <div class="quote">"I use playful methods and memory tools so kids understand and love learning."</div>
                     </div>
                     <div class="tutor-card">
+                        <img src="/photo/Antonia.webp" alt="Antonia" class="tutor-card-photo" width="56" height="56">
                         <h3>Antonia</h3>
                         <div class="subj">Coding</div>
                         <div class="quote">"We build real games in every class, so children learn by creating."</div>
                     </div>
                     <div class="tutor-card">
+                        <img src="/photo/Nina.webp" alt="Nina" class="tutor-card-photo" width="56" height="56">
                         <h3>Nina</h3>
                         <div class="subj">Music & Drawing</div>
                         <div class="quote">"I help children discover confidence and creativity through music and art."</div>
@@ -1118,7 +1101,7 @@
                 if (quizState.online === 'online_positive') { title = "Great — your child already knows the format!"; txt = "KARAKULI goes further: your child picks the subjects they love, the tutor they click with, and the schedule that works. Every class is built around their pace and interests — not a one-size-fits-all curriculum."; }
                 else if (quizState.online === 'online_negative') { title = "We get it — most online classes aren't great"; txt = "Big group calls where kids zone out? That's not real learning. At KARAKULI, classes are small and personal. Your child gets a tutor who knows their name, their level, and what makes them tick. 94% of kids who try a class ask to come back."; }
                 else if (quizState.online === 'online_open') { title = "First time? You're in good hands"; txt = "KARAKULI classes are designed to feel fun, not like homework. Your child picks what to learn, works with a tutor who adapts to them, and can switch subjects anytime. And if it's not a fit — you don't pay for what you don't use."; }
-                else { title = "Not sure about online? Here's what changes minds"; txt = "We hear this a lot — until parents see their kids beg for \"just 5 more minutes.\" The difference is that KARAKULI isn't a lecture. It's a live session with a tutor who makes every class feel like a game. Try it for $15 — if your child doesn't love it, that's okay."; }
+                else { title = "Not sure about online? Here's what changes minds"; txt = "We hear this a lot — until parents see their kids beg for \"just 5 more minutes.\" The difference is that KARAKULI isn't a lecture. It's a live session with a tutor who makes every class feel like a game. Try it for $10 — if your child doesn't love it, that's okay."; }
                 el.innerHTML = `
                 <div style="flex-grow:1; display:flex; flex-direction:column; justify-content:flex-start;">
                     <img src="/photo/quiz/kid_shows_math_other_kids_and_tutor_in_zoom.webp" alt="Child proudly showing solved math work to tutor and classmates on Zoom" class="quiz-screen-image" onerror="this.onerror=null;this.src='/photo/classes/math.webp';">
@@ -1291,7 +1274,7 @@
                 <div class="result-section bg-light">
                     <h2>Why parents choose KARAKULI</h2>
                     <ul class="feature-list" style="margin-top:24px;">
-                        <li>Experienced tutors with 5+ years in education</li>
+                        <li>Experienced tutors with 3+ years in education</li>
                         <li>5 subjects — from math to music</li>
                         <li>Flexible credits — spend them on what your child loves</li>
                     </ul>
