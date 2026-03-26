@@ -121,13 +121,27 @@ h3 {
   margin-bottom: 8px;
 }
 
+/* Home: main headline is quiz teaser (h1); hero block uses h2 with h1 sizing */
+.hero-headline {
+  font-family: var(--font-headings);
+  font-size: 40px;
+  line-height: 1.1;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: var(--text-primary);
+}
+
 @media (min-width: 768px) {
   h1 {
     font-size: 56px;
   }
 
+  .hero-headline {
+    font-size: 56px;
+  }
+
   h2 {
-    font-size: 36px;
+    font-size: 40px;
   }
 }
 
@@ -712,6 +726,41 @@ h3 {
 
 /* Mobile fixes */
 @media (max-width: 767px) {
+  /* Quiz teaser (first block): readable, CTA visible without scrolling */
+  .section-quiz-new {
+    padding: 24px 0 32px;
+  }
+
+  .quiz-teaser-grid {
+    gap: 20px;
+  }
+
+  .quiz-teaser-copy .quiz-eyebrow {
+    margin-bottom: 10px;
+  }
+
+  .quiz-heading {
+    font-size: 34px;
+    line-height: 1.12;
+    margin-bottom: 8px;
+  }
+
+  .quiz-subline {
+    font-size: 17px;
+    line-height: 1.45;
+    margin-bottom: 12px;
+  }
+
+  .quiz-teaser-copy .quiz-cta-btn {
+    padding: 14px 22px;
+    font-size: 15px;
+  }
+
+  .quiz-teaser-copy .quiz-trust-line {
+    margin-top: 8px;
+    font-size: 12px;
+  }
+
   /* Allow the underlined phrase to wrap on small screens */
   .hand-drawn-underline {
     white-space: normal;
@@ -954,6 +1003,20 @@ h3 {
   margin-bottom: 16px;
   line-height: 1.1;
 }
+
+.quiz-subline {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.82);
+  margin: 0 0 24px;
+}
+
+.quiz-teaser-copy .quiz-cta-btn {
+  margin-top: 0;
+}
+
 .quiz-body-text {
   font-family: 'DM Sans', sans-serif;
   font-size: 18px;
