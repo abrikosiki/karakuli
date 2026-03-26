@@ -72,6 +72,7 @@ body {
   background-color: var(--bg-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 a {
@@ -707,6 +708,38 @@ h3 {
   background-size: 100% 100%;
   z-index: -1;
   pointer-events: none;
+}
+
+/* Mobile fixes */
+@media (max-width: 767px) {
+  /* Allow the underlined phrase to wrap on small screens */
+  .hand-drawn-underline {
+    white-space: normal;
+  }
+
+  /* Give more room for class card descriptions on mobile */
+  .card p.text-small {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* Horizontal swipe ribbon for weekly classes (home only) */
+  .weekly-classes {
+    display: flex !important;
+    gap: 16px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 8px;
+  }
+
+  .weekly-classes > .card {
+    flex: 0 0 auto;
+    min-width: 280px;
+    scroll-snap-align: start;
+  }
 }
 
 /* ═══════════════════════════════════════
