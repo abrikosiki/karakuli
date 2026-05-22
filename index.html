@@ -679,16 +679,73 @@
        RESPONSIVE
     ═══════════════════════════════════════ */
     @media (max-width: 768px) {
-      .trust-grid { grid-template-columns: repeat(2,1fr); }
-      .sc-card { width: calc(100% - 32px); max-width: 340px; }
+      /* Sticky bar (~70px) sits at bottom — push body up so it doesn't cover content */
+      body { padding-bottom: 74px; }
+
+      /* NAV */
+      nav { padding: 12px 4%; }
+      nav .btn-gold { font-size: 0.8rem; padding: 9px 13px; }
+
+      /* HERO */
+      #hero { padding-top: 66px; }
+      .hero-inner { padding: 20px 20px 0; }
+      .hero-sub { margin-bottom: 24px; }
+      .hero-game { padding: 0 12px; margin-top: 20px; }
+
+      /* Social proof — wrap text under avatars on small screens */
+      .social-proof { flex-wrap: wrap; gap: 8px; max-width: 100%; }
+      .sp-text { font-size: 0.82rem; text-align: center; width: 100%; }
+
+      /* TRUST BAR */
+      #trust { padding: 24px 4%; }
+      .trust-grid { grid-template-columns: repeat(2,1fr); gap: 12px; }
+
+      /* PREVIEW */
+      #preview { padding: 48px 4%; }
+      .screens-row { gap: 16px; }
+      .sc-card { width: calc(100% - 24px); max-width: 320px; }
       .sc-card:nth-child(1),
       .sc-card:nth-child(2),
       .sc-card:nth-child(3) { transform: rotate(0); }
+
+      /* SHARED SECTION HEADINGS */
+      .section-head { margin-bottom: 32px; }
+
+      /* HOW IT WORKS */
+      #how { padding: 56px 4%; }
+      .steps-grid { gap: 14px; }
+
+      /* FEATURES */
+      #features { padding: 56px 4%; }
+      .features-grid { gap: 14px; }
+
+      /* TUTORS */
+      #tutors { padding: 56px 4%; }
+      .tutors-grid { gap: 16px; }
+
+      /* TESTIMONIALS */
+      #testimonials { padding: 56px 4%; }
+      .test-grid { gap: 14px; }
+
+      /* FAQ */
+      #faq { padding: 56px 4%; }
+      summary { padding: 15px 18px; font-size: 0.95rem; }
+      .faq-body { padding: 13px 18px 15px; }
+
+      /* FINAL CTA */
+      #cta { padding: 64px 4%; }
+      #cta .btn-wa { display: flex; width: 100%; max-width: 400px; margin: 0 auto; font-size: 1rem; padding: 15px 20px; }
+      .cta-sub { margin-bottom: 28px; }
+
+      /* STICKY BAR */
+      .sticky-txt { font-size: 0.88rem; }
     }
-    @media (max-width: 500px) {
-      .age-row   { flex-direction: column; }
-      .form-card { padding: 20px 16px; }
-      nav { padding: 12px 4%; }
+
+    @media (max-width: 480px) {
+      nav .btn-gold { font-size: 0.75rem; padding: 8px 11px; }
+      .hero-h1 { font-size: 2.5rem; }
+      .badge { font-size: 0.78rem; padding: 6px 14px; }
+      .hero-inner { padding: 16px 16px 0; }
     }
   </style>
 </head>
