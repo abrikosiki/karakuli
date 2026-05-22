@@ -1,632 +1,1219 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Karakuli - Live online group classes for curious kids</title>
-  <meta name="description"
-    content="Math, coding, English, art, music — all in one membership. One place for all their learning needs.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='white'/><text y='50%' x='50%' dominant-baseline='middle' text-anchor='middle' font-family='Fraunces' font-size='64' font-weight='700' fill='%23E8612A'>K</text></svg>">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KARAKULI — Your Child Will Beg to Do Math</title>
+  <meta name="description" content="Live 1-on-1 math tutoring for kids ages 5–10, wrapped in an RPG adventure. First lesson free." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,600&display=swap" rel="stylesheet" />
   <style>
-    /* Specific Home Styles */
-    .hero {
-      padding: 96px 0 64px;
+    /* ═══════════════════════════════════════
+       VARIABLES
+    ═══════════════════════════════════════ */
+    :root {
+      --cream:      #FFF8EC;
+      --gold:       #F5A623;
+      --gold-dark:  #C8841A;
+      --teal:       #3BBFAD;
+      --teal-dark:  #2A9B8C;
+      --ink:        #2C1A0E;
+      --ink-lite:   #5A3E2B;
+      --green:      #5BBF6A;
+      --green-bg:   #E8F5E3;
+      --white:      #FFFFFF;
+      --wa:         #25D366;
+      --wa-dark:    #128C4E;
+      --border:     2px solid #2C1A0E;
+      --r:          16px;
+      --sh-sm:      3px 3px 0 #2C1A0E;
+      --sh-md:      5px 5px 0 #2C1A0E;
+      --sh-lg:      8px 8px 0 #2C1A0E;
     }
 
-    .hero-visual {
-      display: none;
+    /* ═══════════════════════════════════════
+       RESET
+    ═══════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+      line-height: 1.6;
     }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; font-family: inherit; }
+    h1, h2, h3, h4 { font-family: 'Fredoka One', cursive; line-height: 1.15; }
 
-    @media (min-width: 768px) {
-      .hero {
-        padding: 120px 0 96px;
-      }
-
-      .hero-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 64px;
-        align-items: center;
-      }
-
-      .hero-visual {
-        display: block;
-      }
+    /* ═══════════════════════════════════════
+       SCROLL REVEAL
+    ═══════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
     }
+    .reveal.on { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: 0.10s; }
+    .d2 { transition-delay: 0.20s; }
+    .d3 { transition-delay: 0.30s; }
+    .d4 { transition-delay: 0.40s; }
 
-    .trust-strip {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px 24px;
-      margin-top: 32px;
-    }
-
-    .trust-item {
+    /* ═══════════════════════════════════════
+       SHARED COMPONENTS
+    ═══════════════════════════════════════ */
+    .btn {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+      font-family: 'Fredoka One', cursive;
+      border: var(--border);
+      border-radius: var(--r);
+      cursor: pointer;
+      transition: transform 0.12s, box-shadow 0.12s;
+      text-decoration: none;
+      line-height: 1;
     }
+    .btn:hover  { transform: translate(-2px, -2px); }
+    .btn:active { transform: translate(1px, 1px); }
 
-    .subjects-row {
-      display: grid;
-      gap: 16px;
+    .btn-gold {
+      background: var(--gold);
+      color: var(--ink);
+      box-shadow: var(--sh-sm);
+      padding: 11px 22px;
+      font-size: 1rem;
     }
+    .btn-gold:hover { box-shadow: 5px 5px 0 var(--gold-dark); }
 
-    @media (min-width: 768px) {
-      .subjects-row {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    .btn-wa {
+      background: var(--wa);
+      color: #fff;
+      box-shadow: var(--sh-sm);
+      padding: 15px 24px;
+      font-size: 1.15rem;
+      width: 100%;
+      justify-content: center;
+      border-radius: 14px;
     }
+    .btn-wa:hover { box-shadow: 5px 5px 0 var(--wa-dark); }
 
-    @media (min-width: 1024px) {
-      .subjects-row {
-        grid-template-columns: repeat(5, 1fr);
-      }
+    .section-head {
+      text-align: center;
+      margin-bottom: 48px;
     }
-
-    .pricing-grid {
-      display: grid;
-      gap: 24px;
-      max-width: 680px;
+    .section-head h2 {
+      font-size: clamp(1.85rem, 4.5vw, 2.75rem);
+      margin-bottom: 10px;
+    }
+    .section-head p {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink-lite);
+      max-width: 480px;
       margin: 0 auto;
     }
 
-    @media (min-width: 768px) {
-      .pricing-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .pricing-card ul {
-      margin: 24px 0;
-      flex-grow: 1;
-    }
-
-    .pricing-card li {
-      margin-bottom: 12px;
-      color: var(--text-secondary);
-      font-size: 14px;
+    /* ═══════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════ */
+    nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 200;
+      background: var(--cream);
+      border-bottom: var(--border);
+      box-shadow: 0 3px 0 var(--ink);
+      padding: 13px 6%;
       display: flex;
-      align-items: flex-start;
-      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
     }
-
-    .pricing-card li::before {
-      content: '✓';
-      color: var(--primary);
-      font-weight: bold;
+    .logo {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.75rem;
+      letter-spacing: 0.5px;
     }
+    .logo em { color: var(--gold); font-style: normal; }
 
-    .quiz-section {
-      background-color: var(--secondary);
-      color: white;
-    }
-
-    .quiz-grid {
-      display: grid;
-      gap: 48px;
+    /* ═══════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════ */
+    #hero {
+      min-height: 100svh;
+      background: linear-gradient(168deg, #FFF8EC 0%, #FFF0D0 52%, #E8F5E3 100%);
+      padding-top: 74px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
       align-items: center;
     }
 
-    @media (min-width: 768px) {
-      .quiz-grid {
-        grid-template-columns: 1fr 1fr;
-      }
+    /* Floating emoji decorations */
+    .floater {
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+      font-size: 2.4rem;
+      z-index: 1;
+    }
+    @keyframes flt  { 0%,100%{ transform:translateY(0) rotate(-5deg); } 50%{ transform:translateY(-20px) rotate(8deg); } }
+    @keyframes flt2 { 0%,100%{ transform:translateY(0) rotate(4deg);  } 50%{ transform:translateY(-15px) rotate(-9deg); } }
+    @keyframes flt3 { 0%,100%{ transform:translateY(0) rotate(0deg);  } 50%{ transform:translateY(-24px) rotate(13deg); } }
+    .f1 { top:13%; left:4%;  animation:flt  5.2s ease-in-out infinite; }
+    .f2 { top: 9%; right:5%; animation:flt2 4.0s ease-in-out infinite 0.7s; font-size:2rem; }
+    .f3 { top:40%; left:7%;  animation:flt3 6.1s ease-in-out infinite 1.3s; font-size:2rem; }
+    .f4 { top:54%; right:8%; animation:flt  4.5s ease-in-out infinite 0.4s; font-size:2.8rem; }
+    .f5 { top:22%; left:14%; animation:flt2 5.6s ease-in-out infinite 0.9s; font-size:1.8rem; }
+    .f6 { top:67%; left:3%;  animation:flt3 3.9s ease-in-out infinite 0.6s; font-size:2rem; }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      width: 100%;
+      padding: 46px 24px 0;
+      text-align: center;
     }
 
-    .quiz-preview-card {
-      background: white;
-      color: var(--text-primary);
-      border-radius: var(--radius-card);
-      padding: 32px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-      transform: rotate(2deg);
+    .badge {
+      display: inline-block;
+      background: var(--teal);
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.88rem;
+      padding: 7px 20px;
+      border: var(--border);
+      border-radius: 50px;
+      box-shadow: var(--sh-sm);
+      margin-bottom: 22px;
+      letter-spacing: 0.3px;
     }
 
-    .faq-container {
-      max-width: 760px;
+    .hero-h1 {
+      font-size: clamp(2.6rem, 7.5vw, 5rem);
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+    .hero-h1 .gold { color: var(--gold); }
+    .hero-h1 .teal { color: var(--teal); }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.4vw, 1.15rem);
+      font-weight: 600;
+      color: var(--ink-lite);
+      max-width: 520px;
+      margin: 0 auto 32px;
+    }
+
+    /* ─── Form card ─── */
+    .form-card {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 24px;
+      box-shadow: var(--sh-lg);
+      padding: 28px 28px 24px;
+      max-width: 460px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .form-step  { display: none; }
+    .form-step.active { display: block; animation: slideIn 0.25s ease; }
+    @keyframes slideIn { from { opacity:0; transform:translateX(10px); } to { opacity:1; transform:translateX(0); } }
+
+    .form-step-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.25rem;
+      text-align: center;
+      margin-bottom: 18px;
+      color: var(--ink);
+    }
+
+    .age-row { display: flex; gap: 10px; }
+    .age-btn {
+      flex: 1;
+      padding: 16px 6px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      background: var(--cream);
+      color: var(--ink);
+      border: var(--border);
+      border-radius: 14px;
+      box-shadow: var(--sh-sm);
+      transition: all 0.15s;
+    }
+    .age-btn:hover { background: #FFE0A0; transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--ink); }
+    .age-btn.sel   { background: var(--gold); transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--ink); }
+
+    .back-link {
+      background: none;
+      border: none;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--ink-lite);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 14px;
+      padding: 0;
+    }
+
+    .form-group { margin-bottom: 13px; }
+    .form-group label {
+      display: block;
+      font-weight: 800;
+      font-size: 0.8rem;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--ink);
+    }
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 11px 14px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      background: var(--cream);
+      color: var(--ink);
+      border: var(--border);
+      border-radius: 12px;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus { box-shadow: var(--sh-sm); }
+
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: '▾';
+      position: absolute;
+      right: 14px; top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: var(--ink);
+    }
+
+    /* Social proof row */
+    .social-proof {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 20px auto 0;
+      max-width: 460px;
+    }
+    .avatars { display: flex; }
+    .av {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: 2px solid var(--white);
+      font-size: 1.15rem;
+      display: flex; align-items: center; justify-content: center;
+      margin-left: -8px; flex-shrink: 0;
+    }
+    .av:first-child { margin-left: 0; }
+    .av1 { background: #FFD090; }
+    .av2 { background: #A8E6CF; }
+    .av3 { background: #FFB3BA; }
+    .av4 { background: #B5D5FF; }
+    .sp-text { font-weight: 700; font-size: 0.92rem; color: var(--ink); }
+
+    .hero-disclaimer {
+      margin-top: 13px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--ink-lite);
+      text-align: center;
+    }
+
+    /* Hero GIF */
+    .hero-game {
+      width: 100%;
+      max-width: 680px;
+      margin: 34px auto 0;
+      padding: 0 24px;
+      position: relative;
+      z-index: 2;
+    }
+    .game-frame {
+      background: var(--ink);
+      border: var(--border);
+      border-radius: 20px;
+      box-shadow: var(--sh-lg);
+      overflow: hidden;
+      line-height: 0;
+    }
+    .game-frame img {
+      width: 100%;
+      display: block;
+      border-radius: 18px;
+    }
+    .game-caption {
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--ink-lite);
+      margin-top: 12px;
+      padding-bottom: 6px;
+    }
+
+    /* Wavy hills */
+    .hills {
+      width: 100%;
+      margin-top: 26px;
+      line-height: 0;
+      position: relative;
+      z-index: 2;
+    }
+    .hills svg { width: 100%; display: block; }
+
+    /* ═══════════════════════════════════════
+       TRUST BAR
+    ═══════════════════════════════════════ */
+    #trust {
+      background: var(--white);
+      border-top: var(--border);
+      border-bottom: var(--border);
+      padding: 30px 6%;
+    }
+    .trust-grid {
+      max-width: 880px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .ti { text-align: center; }
+    .ti-ico  { font-size: 2rem; margin-bottom: 6px; }
+    .ti-big  { font-family: 'Fredoka One', cursive; font-size: 1.55rem; display: block; color: var(--ink); }
+    .ti-lbl  { font-size: 0.82rem; font-weight: 700; color: var(--ink-lite); }
+
+    /* ═══════════════════════════════════════
+       GAME PREVIEW STRIP
+    ═══════════════════════════════════════ */
+    #preview {
+      background: var(--green-bg);
+      border-top: 3px dashed var(--green);
+      border-bottom: 3px dashed var(--green);
+      padding: 60px 6%;
+    }
+    .strip-lbl {
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.95rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--ink-lite);
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .screens-row {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+      max-width: 920px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+    .sc-card {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 18px;
+      box-shadow: var(--sh-md);
+      overflow: hidden;
+      width: 265px;
+      transition: transform 0.22s, box-shadow 0.22s;
+    }
+    .sc-card:nth-child(1) { transform: rotate(-3deg); }
+    .sc-card:nth-child(2) { transform: rotate(1.5deg); }
+    .sc-card:nth-child(3) { transform: rotate(-2deg); }
+    .sc-card:hover { transform: rotate(0deg) scale(1.04) !important; box-shadow: var(--sh-lg) !important; }
+    .sc-mock {
+      height: 165px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 3rem;
+    }
+    .sc-mock-lbl {
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.88);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .sc-cap {
+      padding: 12px 16px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      color: var(--ink);
+      border-top: var(--border);
+    }
+
+    /* ═══════════════════════════════════════
+       HOW IT WORKS
+    ═══════════════════════════════════════ */
+    #how {
+      padding: 84px 6%;
+      background: var(--cream);
+    }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 22px;
+      max-width: 960px;
       margin: 0 auto;
     }
-
-    .final-cta {
-      background-color: var(--primary);
-      color: white;
+    .step-card {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      box-shadow: var(--sh-md);
+      padding: 28px 22px;
       text-align: center;
-      padding: 96px 0;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .step-card:hover { transform: translate(-3px,-3px); box-shadow: var(--sh-lg); }
+    .step-card:nth-child(2) { background: #FFF0D0; }
+    .step-card:nth-child(3) { background: #E8F9F7; }
+    .step-card:nth-child(4) { background: var(--green-bg); }
+    .step-ico   { font-size: 3rem; margin-bottom: 14px; display: block; }
+    .step-title { font-family: 'Fredoka One', cursive; font-size: 1.15rem; margin-bottom: 8px; }
+    .step-text  { font-size: 0.9rem; font-weight: 600; color: var(--ink-lite); line-height: 1.55; }
+
+    /* ═══════════════════════════════════════
+       FEATURES GRID
+    ═══════════════════════════════════════ */
+    #features {
+      padding: 84px 6%;
+      background: #EEF2FF;
+      border-top: var(--border);
+      border-bottom: var(--border);
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .fp {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      box-shadow: var(--sh-sm);
+      padding: 22px 20px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .fp:hover { transform: translate(-2px,-2px); box-shadow: var(--sh-md); }
+    .fp-head  { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .fp-ico   { font-size: 1.9rem; }
+    .fp-title { font-family: 'Fredoka One', cursive; font-size: 1.05rem; }
+    .fp-desc  { font-size: 0.88rem; font-weight: 600; color: var(--ink-lite); line-height: 1.5; }
+
+    /* ═══════════════════════════════════════
+       TUTORS
+    ═══════════════════════════════════════ */
+    #tutors {
+      padding: 84px 6%;
+      background: var(--white);
+    }
+    .tutors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+    .tc {
+      background: var(--cream);
+      border: var(--border);
+      border-radius: 22px;
+      box-shadow: var(--sh-md);
+      padding: 28px 22px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .tc:hover { transform: translate(-3px,-3px); box-shadow: var(--sh-lg); }
+    .t-av {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      border: 3px solid var(--ink);
+      box-shadow: var(--sh-sm);
+      font-size: 3rem;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 14px;
+    }
+    .ta1 { background: linear-gradient(135deg, #FFE0B0, #FFB060); }
+    .ta2 { background: linear-gradient(135deg, #B5D5FF, #80B0FF); }
+    .ta3 { background: linear-gradient(135deg, #A8E6CF, #60C8A0); }
+    .t-name  { font-family: 'Fredoka One', cursive; font-size: 1.3rem; margin-bottom: 3px; }
+    .t-spec  { font-size: 0.83rem; font-weight: 700; color: var(--ink-lite); margin-bottom: 14px; }
+    .t-quote {
+      font-style: italic;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--ink-lite);
+      line-height: 1.55;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    /* ═══════════════════════════════════════
+       TESTIMONIALS
+    ═══════════════════════════════════════ */
+    #testimonials {
+      padding: 84px 6%;
+      background: var(--cream);
+    }
+    .test-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .tt {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 20px;
+      box-shadow: var(--sh-md);
+      padding: 26px 22px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .tt:hover { transform: translate(-3px,-3px); box-shadow: var(--sh-lg); }
+    .tt:nth-child(2) { background: #FFFBE8; }
+    .tt:nth-child(3) { background: #E8F9F7; }
+    .tt-stars { font-size: 1.1rem; margin-bottom: 12px; color: var(--gold); letter-spacing: 2px; }
+    .tt-text  { font-size: 0.93rem; font-weight: 600; color: var(--ink); line-height: 1.65; margin-bottom: 20px; }
+    .tt-foot  { display: flex; align-items: center; gap: 12px; }
+    .tt-av {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: var(--border);
+      font-size: 1.5rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .tav1 { background: #FFD090; }
+    .tav2 { background: #B5D5FF; }
+    .tav3 { background: #A8E6CF; }
+    .tt-name { font-family: 'Fredoka One', cursive; font-size: 1rem; }
+    .tt-role { font-size: 0.78rem; font-weight: 700; color: var(--ink-lite); }
+
+    /* ═══════════════════════════════════════
+       FAQ
+    ═══════════════════════════════════════ */
+    #faq {
+      padding: 84px 6%;
+      background: var(--green-bg);
+    }
+    .faq-list {
+      max-width: 700px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    details {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 16px;
+      box-shadow: var(--sh-sm);
+      overflow: hidden;
+    }
+    summary {
+      padding: 18px 22px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+      color: var(--ink);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      list-style: none;
+      user-select: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: '▶';
+      font-size: 0.82rem;
+      transition: transform 0.22s;
+      flex-shrink: 0;
+      color: var(--gold);
+    }
+    details[open] summary::after { transform: rotate(90deg); }
+    .faq-body {
+      border-top: var(--border);
+      padding: 16px 22px 18px;
+      font-size: 0.93rem;
+      font-weight: 600;
+      color: var(--ink-lite);
+      line-height: 1.65;
+    }
+
+    /* ═══════════════════════════════════════
+       FINAL CTA
+    ═══════════════════════════════════════ */
+    #cta {
+      padding: 96px 6%;
+      background: var(--ink);
+      text-align: center;
       position: relative;
       overflow: hidden;
     }
-
-    .final-cta h2 {
-      color: white;
+    #cta::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(245,166,35,0.22) 0%, transparent 65%);
+      pointer-events: none;
     }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta-h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem, 5.5vw, 3.5rem);
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+    .cta-h2 em { color: var(--gold); font-style: normal; }
+    .cta-sub  { font-size: 1rem; font-weight: 600; color: rgba(255,255,255,0.62); margin-bottom: 40px; }
+    .cta-note { font-size: 0.85rem; font-weight: 700; color: rgba(255,255,255,0.42); margin-top: 20px; }
 
-    .tutor-img-class {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin: 0;
-      display: block;
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    footer {
+      background: #160C03;
+      color: rgba(255,255,255,0.38);
+      text-align: center;
+      padding: 22px 6%;
+      font-size: 0.86rem;
+      font-weight: 700;
+      border-top: 2px solid rgba(255,255,255,0.07);
+    }
+    footer a { color: inherit; text-decoration: underline; }
+
+    /* ═══════════════════════════════════════
+       STICKY MOBILE CTA
+    ═══════════════════════════════════════ */
+    #sticky {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 150;
+      background: var(--gold);
+      border-top: var(--border);
+      box-shadow: 0 -3px 0 var(--ink);
+      padding: 13px 20px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    #sticky.show { display: flex; }
+    .sticky-txt { font-family: 'Fredoka One', cursive; font-size: 1rem; color: var(--ink); }
+    .sticky-btn {
+      background: var(--ink);
+      color: var(--white);
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.95rem;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+      transition: transform 0.12s;
+      white-space: nowrap;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .sticky-btn:hover { transform: translate(-1px,-1px); }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .trust-grid { grid-template-columns: repeat(2,1fr); }
+      .sc-card { width: calc(100% - 32px); max-width: 340px; }
+      .sc-card:nth-child(1),
+      .sc-card:nth-child(2),
+      .sc-card:nth-child(3) { transform: rotate(0); }
+    }
+    @media (max-width: 500px) {
+      .age-row   { flex-direction: column; }
+      .form-card { padding: 20px 16px; }
+      nav { padding: 12px 4%; }
     }
   </style>
-  <link rel="icon" type="image/webp" href="photo/favicon.webp">
 </head>
-
 <body>
 
-  <!-- SHARED NAVIGATION -->
-  <nav class="navbar">
-    <div class="container">
-      <a href="/" class="brand-logo" style="display: flex; align-items: center;">
-        <img src="photo/KaraKuli.svg" alt="Karakuli" style="height: 28px; width: auto;">
-      </a>
-      <div class="nav-links">
-        <a href="/classes">Classes</a>
-        <a href="/tutors">Tutors</a>
-        <a href="/subjects">Subjects</a>
+<!-- ═══════════════════════════════════════ NAV -->
+<nav>
+  <div class="logo">KARA<em>KULI</em></div>
+  <a href="#cta" class="btn btn-gold">Book Free Lesson 🎓</a>
+</nav>
+
+<!-- ═══════════════════════════════════════ HERO -->
+<section id="hero">
+  <div class="floater f1">⭐</div>
+  <div class="floater f2">🍄</div>
+  <div class="floater f3">✨</div>
+  <div class="floater f4">🌙</div>
+  <div class="floater f5">🔢</div>
+  <div class="floater f6">🎒</div>
+
+  <div class="hero-inner">
+    <div class="badge">🎮 Live 1-on-1 tutoring · Ages 5–10</div>
+
+    <h1 class="hero-h1">
+      Your child will<br>
+      <span class="gold">beg</span> to do <span class="teal">math</span>
+    </h1>
+
+    <p class="hero-sub">
+      Live 1-on-1 lessons with real tutors, wrapped in an RPG adventure.
+      When kids love the process, progress takes care of itself.
+    </p>
+
+    <!-- FORM HERO -->
+    <div class="form-card" id="form-hero">
+      <div class="form-step active" id="fh-s1">
+        <p class="form-step-title">How old is your child? 👧👦</p>
+        <div class="age-row">
+          <button class="age-btn" onclick="pickAge(this,'fh')">5–6 yrs</button>
+          <button class="age-btn" onclick="pickAge(this,'fh')">7–8 yrs</button>
+          <button class="age-btn" onclick="pickAge(this,'fh')">9–10 yrs</button>
+        </div>
       </div>
-      <button class="hamburger" id="hamburger">☰</button>
+      <div class="form-step" id="fh-s2">
+        <button class="back-link" onclick="backStep('fh')">← Change age</button>
+        <p class="form-step-title">Book your free lesson 🎓</p>
+        <div class="form-group">
+          <label>Child's name</label>
+          <input type="text" placeholder="e.g. Sofia" id="fh-name" autocomplete="off" />
+        </div>
+        <div class="form-group">
+          <label>Your WhatsApp number</label>
+          <input type="tel" placeholder="+1 234 567 8900" id="fh-phone" autocomplete="tel" />
+        </div>
+        <div class="form-group">
+          <label>Preferred time</label>
+          <div class="select-wrap">
+            <select id="fh-time">
+              <option>Weekday morning (9–12)</option>
+              <option>Weekday afternoon (12–17)</option>
+              <option>Weekday evening (17–20)</option>
+              <option>Weekend morning (9–12)</option>
+              <option>Weekend afternoon (12–17)</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn btn-wa" onclick="sendWA('fh')">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Book Free Lesson on WhatsApp
+        </button>
+      </div>
     </div>
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobile-menu">
-      <a href="/classes">Classes</a>
-      <a href="/tutors">Tutors</a>
-      <a href="/subjects">Subjects</a>
+
+    <div class="social-proof">
+      <div class="avatars">
+        <div class="av av1">👩</div>
+        <div class="av av2">👨</div>
+        <div class="av av3">👩</div>
+        <div class="av av4">👦</div>
+      </div>
+      <span class="sp-text">⭐ 847 parents booked a free lesson this month</span>
     </div>
-  </nav>
+    <p class="hero-disclaimer">🔒 First lesson completely free. No card needed.</p>
+  </div>
 
+  <!-- Game GIF -->
+  <div class="hero-game">
+    <div class="game-frame">
+      <img
+        src="https://i.imgur.com/dISQat6.gif"
+        alt="KARAKULI math game — what your child sees during every lesson"
+        loading="eager"
+      />
+    </div>
+    <p class="game-caption">👆 This is what your child sees during every lesson</p>
+  </div>
 
+  <!-- Wavy hills -->
+  <div class="hills">
+    <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,45 C200,95 400,10 620,62 C820,112 1020,18 1220,72 C1340,98 1410,52 1440,62 L1440,120 L0,120 Z" fill="#A8D8A0"/>
+      <path d="M0,72 C180,32 360,102 560,68 C740,34 940,95 1100,58 C1270,20 1390,82 1440,58 L1440,120 L0,120 Z" fill="#5BBF6A"/>
+    </svg>
+  </div>
+</section>
 
-  <!-- NEW QUIZ SECTION (Position 1) -->
-  <section class="section-quiz-new">
-    <div class="container quiz-teaser-grid">
-      <div>
-        <div class="quiz-eyebrow">Free 2-min quiz</div>
-        <h2 class="quiz-heading">Your child isn't bored.<br>They just haven't found what makes learning exciting yet.
-        </h2>
-        <p class="quiz-body-text mb-16" style="color: #FFFFFF; font-weight: 500; opacity: 0.9;">Screens aren't the
-          problem. Your kid just hasn't found the tutor and subject that clicks. Yet.</p>
-        <p class="quiz-body-text">Take a 2-minute quiz — we'll build your child's personal learning profile and
-          match them with the exact classes from our weekly schedule that fit who they are.</p>
+<!-- ═══════════════════════════════════════ TRUST BAR -->
+<section id="trust">
+  <div class="trust-grid">
+    <div class="ti reveal">
+      <div class="ti-ico">👨‍👩‍👧</div>
+      <span class="ti-big">300,000+</span>
+      <span class="ti-lbl">families through our projects</span>
+    </div>
+    <div class="ti reveal d1">
+      <div class="ti-ico">⭐</div>
+      <span class="ti-big">4.9 / 5</span>
+      <span class="ti-lbl">average parent rating</span>
+    </div>
+    <div class="ti reveal d2">
+      <div class="ti-ico">🎓</div>
+      <span class="ti-big">Live 1-on-1</span>
+      <span class="ti-lbl">tutors, every lesson</span>
+    </div>
+    <div class="ti reveal d3">
+      <div class="ti-ico">🌍</div>
+      <span class="ti-big">Ages 5–10</span>
+      <span class="ti-lbl">curriculum aligned</span>
+    </div>
+  </div>
+</section>
 
+<!-- ═══════════════════════════════════════ GAME PREVIEW STRIP -->
+<section id="preview">
+  <p class="strip-lbl reveal">✦ What your child sees in every lesson ✦</p>
+  <div class="screens-row">
+    <div class="sc-card reveal d1">
+      <div class="sc-mock" style="background:linear-gradient(135deg,#3BBFAD,#1A6B7A);">
+        <span>🧙</span>
+        <span class="sc-mock-lbl">Character Creation</span>
+      </div>
+      <div class="sc-cap">Create your hero 🧙</div>
+    </div>
+    <div class="sc-card reveal d2">
+      <div class="sc-mock" style="background:linear-gradient(135deg,#F5A623,#C84F10);">
+        <span>🌴</span>
+        <span class="sc-mock-lbl">Tropical Quest</span>
+      </div>
+      <div class="sc-cap">Island adventure quest 🌴</div>
+    </div>
+    <div class="sc-card reveal d3">
+      <div class="sc-mock" style="background:linear-gradient(135deg,#6B5BD9,#2C1A8A);">
+        <span>⚔️</span>
+        <span class="sc-mock-lbl">Cave Puzzle</span>
+      </div>
+      <div class="sc-cap">Solve puzzles, earn XP ⚔️</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ HOW IT WORKS -->
+<section id="how">
+  <div class="section-head reveal">
+    <h2>How it works</h2>
+    <p>Four steps from sign-up to "Mom, when's my next lesson?"</p>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card reveal d1">
+      <span class="step-ico">🎓</span>
+      <div class="step-title">Meet your live tutor</div>
+      <p class="step-text">A real human, not a bot. They see your child's face, hear their thinking, and adapt every minute of the lesson.</p>
+    </div>
+    <div class="step-card reveal d2">
+      <span class="step-ico">🧙</span>
+      <div class="step-title">The game makes it stick</div>
+      <p class="step-text">The RPG adventure IS the lesson. Every math problem advances the quest. Kids aren't playing — they're doing math.</p>
+    </div>
+    <div class="step-card reveal d3">
+      <span class="step-ico">🔥</span>
+      <div class="step-title">They start asking to go</div>
+      <p class="step-text">Within 2–3 lessons, most kids start asking when the next one is. Excitement drives progress, not willpower.</p>
+    </div>
+    <div class="step-card reveal d4">
+      <span class="step-ico">📈</span>
+      <div class="step-title">Progress you can see</div>
+      <p class="step-text">Kids in KARAKULI learn 3× faster than average. You get weekly updates from the tutor on exactly where they've grown.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ FEATURES -->
+<section id="features">
+  <div class="section-head reveal">
+    <h2>Everything in one place</h2>
+    <p>Designed from the ground up for kids who "hate math"</p>
+  </div>
+  <div class="features-grid">
+    <div class="fp reveal d1">
+      <div class="fp-head"><span class="fp-ico">👩‍🏫</span><span class="fp-title">Live 1-on-1 Tutor</span></div>
+      <p class="fp-desc">Every session is with a real, qualified tutor who knows your child's name, quirks, and pace.</p>
+    </div>
+    <div class="fp reveal d2">
+      <div class="fp-head"><span class="fp-ico">🎮</span><span class="fp-title">Game = Lesson</span></div>
+      <p class="fp-desc">The RPG isn't a reward — it is the lesson. Every problem is a quest, every correct answer earns XP.</p>
+    </div>
+    <div class="fp reveal d3">
+      <div class="fp-head"><span class="fp-ico">🔥</span><span class="fp-title">They Ask for the Next One</span></div>
+      <p class="fp-desc">When kids love it, you stop fighting over homework. Parents tell us this is the biggest surprise.</p>
+    </div>
+    <div class="fp reveal d1">
+      <div class="fp-head"><span class="fp-ico">🧠</span><span class="fp-title">Engagement = Faster Progress</span></div>
+      <p class="fp-desc">A focused, excited child absorbs 3× more than a bored one. Emotion drives memory — that's the science.</p>
+    </div>
+    <div class="fp reveal d2">
+      <div class="fp-head"><span class="fp-ico">📚</span><span class="fp-title">Curriculum-Aligned</span></div>
+      <p class="fp-desc">Covers all key topics for ages 5–10: counting, operations, fractions, word problems, and more.</p>
+    </div>
+    <div class="fp reveal d3">
+      <div class="fp-head"><span class="fp-ico">📵</span><span class="fp-title">Screen Time You'll Approve</span></div>
+      <p class="fp-desc">45 minutes of intentional, adult-supervised, genuinely educational screen time. Not Netflix. Not TikTok.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ TUTORS -->
+<section id="tutors">
+  <div class="section-head reveal">
+    <h2>Real tutors. Real connections.</h2>
+    <p>Every child gets a tutor who knows them, challenges them, and celebrates them — lesson after lesson.</p>
+  </div>
+  <div class="tutors-grid">
+    <div class="tc reveal d1">
+      <div class="t-av ta1">👩‍🏫</div>
+      <div class="t-name">Sarah</div>
+      <div class="t-spec">Ages 5–7 · 4 years experience</div>
+      <div class="t-quote">"I love the moment when a shy kid suddenly answers before I even finish the question."</div>
+    </div>
+    <div class="tc reveal d2">
+      <div class="t-av ta2">👨‍🏫</div>
+      <div class="t-name">James</div>
+      <div class="t-spec">Ages 8–10 · 6 years experience</div>
+      <div class="t-quote">"Older kids need to feel challenged — not bored. The quest format keeps even the sharpest ones hooked."</div>
+    </div>
+    <div class="tc reveal d3">
+      <div class="t-av ta3">👩‍🦱</div>
+      <div class="t-name">Mia</div>
+      <div class="t-spec">All ages · 3 years experience</div>
+      <div class="t-quote">"Every child has a breakthrough moment. My job is to make sure they're not waiting too long for theirs."</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-head reveal">
+    <h2>What parents say</h2>
+    <p>847 free lessons booked this month. Here's what happened after.</p>
+  </div>
+  <div class="test-grid">
+    <div class="tt reveal d1">
+      <div class="tt-stars">★★★★★</div>
+      <p class="tt-text">"After the first lesson my son ran into the kitchen and said 'Mom, when's the next one?' I literally cried. He used to cry every time I mentioned math."</p>
+      <div class="tt-foot">
+        <div class="tt-av tav1">👩</div>
         <div>
-          <div class="quiz-list-item">Your child's learner type (Creative Explorer? Strategic Thinker?)</div>
-          <div class="quiz-list-item">Discover your child's learner type and the subjects they'll love</div>
-        </div>
-
-        <a href="/quiz" class="quiz-cta-btn">Discover your child's learning superpower →</a>
-        <div class="quiz-trust-line">Free · 2 minutes · No commitment</div>
-      </div>
-
-      <div>
-        <div class="quiz-result-card" style="box-shadow: 0 12px 32px rgba(0,0,0,0.08); border-radius: 16px;">
-          <div class="quiz-card-label"
-            style="background: #F5F0FF; color: #2D1B6B; padding: 6px 12px; border-radius: 8px; display: inline-block; margin-bottom: 12px; font-weight: 600; border: 1px solid #EBE4FF;">
-            📋 Here's what you'll get ↓</div>
-          <div class="quiz-card-title">🎯 The Strategic Thinker</div>
-          <div class="quiz-card-desc">Loves logical challenges and goes deep. Math and Coding are their natural
-            playground.</div>
-
-          <div class="quiz-card-divider"></div>
-
-          <div class="quiz-card-sublabel">Matched classes</div>
-
-          <div class="quiz-mini-class">
-            <div class="quiz-mini-class-left">🔢 Math</div>
-            <div class="quiz-mini-class-right">Mon 5:00 PM</div>
-          </div>
-          <div class="quiz-mini-class">
-            <div class="quiz-mini-class-left">💻 Coding</div>
-            <div class="quiz-mini-class-right">Thu 4:30 PM</div>
-          </div>
-
+          <div class="tt-name">Sarah M.</div>
+          <div class="tt-role">Mom of 7-year-old · 3 months in</div>
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- SECTION 1: HERO -->
-  <section class="section bg-offwhite hero">
-    <div class="container hero-grid">
-      <div>
-        <h1>Where kids learn, grow, and <span class="hand-drawn-underline" style="color: var(--primary);">show up every
-            week</span></h1>
-        <p class="text-large text-secondary mb-32">Math, coding, English, art, music — all in one membership. One place
-          for all their learning needs.</p>
-        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-          <a href="/classes" class="btn btn-primary">Explore classes</a>
-        </div>
-        <div class="trust-strip text-muted text-label mt-32">
-          <span class="trust-item">✦ Ages 5–12</span>
-          <span class="trust-item">✦ Max 3 kids per class</span>
-          <span class="trust-item">✦ Live on Zoom</span>
-
-        </div>
-      </div>
-      <!-- Real GIF wrapper -->
-      <div class="hero-visual" aria-hidden="true">
-        <div
-          style="background: white; padding: 16px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); transform: rotate(2deg);">
-          <img src="photo/video.gif" alt="Happy kids learning"
-            style="border-radius: 12px; width: 100%; display: block;">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 2: HOW IT WORKS -->
-  <!-- SECTION 3: UPCOMING CLASSES -->
-  <section class="section bg-white">
-    <div class="container">
-      <h2>What's on this week</h2>
-      <p class="text-body text-secondary mb-48">All classes repeat weekly. Book once, come back every week.</p>
-
-      <div class="grid-3 mb-48">
-
-        <!-- Class 1: Math 5-8 -->
-        <div class="card card-math">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <span class="pill subj-math">Math</span>
-            <span class="text-label text-secondary">Ages 5–12</span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-            <img src="photo/Kate.webp" alt="Kate" class="tutor-img-class">
-            <span class="text-label">Tutor: Kate</span>
-          </div>
-          <h3>Counting & Numbers</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Learning counting and basic
-            math through fun, interactive games.</p>
-          <img src="photo/math.webp" class="card-illustration mb-24"
-            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
-          <div
-            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
-            <span class="text-label text-secondary">3 spots · 25 credits</span>
-          </div>
-        </div>
-
-        <!-- Class 2: Math 9-12 -->
-        <div class="card card-math">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <span class="pill subj-math">Math</span>
-            <span class="text-label text-secondary">Ages 5–12</span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-            <img src="photo/Antonia.webp" alt="Antonia" class="tutor-img-class">
-            <span class="text-label">Tutor: Antonia</span>
-          </div>
-          <h3>Multiplication Games</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Learning multiplication and
-            times tables through engaging games.</p>
-          <img src="photo/math.webp" class="card-illustration mb-24"
-            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
-          <div
-            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
-            <span class="text-label text-secondary">3 spots · 25 credits</span>
-          </div>
-        </div>
-
-        <!-- Class 3: Coding Scratch 5-8 -->
-        <div class="card card-coding">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <span class="pill subj-coding">Coding</span>
-            <span class="text-label text-secondary">Ages 5–12</span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-            <img src="photo/Giang.webp" alt="Giang" class="tutor-img-class">
-            <span class="text-label">Tutor: Giang</span>
-          </div>
-          <h3>Scratch Creators</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Animations, click games,
-            and interactive stories. Every lesson a new project!</p>
-          <img src="photo/code.webp" class="card-illustration mb-24"
-            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
-          <div
-            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
-            <span class="text-label text-secondary">3 spots · 25 credits</span>
-          </div>
-        </div>
-
-        <!-- Class 4: Coding Roblox 9-12 -->
-        <div class="card card-coding">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <span class="pill subj-coding">Coding</span>
-            <span class="text-label text-secondary">Ages 5–12</span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-            <img src="photo/Giang.webp" alt="Giang" class="tutor-img-class">
-            <span class="text-label">Tutor: Giang</span>
-          </div>
-          <h3>Roblox Game Design</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Build real games: Obby
-            courses, coin collectors, tycoons, and 3D mazes!</p>
-          <img src="photo/code.webp" class="card-illustration mb-24"
-            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
-          <div
-            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
-            <span class="text-label text-secondary">3 spots · 25 credits</span>
-          </div>
-        </div>
-
-        <!-- Class 5: English A2 -->
-        <div class="card card-english">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <span class="pill subj-english">English</span>
-            <span class="text-label text-secondary">Ages 5–12</span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-            <img src="photo/Kate.webp" alt="Kate" class="tutor-img-class">
-            <span class="text-label">Tutor: Kate</span>
-          </div>
-          <h3>Speaking Club A2</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Practice real English
-            conversation through games and discussions at the A2 level.</p>
-          <img src="photo/english.png" class="card-illustration mb-24"
-            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
-          <div
-            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
-            <span class="text-label text-secondary">3 spots · 25 credits</span>
-          </div>
-        </div>
-
-        <!-- Class 6: English B1 -->
-        <div class="card card-english">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <span class="pill subj-english">English</span>
-            <span class="text-label text-secondary">Ages 5–12</span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-            <img src="photo/Kate.webp" alt="Kate" class="tutor-img-class">
-            <span class="text-label">Tutor: Kate</span>
-          </div>
-          <h3>Speaking Club B1</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Advanced speaking practice
-            and storytelling at the B1 level.</p>
-          <img src="photo/english.png" class="card-illustration mb-24"
-            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
-          <div
-            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
-            <span class="text-label text-secondary">3 spots · 25 credits</span>
-          </div>
-        </div>
-
-        <!-- Class 7: Art -->
-        <div class="card card-art">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <span class="pill subj-art">Art</span>
-            <span class="text-label text-secondary">Ages 5–12</span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-            <img src="photo/Giang.webp" alt="Giang" class="tutor-img-class">
-            <span class="text-label">Tutor: Giang</span>
-          </div>
-          <h3>Anime Drawing</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Anime-style drawing lessons
-            where kids draw something new and exciting every week.</p>
-          <img src="photo/art.png" class="card-illustration mb-24"
-            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
-          <div
-            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
-            <span class="text-label text-secondary">3 spots · 25 credits</span>
-          </div>
-        </div>
-
-        
-        <!-- Class 8.5: Music -->
-        <div class="card card-music" data-subject="Music" data-age="5-12" data-day="Tue">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <span class="pill subj-music">Music</span>
-            <span class="text-label text-secondary">Ages 5–12</span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-            <img src="photo/Nina.webp" alt="Nina" class="tutor-img-class">
-            <span class="text-label">Tutor: Nina</span>
-          </div>
-          <img src="photo/music.png" class="card-illustration mb-24" style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Music Illustration">
-          <h3>Music Foundation</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">Discovering voice and rhythm through fun musical exercises.</p>
-          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto; border-top: 1px solid var(--border-color);">
-            <div style="display: flex; flex-direction: column;">
-              <span class="text-label text-secondary">Tue 10:00 AM</span>
-              <span class="text-label text-secondary">3 spots · 25 credits</span>
-            </div>
-            <a href="/quiz" class="btn btn-primary btn-small">Discover your child's learner type →</a>
-          </div>
-        </div>
-
-        <!-- Class 8: 1:1 Math Tutoring -->
-        <div class="card card-math" style="position: relative;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <span class="pill subj-math">Math</span>
-            <span class="text-label text-secondary">Ages 5–12</span>
-          </div>
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-            <img src="photo/Kate%20K.webp" alt="Kate K" class="tutor-img-class">
-            <span class="text-label">Tutor: Kate K</span>
-          </div>
-          <h3>1-on-1 Math Tutoring</h3>
-          <p class="text-small text-secondary mb-24" style="height: 48px; overflow: hidden;">A fully personalized math
-            session built around your child's level and goals.</p>
-          <img src="photo/math.webp" class="card-illustration mb-24"
-            style="object-fit: cover; width: 100%; height: 160px; padding: 0; display: block;" alt="Class Illustration">
-          <div
-            style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; margin-top: auto;">
-            <span class="text-label text-secondary">On Demand</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="text-center">
-        <a href="/quiz" class="btn btn-primary" style="margin-top: 16px;">Which classes will keep your child
-          engaged? →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 4: SUBJECTS -->
-  <section class="section bg-offwhite">
-    <div class="container">
-      <h2 class="mb-48">What your child can learn</h2>
-      <div class="subjects-row">
-        <div class="card-gray">
-          <div>
-            🔢</div>
-          <h3>Math</h3>
-          <span class="text-label text-secondary mb-16" style="display: block;">Ages 5–12</span>
-          <p class="text-body mb-24">From counting and patterns to fractions and puzzles — math that actually makes
-            sense, taught in small groups of real kids.</p>
-        </div>
-        <div class="card-gray">
-          <div>
-            📖</div>
-          <h3>English</h3>
-          <span class="text-label text-secondary mb-16" style="display: block;">Ages 5–12</span>
-          <p class="text-body mb-24">A weekly conversation club where kids practice real English through games,
-            discussion, and storytelling — no textbooks.</p>
-        </div>
-        <div class="card-gray">
-          <div>
-            💻</div>
-          <h3>Coding</h3>
-          <span class="text-label text-secondary mb-16" style="display: block;">Ages 5–12</span>
-          <p class="text-body mb-24">Kids ages 5–8 build in Scratch. Ages 5–12 build in Roblox Studio. Every lesson ends
-            with something they actually made.</p>
-        </div>
-        <div class="card-gray">
-          <div>
-            🎨</div>
-          <h3>Art</h3>
-          <span class="text-label text-secondary mb-16" style="display: block;">Ages 5–12</span>
-          <p class="text-body mb-24">Anime characters, original creatures, fan art and more — kids draw what they're
-            excited about, guided step by step.</p>
-        </div>
-        <div class="card-gray">
-          <div>
-            🎵</div>
-          <h3>Music</h3>
-          <span class="text-label text-secondary mb-16" style="display: block;">Ages 5–12</span>
-          <p class="text-body mb-24">Make beats, write lyrics, or sing together — every lesson ends with something kids
-            created themselves. No instrument needed.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 5: TUTORS PREVIEW -->
-  <section class="section bg-white">
-    <div class="container">
-      <h2>Meet the tutors</h2>
-      <p class="text-body text-secondary mb-48">All our tutors are experienced, background-checked, and great with kids.
-      </p>
-
-      <div class="grid-3 mb-48">
-        <!-- Tutor: Kate -->
-        <div class="card card-math">
-          <div class="tutor-avatar-wrapper"><img src="photo/Kate.webp" alt="Kate"></div>
-          <h3>Kate</h3>
-          <div class="mb-16" style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <span class="pill subj-math">Math</span>
-            <span class="pill subj-english">English</span>
-            <span class="pill bg-white text-secondary">8 years</span>
-          </div>
-          <p class="text-body mb-24">Experienced and structured tutor who helps children truly understand math and speak
-            English confidently.</p>
-        </div>
-        <!-- Tutor: Kate -->
-        <div class="card card-english">
-          <div class="tutor-avatar-wrapper"><img src="photo/Kate.webp" alt="Kate"></div>
-          <h3>Kate</h3>
-          <div class="mb-16" style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <span class="pill subj-math">Math</span>
-            <span class="pill subj-english">English</span>
-            <span class="pill bg-white text-secondary">3 years</span>
-          </div>
-          <p class="text-body mb-24">Warm and patient tutor who makes math and English easy to understand.</p>
-        </div>
-        <!-- Tutor: Antonia -->
-        <div class="card card-math">
-          <div class="tutor-avatar-wrapper"><img src="photo/Antonia.webp" alt="Antonia"></div>
-          <h3>Antonia</h3>
-          <div class="mb-16" style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <span class="pill subj-math">Math</span>
-            <span class="pill subj-english">English</span>
-            <span class="pill bg-white text-secondary">5 years</span>
-          </div>
-          <p class="text-body mb-24">Energetic and friendly tutor who turns learning into an exciting process.</p>
-        </div>
-        <!-- Tutor: Nina -->
-        <div class="card card-art">
-          <div class="tutor-avatar-wrapper"><img src="photo/Nina.webp" alt="Nina"></div>
-          <h3>Nina</h3>
-          <div class="mb-16" style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <span class="pill subj-art">Art</span>
-            <span class="pill bg-white text-secondary">5 years</span>
-          </div>
-          <p class="text-body mb-24">Creative art tutor specializing in anime-style drawing. Helps kids express
-            themselves.</p>
-        </div>
-        <!-- Tutor: Giang -->
-        <div class="card card-coding">
-          <div class="tutor-avatar-wrapper"><img src="photo/Giang.webp" alt="Giang"></div>
-          <h3>Giang</h3>
-          <div class="mb-16" style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <span class="pill subj-coding">Coding</span>
-            <span class="pill bg-white text-secondary">4 years</span>
-          </div>
-          <p class="text-body mb-24">Coding tutor who teaches kids how to create, not just consume technology.</p>
-        </div>
-        <!-- Tutor: Giang -->
-        <div class="card card-chess">
-          <div class="tutor-avatar-wrapper"><img src="photo/Giang.webp" alt="Giang"></div>
-          <h3>Giang</h3>
-          <div class="mb-16" style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <span class="pill subj-chess">Chess</span>
-            <span class="pill bg-white text-secondary">4 years</span>
-          </div>
-          <p class="text-body mb-24">Chess tutor who makes every lesson engaging while helping kids think several steps
-            ahead.</p>
-        </div>
-      </div>
-
-      <div class="text-center">
-        <a href="/tutors" class="btn btn-secondary">Meet all tutors →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 7: QUIZ TEASER -->
-  <!-- SHARED FOOTER -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-top">
+    <div class="tt reveal d2">
+      <div class="tt-stars">★★★★★</div>
+      <p class="tt-text">"We have two kids, 6 and 9, with totally different personalities. Both tutors figured out exactly how to challenge each of them. I was blown away."</p>
+      <div class="tt-foot">
+        <div class="tt-av tav2">👨</div>
         <div>
-          <div class="footer-logo">Karakuli</div>
-          <p class="text-body text-secondary" style="color: rgba(255,255,255,0.8);">Where kids learn, grow, and show up
-            every week</p>
+          <div class="tt-name">James K.</div>
+          <div class="tt-role">Dad of two · 2 months in</div>
         </div>
-        <div class="footer-links">
-          <a href="/classes">Classes</a>
-          <a href="/tutors">Tutors</a>
-          <a href="/subjects">Subjects</a>
-          <a href="/index#faq">FAQ</a>
-          <a href="/privacy">Privacy</a>
-        </div>
-      </div>
-      <div class="footer-bottom text-center">
-        © 2025 Karakuli · karakuli.art@gmail.com
       </div>
     </div>
-  </footer>
+    <div class="tt reveal d3">
+      <div class="tt-stars">★★★★★</div>
+      <p class="tt-text">"Her classroom teacher pulled me aside to say Priya's confidence in math has jumped noticeably. I hadn't even told the school about KARAKULI yet."</p>
+      <div class="tt-foot">
+        <div class="tt-av tav3">👩</div>
+        <div>
+          <div class="tt-name">Priya L.</div>
+          <div class="tt-role">Mom of 8-year-old · 6 weeks in</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <script src="scripts.js"></script>
+<!-- ═══════════════════════════════════════ FAQ -->
+<section id="faq">
+  <div class="section-head reveal">
+    <h2>Questions? We've got answers.</h2>
+    <p>The ones parents ask most before booking.</p>
+  </div>
+  <div class="faq-list">
+    <details class="reveal d1">
+      <summary>What happens in the free lesson?</summary>
+      <p class="faq-body">Your child gets a full 45-minute live session with a real tutor. They'll create their character, name it, pick their look, and set off on the first quest. No prep needed — no worksheets, no homework. Just show up and play.</p>
+    </details>
+    <details class="reveal d2">
+      <summary>What if my child doesn't like it?</summary>
+      <p class="faq-body">Fewer than 1 in 20 kids don't come back for a second lesson. But if yours is one of them, that's perfectly fine — no payment, no pressure, no follow-up sales calls. We'd rather have kids who are genuinely excited than ones who are just attending.</p>
+    </details>
+    <details class="reveal d3">
+      <summary>How does it work technically?</summary>
+      <p class="faq-body">It's a video call — your child can join from any device: laptop, tablet, or phone. No downloads required. The tutor shares the game screen and guides your child through the lesson live. All you need is a camera and an internet connection.</p>
+    </details>
+    <details class="reveal d1">
+      <summary>How much does it cost after the free lesson?</summary>
+      <p class="faq-body">Pricing is personalised based on your child's age, frequency, and goals. Your tutor will walk you through the options at the end of the free lesson — no surprises, no pressure. You choose what works for your family.</p>
+    </details>
+    <details class="reveal d2">
+      <summary>My child is shy / hates math. Will this work?</summary>
+      <p class="faq-body">Honestly? Those are our best students. Shy kids thrive in 1-on-1 settings — no class to feel embarrassed in front of. And kids who "hate math" usually hate being confused, bored, or pressured. The game removes all three. We've turned around some serious math-avoiders.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ FINAL CTA -->
+<section id="cta">
+  <div class="cta-inner">
+    <h2 class="cta-h2 reveal">Book your child's<br><em>free lesson.</em></h2>
+    <p class="cta-sub reveal d1">No credit card · No commitment · Confirms in minutes</p>
+
+    <!-- FORM CTA -->
+    <div class="form-card reveal d2" id="form-cta" style="max-width:460px;margin:0 auto;text-align:left;">
+      <div class="form-step active" id="fc-s1">
+        <p class="form-step-title">How old is your child? 👧👦</p>
+        <div class="age-row">
+          <button class="age-btn" onclick="pickAge(this,'fc')">5–6 yrs</button>
+          <button class="age-btn" onclick="pickAge(this,'fc')">7–8 yrs</button>
+          <button class="age-btn" onclick="pickAge(this,'fc')">9–10 yrs</button>
+        </div>
+      </div>
+      <div class="form-step" id="fc-s2">
+        <button class="back-link" onclick="backStep('fc')">← Change age</button>
+        <p class="form-step-title">Book your free lesson 🎓</p>
+        <div class="form-group">
+          <label>Child's name</label>
+          <input type="text" placeholder="e.g. Sofia" id="fc-name" autocomplete="off" />
+        </div>
+        <div class="form-group">
+          <label>Your WhatsApp number</label>
+          <input type="tel" placeholder="+1 234 567 8900" id="fc-phone" autocomplete="tel" />
+        </div>
+        <div class="form-group">
+          <label>Preferred time</label>
+          <div class="select-wrap">
+            <select id="fc-time">
+              <option>Weekday morning (9–12)</option>
+              <option>Weekday afternoon (12–17)</option>
+              <option>Weekday evening (17–20)</option>
+              <option>Weekend morning (9–12)</option>
+              <option>Weekend afternoon (12–17)</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn btn-wa" onclick="sendWA('fc')">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Book Free Lesson on WhatsApp
+        </button>
+      </div>
+    </div>
+
+    <p class="cta-note reveal d3">🔒 First lesson completely free. No card needed.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ FOOTER -->
+<footer>
+  © 2025 KARAKULI · <a href="mailto:hello@karakuli.com">hello@karakuli.com</a>
+</footer>
+
+<!-- ═══════════════════════════════════════ STICKY MOBILE CTA -->
+<div id="sticky">
+  <span class="sticky-txt">Free lesson for your child 🎓</span>
+  <a href="#cta" class="sticky-btn">Book Free →</a>
+</div>
+
+<script>
+  /* ─── Two-step form ─── */
+  const ages = { fh: null, fc: null };
+
+  function pickAge(btn, prefix) {
+    ages[prefix] = btn.textContent.trim();
+    btn.closest('.form-card').querySelectorAll('.age-btn').forEach(b => b.classList.remove('sel'));
+    btn.classList.add('sel');
+    setTimeout(() => {
+      document.getElementById(prefix + '-s1').classList.remove('active');
+      document.getElementById(prefix + '-s2').classList.add('active');
+    }, 260);
+  }
+
+  function backStep(prefix) {
+    document.getElementById(prefix + '-s2').classList.remove('active');
+    document.getElementById(prefix + '-s1').classList.add('active');
+  }
+
+  function sendWA(prefix) {
+    const name  = document.getElementById(prefix + '-name').value.trim();
+    const phone = document.getElementById(prefix + '-phone').value.trim();
+    const time  = document.getElementById(prefix + '-time').value;
+    const age   = ages[prefix] || '(not specified)';
+
+    if (!name)  { alert('Please enter your child\'s name 😊'); return; }
+    if (!phone) { alert('Please enter your WhatsApp number 📱'); return; }
+
+    const msg = [
+      'Hi KARAKULI! 👋',
+      '',
+      "I'd like to book a FREE math lesson for my child.",
+      '',
+      '• Name: ' + name,
+      '• Age group: ' + age,
+      '• Preferred time: ' + time,
+      '• My WhatsApp: ' + phone,
+      '',
+      'Looking forward to it! 🎓'
+    ].join('\n');
+
+    window.open('https://wa.me/YOUR_NUMBER?text=' + encodeURIComponent(msg), '_blank');
+  }
+
+  /* ─── Scroll reveal ─── */
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('on');
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  /* ─── Sticky mobile CTA ─── */
+  const sticky = document.getElementById('sticky');
+  const heroEl = document.getElementById('hero');
+
+  const heroObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (window.innerWidth <= 768) {
+        sticky.classList.toggle('show', !e.isIntersecting);
+      }
+    });
+  }, { threshold: 0 });
+  heroObs.observe(heroEl);
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) sticky.classList.remove('show');
+  });
+</script>
+
 </body>
-
 </html>
