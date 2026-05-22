@@ -747,23 +747,22 @@
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
-        padding: 4px 4% 8px;
+        padding: 4px 0 8px;
       }
       .steps-carousel-wrap::-webkit-scrollbar { display: none; }
       .steps-grid {
         display: flex;
         flex-wrap: nowrap;
-        gap: 12px;
-        padding-right: 4%;
+        gap: 0;
       }
       .step-card {
-        min-width: 82vw;
+        min-width: 100vw;
         flex-shrink: 0;
         scroll-snap-align: start;
-        /* отключаем reveal-анимацию внутри карусели */
+        box-sizing: border-box;
         opacity: 1 !important;
         transform: none !important;
-        transition: box-shadow 0.2s, transform 0.2s !important;
+        transition: box-shadow 0.2s !important;
       }
       .steps-dots { display: flex; }
 
@@ -1136,7 +1135,7 @@
       if (window.innerWidth > 768) return;
       const card = stepsWrap.querySelector('.step-card');
       if (!card) return;
-      const cardW = card.offsetWidth + 12;
+      const cardW = card.offsetWidth;
       const idx = Math.min(Math.round(stepsWrap.scrollLeft / cardW), stepsDots.length - 1);
       stepsDots.forEach((d, i) => d.classList.toggle('active', i === idx));
     };
