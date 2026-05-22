@@ -742,23 +742,18 @@
       /* HOW IT WORKS — горизонтальная карусель */
       #how { padding: 56px 0; }
       #how .section-head { padding: 0 4%; }
-      .steps-carousel-wrap { overflow: visible; }
-      .steps-grid {
-        display: flex;
-        flex-wrap: nowrap;
-        gap: 0;
-        max-width: 100%;
-        margin: 0;
-        width: 100%;
+      .steps-carousel-wrap {
         overflow-x: scroll;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
+        display: flex;
+        flex-wrap: nowrap;
         padding: 4px 0 8px;
       }
-      .steps-grid::-webkit-scrollbar { display: none; }
+      .steps-carousel-wrap::-webkit-scrollbar { display: none; }
+      .steps-grid { display: contents; }
       .step-card {
-        min-width: 100%;
         flex-shrink: 0;
         scroll-snap-align: start;
         box-sizing: border-box;
@@ -1129,19 +1124,30 @@
 </div>
 
 <script>
-  /* ─── Steps carousel dots ─── */
-  const stepsGrid = document.querySelector('.steps-grid');
+  /* ─── Steps carousel ─── */
+  const stepsWrap = document.querySelector('.steps-carousel-wrap');
   const stepsDots = document.querySelectorAll('.steps-dot');
 
+  function initStepsCarousel() {
+    if (!stepsWrap || window.innerWidth > 768) return;
+    const vw = window.innerWidth;
+    stepsWrap.querySelectorAll('.step-card').forEach(card => {
+      card.style.minWidth = vw + 'px';
+      card.style.width = vw + 'px';
+      card.style.opacity = '1';
+      card.style.transform = 'none';
+    });
+  }
+
   const updateStepsDots = () => {
-    if (!stepsGrid || window.innerWidth > 768) return;
-    const w = stepsGrid.clientWidth;
-    if (!w) return;
-    const idx = Math.min(Math.round(stepsGrid.scrollLeft / w), stepsDots.length - 1);
+    if (!stepsWrap || window.innerWidth > 768) return;
+    const idx = Math.min(Math.round(stepsWrap.scrollLeft / window.innerWidth), stepsDots.length - 1);
     stepsDots.forEach((d, i) => d.classList.toggle('active', i === idx));
   };
 
-  if (stepsGrid) stepsGrid.addEventListener('scroll', updateStepsDots, { passive: true });
+  initStepsCarousel();
+  window.addEventListener('resize', initStepsCarousel, { passive: true });
+  if (stepsWrap) stepsWrap.addEventListener('scroll', updateStepsDots, { passive: true });
 
   /* ─── Scroll reveal ─── */
   const revealObs = new IntersectionObserver(entries => {
