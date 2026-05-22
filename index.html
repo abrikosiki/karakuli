@@ -5,9 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KARAKULI — Your Child Will Beg to Do Math</title>
   <meta name="description" content="Live 1-on-1 math tutoring for kids ages 5–10, wrapped in an RPG adventure. First lesson free." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,600&display=swap" rel="stylesheet" />
+  <style>
+    @font-face {
+      font-family: 'Fredoka One';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('/fonts/fredoka-one.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Nunito';
+      font-style: normal;
+      font-weight: 400 900;
+      font-display: swap;
+      src: url('/fonts/nunito-normal.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Nunito';
+      font-style: italic;
+      font-weight: 600;
+      font-display: swap;
+      src: url('/fonts/nunito-italic-600.woff2') format('woff2');
+    }
+  </style>
   <style>
     /* ═══════════════════════════════════════
        VARIABLES
@@ -38,7 +58,8 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Nunito', sans-serif;
+      font-family: 'Nunito', Arial, sans-serif;
+      font-style: normal;
       background: var(--cream);
       color: var(--ink);
       overflow-x: hidden;
@@ -46,7 +67,7 @@
     }
     a { text-decoration: none; color: inherit; }
     button { cursor: pointer; font-family: inherit; }
-    h1, h2, h3, h4 { font-family: 'Fredoka One', cursive; line-height: 1.15; }
+    h1, h2, h3, h4 { font-family: 'Fredoka One', Arial, sans-serif; font-style: normal; line-height: 1.15; }
 
     /* ═══════════════════════════════════════
        SCROLL REVEAL
@@ -69,7 +90,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-family: 'Fredoka One', cursive;
+      font-family: 'Fredoka One', Arial, sans-serif;
       border: var(--border);
       border-radius: var(--r);
       cursor: pointer;
@@ -133,7 +154,7 @@
       justify-content: space-between;
     }
     .logo {
-      font-family: 'Fredoka One', cursive;
+      font-family: 'Fredoka One', Arial, sans-serif;
       font-size: 1.75rem;
       letter-spacing: 0.5px;
     }
@@ -226,7 +247,7 @@
     @keyframes slideIn { from { opacity:0; transform:translateX(10px); } to { opacity:1; transform:translateX(0); } }
 
     .form-step-title {
-      font-family: 'Fredoka One', cursive;
+      font-family: 'Fredoka One', Arial, sans-serif;
       font-size: 1.25rem;
       text-align: center;
       margin-bottom: 18px;
@@ -237,7 +258,7 @@
     .age-btn {
       flex: 1;
       padding: 16px 6px;
-      font-family: 'Fredoka One', cursive;
+      font-family: 'Fredoka One', Arial, sans-serif;
       font-size: 1.1rem;
       background: var(--cream);
       color: var(--ink);
@@ -392,7 +413,7 @@
     }
     .ti { text-align: center; }
     .ti-ico  { font-size: 2rem; margin-bottom: 6px; }
-    .ti-big  { font-family: 'Fredoka One', cursive; font-size: 1.55rem; display: block; color: var(--ink); }
+    .ti-big  { font-family: 'Fredoka One', Arial, sans-serif; font-size: 1.55rem; display: block; color: var(--ink); }
     .ti-lbl  { font-size: 0.82rem; font-weight: 700; color: var(--ink-lite); }
 
     /* ═══════════════════════════════════════
@@ -405,7 +426,7 @@
       padding: 60px 6%;
     }
     .strip-lbl {
-      font-family: 'Fredoka One', cursive;
+      font-family: 'Fredoka One', Arial, sans-serif;
       font-size: 0.95rem;
       letter-spacing: 3px;
       text-transform: uppercase;
@@ -445,7 +466,7 @@
       font-size: 3rem;
     }
     .sc-mock-lbl {
-      font-family: 'Fredoka One', cursive;
+      font-family: 'Fredoka One', Arial, sans-serif;
       font-size: 0.78rem;
       color: rgba(255,255,255,0.88);
       letter-spacing: 1.5px;
@@ -487,7 +508,7 @@
     .step-card:nth-child(3) { background: #E8F9F7; }
     .step-card:nth-child(4) { background: var(--green-bg); }
     .step-ico   { font-size: 3rem; margin-bottom: 14px; display: block; }
-    .step-title { font-family: 'Fredoka One', cursive; font-size: 1.15rem; margin-bottom: 8px; }
+    .step-title { font-family: 'Fredoka One', Arial, sans-serif; font-size: 1.15rem; margin-bottom: 8px; }
     .step-text  { font-size: 0.9rem; font-weight: 600; color: var(--ink-lite); line-height: 1.55; }
 
     /* ═══════════════════════════════════════
@@ -517,7 +538,7 @@
     .fp:hover { transform: translate(-2px,-2px); box-shadow: var(--sh-md); }
     .fp-head  { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
     .fp-ico   { font-size: 1.9rem; }
-    .fp-title { font-family: 'Fredoka One', cursive; font-size: 1.05rem; }
+    .fp-title { font-family: 'Fredoka One', Arial, sans-serif; font-size: 1.05rem; }
     .fp-desc  { font-size: 0.88rem; font-weight: 600; color: var(--ink-lite); line-height: 1.5; }
 
     /* ═══════════════════════════════════════
@@ -556,7 +577,7 @@
     .ta1 { background: linear-gradient(135deg, #FFE0B0, #FFB060); }
     .ta2 { background: linear-gradient(135deg, #B5D5FF, #80B0FF); }
     .ta3 { background: linear-gradient(135deg, #A8E6CF, #60C8A0); }
-    .t-name  { font-family: 'Fredoka One', cursive; font-size: 1.3rem; margin-bottom: 3px; }
+    .t-name  { font-family: 'Fredoka One', Arial, sans-serif; font-size: 1.3rem; margin-bottom: 3px; }
     .t-spec  { font-size: 0.83rem; font-weight: 700; color: var(--ink-lite); margin-bottom: 14px; }
     .t-quote {
       font-style: italic;
@@ -609,7 +630,7 @@
     .tav1 { background: #FFD090; }
     .tav2 { background: #B5D5FF; }
     .tav3 { background: #A8E6CF; }
-    .tt-name { font-family: 'Fredoka One', cursive; font-size: 1rem; }
+    .tt-name { font-family: 'Fredoka One', Arial, sans-serif; font-size: 1rem; }
     .tt-role { font-size: 0.78rem; font-weight: 700; color: var(--ink-lite); }
 
     /* ═══════════════════════════════════════
@@ -635,7 +656,7 @@
     }
     summary {
       padding: 18px 22px;
-      font-family: 'Fredoka One', cursive;
+      font-family: 'Fredoka One', Arial, sans-serif;
       font-size: 1rem;
       color: var(--ink);
       cursor: pointer;
@@ -685,7 +706,7 @@
     }
     .cta-inner { position: relative; z-index: 1; }
     .cta-h2 {
-      font-family: 'Fredoka One', cursive;
+      font-family: 'Fredoka One', Arial, sans-serif;
       font-size: clamp(2rem, 5.5vw, 3.5rem);
       color: var(--white);
       margin-bottom: 10px;
@@ -725,11 +746,11 @@
       gap: 12px;
     }
     #sticky.show { display: flex; }
-    .sticky-txt { font-family: 'Fredoka One', cursive; font-size: 1rem; color: var(--ink); }
+    .sticky-txt { font-family: 'Fredoka One', Arial, sans-serif; font-size: 1rem; color: var(--ink); }
     .sticky-btn {
       background: var(--ink);
       color: var(--white);
-      font-family: 'Fredoka One', cursive;
+      font-family: 'Fredoka One', Arial, sans-serif;
       font-size: 0.95rem;
       padding: 10px 18px;
       border: none;
