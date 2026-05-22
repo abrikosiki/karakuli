@@ -232,94 +232,6 @@
     }
 
     /* ─── Form card ─── */
-    .form-card {
-      background: var(--white);
-      border: var(--border);
-      border-radius: 24px;
-      box-shadow: var(--sh-lg);
-      padding: 28px 28px 24px;
-      max-width: 460px;
-      margin: 0 auto;
-      text-align: left;
-    }
-    .form-step  { display: none; }
-    .form-step.active { display: block; animation: slideIn 0.25s ease; }
-    @keyframes slideIn { from { opacity:0; transform:translateX(10px); } to { opacity:1; transform:translateX(0); } }
-
-    .form-step-title {
-      font-family: 'Fredoka One', Arial, sans-serif;
-      font-size: 1.25rem;
-      text-align: center;
-      margin-bottom: 18px;
-      color: var(--ink);
-    }
-
-    .age-row { display: flex; gap: 10px; }
-    .age-btn {
-      flex: 1;
-      padding: 16px 6px;
-      font-family: 'Fredoka One', Arial, sans-serif;
-      font-size: 1.1rem;
-      background: var(--cream);
-      color: var(--ink);
-      border: var(--border);
-      border-radius: 14px;
-      box-shadow: var(--sh-sm);
-      transition: all 0.15s;
-    }
-    .age-btn:hover { background: #FFE0A0; transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--ink); }
-    .age-btn.sel   { background: var(--gold); transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--ink); }
-
-    .back-link {
-      background: none;
-      border: none;
-      font-weight: 700;
-      font-size: 0.88rem;
-      color: var(--ink-lite);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      margin-bottom: 14px;
-      padding: 0;
-    }
-
-    .form-group { margin-bottom: 13px; }
-    .form-group label {
-      display: block;
-      font-weight: 800;
-      font-size: 0.8rem;
-      margin-bottom: 5px;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      color: var(--ink);
-    }
-    .form-group input,
-    .form-group select {
-      width: 100%;
-      padding: 11px 14px;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      background: var(--cream);
-      color: var(--ink);
-      border: var(--border);
-      border-radius: 12px;
-      outline: none;
-      -webkit-appearance: none;
-      appearance: none;
-    }
-    .form-group input:focus,
-    .form-group select:focus { box-shadow: var(--sh-sm); }
-
-    .select-wrap { position: relative; }
-    .select-wrap::after {
-      content: '▾';
-      position: absolute;
-      right: 14px; top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-      color: var(--ink);
-    }
 
     /* Social proof row */
     .social-proof {
@@ -787,7 +699,7 @@
   <div class="logo">
     <img src="https://static.tildacdn.com/tild3631-6266-4832-b965-356232636437/noroot.png" alt="KARAKULI" style="height:40px;display:block;">
   </div>
-  <a href="#cta" class="btn btn-gold">Book Free Lesson 🎓</a>
+  <a href="https://wa.me/13472005282?text=Hi!%20I%20would%20like%20to%20sign%20up%20for%20a%20free%20lesson" target="_blank" rel="noopener" class="btn btn-gold">Book Free Lesson 🎓</a>
 </nav>
 
 <!-- ═══════════════════════════════════════ HERO -->
@@ -812,45 +724,10 @@
       When kids love the process, progress takes care of itself.
     </p>
 
-    <!-- FORM HERO -->
-    <div class="form-card" id="form-hero">
-      <div class="form-step active" id="fh-s1">
-        <p class="form-step-title">How old is your child? 👧👦</p>
-        <div class="age-row">
-          <button class="age-btn" onclick="pickAge(this,'fh')">5–6 yrs</button>
-          <button class="age-btn" onclick="pickAge(this,'fh')">7–8 yrs</button>
-          <button class="age-btn" onclick="pickAge(this,'fh')">9–10 yrs</button>
-        </div>
-      </div>
-      <div class="form-step" id="fh-s2">
-        <button class="back-link" onclick="backStep('fh')">← Change age</button>
-        <p class="form-step-title">Book your free lesson 🎓</p>
-        <div class="form-group">
-          <label>Child's name</label>
-          <input type="text" placeholder="e.g. Sofia" id="fh-name" autocomplete="off" />
-        </div>
-        <div class="form-group">
-          <label>Your WhatsApp number</label>
-          <input type="tel" placeholder="+1 234 567 8900" id="fh-phone" autocomplete="tel" />
-        </div>
-        <div class="form-group">
-          <label>Preferred time</label>
-          <div class="select-wrap">
-            <select id="fh-time">
-              <option>Weekday morning (9–12)</option>
-              <option>Weekday afternoon (12–17)</option>
-              <option>Weekday evening (17–20)</option>
-              <option>Weekend morning (9–12)</option>
-              <option>Weekend afternoon (12–17)</option>
-            </select>
-          </div>
-        </div>
-        <button class="btn btn-wa" onclick="sendWA('fh')">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-          Book Free Lesson on WhatsApp
-        </button>
-      </div>
-    </div>
+    <a href="https://wa.me/13472005282?text=Hi!%20I%20would%20like%20to%20sign%20up%20for%20a%20free%20lesson" target="_blank" rel="noopener" class="btn btn-wa">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      Book Free Lesson on WhatsApp
+    </a>
 
     <div class="social-proof">
       <div class="avatars">
@@ -1113,45 +990,10 @@
     <h2 class="cta-h2 reveal">Book your child's<br><em>free lesson.</em></h2>
     <p class="cta-sub reveal d1">No credit card · No commitment · Confirms in minutes</p>
 
-    <!-- FORM CTA -->
-    <div class="form-card reveal d2" id="form-cta" style="max-width:460px;margin:0 auto;text-align:left;">
-      <div class="form-step active" id="fc-s1">
-        <p class="form-step-title">How old is your child? 👧👦</p>
-        <div class="age-row">
-          <button class="age-btn" onclick="pickAge(this,'fc')">5–6 yrs</button>
-          <button class="age-btn" onclick="pickAge(this,'fc')">7–8 yrs</button>
-          <button class="age-btn" onclick="pickAge(this,'fc')">9–10 yrs</button>
-        </div>
-      </div>
-      <div class="form-step" id="fc-s2">
-        <button class="back-link" onclick="backStep('fc')">← Change age</button>
-        <p class="form-step-title">Book your free lesson 🎓</p>
-        <div class="form-group">
-          <label>Child's name</label>
-          <input type="text" placeholder="e.g. Sofia" id="fc-name" autocomplete="off" />
-        </div>
-        <div class="form-group">
-          <label>Your WhatsApp number</label>
-          <input type="tel" placeholder="+1 234 567 8900" id="fc-phone" autocomplete="tel" />
-        </div>
-        <div class="form-group">
-          <label>Preferred time</label>
-          <div class="select-wrap">
-            <select id="fc-time">
-              <option>Weekday morning (9–12)</option>
-              <option>Weekday afternoon (12–17)</option>
-              <option>Weekday evening (17–20)</option>
-              <option>Weekend morning (9–12)</option>
-              <option>Weekend afternoon (12–17)</option>
-            </select>
-          </div>
-        </div>
-        <button class="btn btn-wa" onclick="sendWA('fc')">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-          Book Free Lesson on WhatsApp
-        </button>
-      </div>
-    </div>
+    <a href="https://wa.me/13472005282?text=Hi!%20I%20would%20like%20to%20sign%20up%20for%20a%20free%20lesson" target="_blank" rel="noopener" class="btn btn-wa reveal d2" style="max-width:460px;margin:0 auto;">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      Book Free Lesson on WhatsApp
+    </a>
 
     <p class="cta-note reveal d3">🔒 First lesson completely free. No card needed.</p>
   </div>
@@ -1165,53 +1007,10 @@
 <!-- ═══════════════════════════════════════ STICKY MOBILE CTA -->
 <div id="sticky">
   <span class="sticky-txt">Free lesson for your child 🎓</span>
-  <a href="#cta" class="sticky-btn">Book Free →</a>
+  <a href="https://wa.me/13472005282?text=Hi!%20I%20would%20like%20to%20sign%20up%20for%20a%20free%20lesson" target="_blank" rel="noopener" class="sticky-btn">Book Free →</a>
 </div>
 
 <script>
-  /* ─── Two-step form ─── */
-  const ages = { fh: null, fc: null };
-
-  function pickAge(btn, prefix) {
-    ages[prefix] = btn.textContent.trim();
-    btn.closest('.form-card').querySelectorAll('.age-btn').forEach(b => b.classList.remove('sel'));
-    btn.classList.add('sel');
-    setTimeout(() => {
-      document.getElementById(prefix + '-s1').classList.remove('active');
-      document.getElementById(prefix + '-s2').classList.add('active');
-    }, 260);
-  }
-
-  function backStep(prefix) {
-    document.getElementById(prefix + '-s2').classList.remove('active');
-    document.getElementById(prefix + '-s1').classList.add('active');
-  }
-
-  function sendWA(prefix) {
-    const name  = document.getElementById(prefix + '-name').value.trim();
-    const phone = document.getElementById(prefix + '-phone').value.trim();
-    const time  = document.getElementById(prefix + '-time').value;
-    const age   = ages[prefix] || '(not specified)';
-
-    if (!name)  { alert('Please enter your child\'s name 😊'); return; }
-    if (!phone) { alert('Please enter your WhatsApp number 📱'); return; }
-
-    const msg = [
-      'Hi KARAKULI! 👋',
-      '',
-      "I'd like to book a FREE math lesson for my child.",
-      '',
-      '• Name: ' + name,
-      '• Age group: ' + age,
-      '• Preferred time: ' + time,
-      '• My WhatsApp: ' + phone,
-      '',
-      'Looking forward to it! 🎓'
-    ].join('\n');
-
-    window.open('https://wa.me/YOUR_NUMBER?text=' + encodeURIComponent(msg), '_blank');
-  }
-
   /* ─── Scroll reveal ─── */
   const revealObs = new IntersectionObserver(entries => {
     entries.forEach(e => {
