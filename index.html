@@ -742,21 +742,23 @@
       /* HOW IT WORKS — горизонтальная карусель */
       #how { padding: 56px 0; }
       #how .section-head { padding: 0 4%; }
-      .steps-carousel-wrap {
-        overflow-x: auto;
+      .steps-carousel-wrap { overflow: visible; }
+      .steps-grid {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 0;
+        max-width: 100%;
+        margin: 0;
+        width: 100%;
+        overflow-x: scroll;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
         padding: 4px 0 8px;
       }
-      .steps-carousel-wrap::-webkit-scrollbar { display: none; }
-      .steps-grid {
-        display: flex;
-        flex-wrap: nowrap;
-        gap: 0;
-      }
+      .steps-grid::-webkit-scrollbar { display: none; }
       .step-card {
-        min-width: 100vw;
+        min-width: 100%;
         flex-shrink: 0;
         scroll-snap-align: start;
         box-sizing: border-box;
@@ -1128,19 +1130,18 @@
 
 <script>
   /* ─── Steps carousel dots ─── */
-  const stepsWrap = document.querySelector('.steps-carousel-wrap');
+  const stepsGrid = document.querySelector('.steps-grid');
   const stepsDots = document.querySelectorAll('.steps-dot');
-  if (stepsWrap && stepsDots.length) {
-    const updateStepsDots = () => {
-      if (window.innerWidth > 768) return;
-      const card = stepsWrap.querySelector('.step-card');
-      if (!card) return;
-      const cardW = card.offsetWidth;
-      const idx = Math.min(Math.round(stepsWrap.scrollLeft / cardW), stepsDots.length - 1);
-      stepsDots.forEach((d, i) => d.classList.toggle('active', i === idx));
-    };
-    stepsWrap.addEventListener('scroll', updateStepsDots, { passive: true });
-  }
+
+  const updateStepsDots = () => {
+    if (!stepsGrid || window.innerWidth > 768) return;
+    const w = stepsGrid.clientWidth;
+    if (!w) return;
+    const idx = Math.min(Math.round(stepsGrid.scrollLeft / w), stepsDots.length - 1);
+    stepsDots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  };
+
+  if (stepsGrid) stepsGrid.addEventListener('scroll', updateStepsDots, { passive: true });
 
   /* ─── Scroll reveal ─── */
   const revealObs = new IntersectionObserver(entries => {
