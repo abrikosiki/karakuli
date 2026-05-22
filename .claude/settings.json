@@ -7,7 +7,7 @@
           {
             "type": "command",
             "command": "cd /Users/ilmirakenzibaeva/Desktop/karakuli && git add -A && (git diff --cached --quiet || (git commit -m \"Auto-deploy: $(date '+%Y-%m-%d %H:%M:%S')\" && git push origin main))",
-            "timeout": 30,
+            "timeout": 60,
             "statusMessage": "Деплоим изменения..."
           }
         ]
