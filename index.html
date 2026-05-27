@@ -1249,6 +1249,13 @@
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
+  /* ─── Meta Pixel: Lead event on WhatsApp click ─── */
+  document.querySelectorAll('a[href*="wa.me"]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      if (typeof fbq === 'function') fbq('track', 'Lead');
+    });
+  });
+
   /* ─── Sticky mobile CTA ─── */
   const sticky = document.getElementById('sticky');
   const heroEl = document.getElementById('hero');
