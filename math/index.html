@@ -1530,26 +1530,19 @@
     0: ['10:00','11:00','12:00','13:00','14:00']                  // Вс 10:00–15:00
   };
 
-  var bkData = { parentName: null, age: null, whatsapp: null, email: null, date: null, time: null };
+  var bkData = { parentName: null, age: null, whatsapp: null, date: null, time: null };
   var bkDatesData = [];
   var bkSelDateEl = null, bkSelTimeEl = null;
 
   function bkPad(n) { return n < 10 ? '0' + n : '' + n; }
   function bkWaDigits(num) { return num.replace(/\D/g, ''); }
 
+  /* Кнопки CTA по странице просто прокручивают к встроенному виджету */
   function openBooking(e) {
     if (e && e.preventDefault) e.preventDefault();
-    document.getElementById('bkOverlay').classList.add('open');
-    document.body.style.overflow = 'hidden';
-    bkGoStep(1);
+    var w = document.getElementById('bookingWidget');
+    if (w) w.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
-  function closeBooking() {
-    document.getElementById('bkOverlay').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-  document.getElementById('bkOverlay').addEventListener('click', function(e) {
-    if (e.target === this) closeBooking();
-  });
 
   function bkGoStep(n) {
     document.querySelectorAll('.bk-step').forEach(function(s) { s.classList.remove('active'); });
@@ -1560,17 +1553,14 @@
     var name  = document.getElementById('bkParentName').value.trim();
     var age   = document.getElementById('bkChildAge').value;
     var wa    = document.getElementById('bkWhatsApp').value.trim();
-    var email = document.getElementById('bkEmail').value.trim();
 
-    if (!name || !age || !wa || !email) { alert('Please fill in all fields'); return; }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Please enter a valid email'); return; }
+    if (!name || !age || !wa) { alert('Please fill in all fields'); return; }
     if (wa.indexOf('+') === -1) { alert('Please include the country code with + (e.g. +972 or +7)'); return; }
     if (bkWaDigits(wa).length < 8) { alert('Please enter a valid WhatsApp number'); return; }
 
     bkData.parentName = name;
     bkData.age = age;
     bkData.whatsapp = wa;
-    bkData.email = email;
 
     if (age === 'less than 5' || age === 'older than 10') {
       bkSendOutOfRange();
