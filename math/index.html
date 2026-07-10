@@ -907,14 +907,16 @@
       width: 100%;
       padding: 13px 14px;
       font-family: 'Nunito', Arial, sans-serif;
-      font-size: 1rem;
+      font-size: 16px; /* 16px, чтобы iOS не зумил при фокусе */
       font-weight: 700;
       color: var(--ink);
-      background: var(--white);
+      background: var(--cream);
       border: var(--border);
       border-radius: 12px;
       box-shadow: var(--sh-sm);
       outline: none;
+      -webkit-appearance: none;
+      appearance: none;
     }
     .bk-field input:focus,
     .bk-field select:focus { box-shadow: 5px 5px 0 var(--gold); }
