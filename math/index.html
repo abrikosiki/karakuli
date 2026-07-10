@@ -870,46 +870,20 @@
     }
 
     /* ═══════════════════════════════════════
-       BOOKING MODAL
+       BOOKING WIDGET (inline)
     ═══════════════════════════════════════ */
-    .bk-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 500;
-      background: rgba(44, 26, 14, 0.62);
-      padding: 20px;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    .bk-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
-
     .bk-card {
-      background: var(--cream);
+      background: var(--white);
       border: var(--border);
       border-radius: 22px;
       box-shadow: var(--sh-lg);
       width: 100%;
       max-width: 430px;
-      margin: auto;
-      padding: 30px 26px 26px;
+      margin: 6px auto 0;
+      padding: 28px 26px 26px;
       position: relative;
+      text-align: left;
     }
-    .bk-close {
-      position: absolute;
-      top: 14px; right: 14px;
-      width: 34px; height: 34px;
-      border: var(--border);
-      border-radius: 10px;
-      background: var(--white);
-      box-shadow: var(--sh-sm);
-      font-size: 1rem;
-      color: var(--ink);
-      line-height: 1;
-      display: flex; align-items: center; justify-content: center;
-      transition: transform 0.12s;
-    }
-    .bk-close:hover { transform: translate(-1px, -1px); }
 
     .bk-step { display: none; }
     .bk-step.active { display: block; animation: bkFade 0.35s ease; }
