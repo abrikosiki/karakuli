@@ -1405,19 +1405,9 @@
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-  /* ─── Meta Pixel + Telegram: fire on WhatsApp click ─── */
+  /* ─── Любая WhatsApp-кнопка теперь открывает окно записи ─── */
   document.querySelectorAll('a[href*="wa.me"]').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      if (typeof fbq === 'function') fbq('track', 'Lead', { content_name: 'landing_math_variant_b' });
-
-      var now = new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow', hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit' });
-      var text = '🔥 Новый лид! [Вариант B · /math]\n\nКто-то нажал «Book Free Lesson» на странице /math (тест)\n⏰ ' + now + ' (МСК)';
-      fetch('https://api.telegram.org/bot8526009584:AAH-hDqYhPz-1A5tqdvET2Bex52zJtRHMVM/sendMessage', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: '-5113540334', text: text })
-      });
-    });
+    btn.addEventListener('click', function(e) { openBooking(e); });
   });
 
   /* ─── Sticky mobile CTA ─── */
