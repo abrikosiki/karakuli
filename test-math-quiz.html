@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karakuli Math Quiz — TEST</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            background: #faf9f6;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #faf9f6;
+            min-height: auto;
+            padding: 0;
+        }
+
+        /* Тестовый баннер сверху — виден только в тестовой версии */
+        .test-banner {
+            background: #FFF3CD;
+            border-bottom: 2px solid #FFE69C;
+            color: #856404;
+            text-align: center;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .quiz-wrapper {
+            padding: 0 0 40px 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero-illustration {
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .hero-illustration img {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+        }
+
+        .card {
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 40px;
+            max-width: 600px;
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .card-header h1 {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+            font-size: 28px;
+            color: #FE523B;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .quiz-step {
+            display: none;
+        }
+
+        .quiz-step.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 15px;
+            border: 1.5px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s;
+            background: #faf9f6;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #FE523B;
+            box-shadow: 0 0 0 3px rgba(254, 82, 59, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+        }
+
+        .phone-group {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 10px;
+        }
+
+        .date-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .date-slot {
+            padding: 12px;
+            background: #F8F9FA;
+            border: 2px solid #E9ECEF;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .date-slot:hover {
+            border-color: #FE523B;
+            transform: translateY(-2px);
+        }
+
+        .date-slot.selected {
+            background: #FE523B;
+            color: white;
+            border-color: #FE523B;
+        }
+
+        .times-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #E9ECEF;
+        }
+
+        .times-section h3 {
+            font-family: 'Comic Sans MS', sans-serif;
+            font-size: 18px;
+            color: #FE523B;
+            margin-bottom: 15px;
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 10px;
+        }
+
+        .time-slot {
+            padding: 12px;
+            background: #F8F9FA;
+            border: 2px solid #E9ECEF;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .time-slot:hover {
+            border-color: #FE523B;
+            transform: translateY(-2px);
+        }
+
+        .time-slot.selected {
+            background: #FE523B;
+            color: white;
+            border-color: #FE523B;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            background: #FE523B;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+            margin-top: 20px;
+        }
+
+        .btn:hover:not(:disabled) {
+            background: #E63E26;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(254, 82, 59, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #F8F9FA;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #E9ECEF;
+            box-shadow: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        .success-content {
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 80px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .success-content h2 {
+            font-family: 'Comic Sans MS', sans-serif;
+            font-size: 32px;
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+
+        .success-content p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .detail-box {
+            background: #FFF9F0;
+            border: 2px solid #FFE4B5;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .detail-box h3 {
+            font-size: 18px;
+            color: #CC8800;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .detail-box p {
+            margin: 8px 0;
+            color: #333;
+            font-size: 15px;
+        }
+
+        .detail-box strong {
+            color: #666;
+        }
+
+        .info-box {
+            background: #F0FAF0;
+            border: 2px solid #C8E6C9;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .info-box h3 {
+            font-size: 16px;
+            color: #2E7D32;
+            margin-bottom: 10px;
+        }
+
+        .info-box ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .info-box li {
+            padding: 5px 0;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .info-box li:before {
+            content: "✓ ";
+            color: #4CAF50;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .challenge-section {
+            border-top: 2px solid #E9ECEF;
+            padding-top: 30px;
+            margin-top: 30px;
+        }
+
+        .challenge-section h3 {
+            font-family: 'Comic Sans MS', sans-serif;
+            font-size: 22px;
+            color: #FE523B;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .challenge-section .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .challenge-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .challenge-option {
+            padding: 16px 20px;
+            background: #F8F9FA;
+            border: 2px solid #E9ECEF;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .challenge-option:hover {
+            border-color: #FE523B;
+            transform: translateX(5px);
+        }
+
+        .challenge-option.selected {
+            background: #FFF5F0;
+            border-color: #FE523B;
+        }
+
+        .challenge-option .icon {
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+
+        .challenge-option .text {
+            flex: 1;
+            text-align: left;
+        }
+
+        .challenge-option .title {
+            font-weight: 700;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .challenge-option .desc {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .features {
+            width: 100%;
+            max-width: 100%;
+            margin: -15px auto 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .feature-item {
+            background: white;
+            border: 2px solid #FFE4DD;
+            border-radius: 10px;
+            padding: 12px 8px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .feature-item:hover {
+            border-color: #FE523B;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(254, 82, 59, 0.2);
+        }
+
+        .feature-item h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            color: #FE523B;
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 1.3;
+        }
+
+        .custom-alert {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .custom-alert.show {
+            display: flex;
+        }
+
+        .alert-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: alertSlideIn 0.3s ease;
+        }
+
+        @keyframes alertSlideIn {
+            from { opacity: 0; transform: translateY(-50px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .alert-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        .alert-message {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .alert-button {
+            background: #FE523B;
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .alert-button:hover {
+            background: #E63E26;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(254, 82, 59, 0.3);
+        }
+
+        /* Desktop */
+        @media (min-width: 768px) {
+            .quiz-wrapper {
+                padding: 110px 0 40px 0;
+            }
+
+            .quiz-wrapper .container {
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-items: flex-start;
+                gap: 80px;
+                max-width: 1350px;
+            }
+
+            .hero-illustration {
+                flex: 0 0 580px;
+                max-width: 580px;
+                order: 1;
+            }
+
+            .card {
+                flex: 0 0 380px;
+                max-width: 380px;
+                padding: 28px;
+                order: 2;
+                margin-left: 100px;
+            }
+
+            .features {
+                order: 3;
+                width: calc(100% + 40px);
+                margin-left: -20px;
+                margin-right: -20px;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 15px;
+                margin-top: -60px;
+                max-width: none;
+                padding: 0 20px;
+            }
+
+            .card-header h1 {
+                font-size: 21px;
+            }
+
+            .feature-item {
+                padding: 15px 10px;
+            }
+
+            .feature-item h3 {
+                font-size: 15px;
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 767px) {
+            .card {
+                padding: 30px 20px;
+            }
+
+            .features {
+                margin-top: -30px;
+            }
+
+            .feature-item {
+                padding: 20px 15px;
+                min-height: 90px;
+            }
+
+            .feature-item h3 {
+                font-size: 13px;
+                line-height: 1.4;
+            }
+
+            .card-header h1 {
+                font-size: 20px;
+                font-style: normal;
+            }
+
+            .phone-group {
+                grid-template-columns: 90px 1fr;
+            }
+
+            .hero-illustration {
+                max-width: 100%;
+            }
+
+            .success-content h2 {
+                font-style: normal;
+            }
+
+            .challenge-section h3 {
+                font-style: normal;
+            }
+
+            .times-section h3 {
+                font-style: normal;
+            }
+
+            #selectedDateDisplay {
+                font-style: normal;
+                font-family: 'Montserrat', sans-serif;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ТЕСТОВЫЙ РЕЖИМ: запросы в календарь и Telegram замоканы, данные фейковые -->
+    <div class="test-banner">
+        🧪 ТЕСТОВАЯ ВЕРСИЯ — слоты дат/времени сгенерированы локально, реальные заявки НЕ отправляются
+    </div>
+
+    <div class="quiz-wrapper">
+        <div class="container">
+            <!-- Hero illustration -->
+            <div class="hero-illustration">
+                <img src="https://static.tildacdn.com/tild3033-3739-4665-a463-353964393435/ChatGPT_Image_3__202.webp" alt="Math illustration">
+            </div>
+
+            <!-- Features section -->
+            <div class="features">
+                <div class="feature-item">
+                    <h3>Personalized 1:1 Classes</h3>
+                </div>
+                <div class="feature-item">
+                    <h3>Math Disguised as a Game</h3>
+                </div>
+                <div class="feature-item">
+                    <h3>Weekly Progress Reports</h3>
+                </div>
+                <div class="feature-item">
+                    <h3>From "I Hate Math" to "When's My Next Lesson?"</h3>
+                </div>
+            </div>
+
+            <!-- Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h1>Get your free trial class with our expert tutor</h1>
+                </div>
+
+                <!-- Step 1: Basic Info -->
+                <div class="quiz-step active" id="step1">
+                    <div class="form-group">
+                        <label>Parent's name</label>
+                        <input type="text" id="parentName" placeholder="Your name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Child's age</label>
+                        <select id="childAge">
+                            <option value="">Select age</option>
+                            <option value="less than 5">Less than 5 y.o.</option>
+                            <option value="5">5 years old</option>
+                            <option value="6">6 years old</option>
+                            <option value="7">7 years old</option>
+                            <option value="8">8 years old</option>
+                            <option value="9">9 years old</option>
+                            <option value="older than 9">Older than 9 y.o.</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone number</label>
+                        <input type="tel" id="whatsapp" placeholder="+972 XX XXX XXXX">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Parent's email address *</label>
+                        <input type="email" id="email" placeholder="your@email.com" required>
+                    </div>
+
+                    <button class="btn" id="nextBtn" onclick="goToSlots()">Next →</button>
+                </div>
+
+                <!-- Step 2: Date & Time -->
+                <div class="quiz-step" id="step2">
+                    <div class="form-group">
+                        <label>Select a date</label>
+                        <div id="datesContainer" class="date-slots loading">Loading available dates...</div>
+                    </div>
+
+                    <div id="timesSection" class="times-section" style="display:none;">
+                        <h3 id="selectedDateDisplay"></h3>
+                        <div id="timesContainer" class="time-slots"></div>
+                    </div>
+
+                    <button class="btn-secondary btn" onclick="goToStep(1)">← Back</button>
+                    <button class="btn" id="confirmBtn" disabled onclick="confirmBooking()">Confirm booking</button>
+                </div>
+
+                <!-- Step 3: Success -->
+                <div class="quiz-step" id="step3">
+                    <div class="success-content">
+
+                        <h1 style="font-family:'Comic Sans MS','Chalkboard SE',sans-serif; font-size:24px; color:#FE523B; font-weight:700; line-height:1.3; text-align:center; margin-bottom:24px;">
+                            Great! Keep an eye on your SMS and email — we'll send you updates and a Zoom link for your math class
+                        </h1>
+
+                        <div class="detail-box">
+                            <h3>Free Trial Class Details</h3>
+                            <p><strong>Date:</strong> <span id="successDate"></span></p>
+                            <p><strong>Time:</strong> <span id="successTime"></span></p>
+                            <p><strong>Parent:</strong> <span id="successParent"></span></p>
+                            <p><strong>WhatsApp:</strong> <span id="successWhatsApp"></span></p>
+                        </div>
+
+                        <!-- НОВЫЙ БЛОК: Имя ребенка -->
+                        <div class="challenge-section" id="childNameSection">
+                            <h3>What is your child's name?</h3>
+                            <p class="subtitle">Please tell us your child's name</p>
+
+                            <div class="form-group" style="text-align: left; margin-bottom: 20px;">
+                                <input type="text" id="childNameInput" placeholder="Child's name">
+                            </div>
+
+                            <button class="btn" id="childNameBtn" onclick="submitChildName()">Next</button>
+                        </div>
+
+                        <!-- ИЗМЕНЁННЫЙ БЛОК: Скрыт по умолчанию через style="display:none;" -->
+                        <div class="challenge-section" id="challengeSection" style="display:none;">
+                            <h3>How's your child doing in math?</h3>
+                            <p class="subtitle">To help us personalize the trial, take a minute to tell us more</p>
+
+                            <div class="challenge-options">
+                                <div class="challenge-option" onclick="selectChallenge(this, 'needs')">
+                                    <div class="icon">⭐</div>
+                                    <div class="text">
+                                        <div class="title">NEEDS SUPPORT</div>
+                                        <div class="desc">Finding current math topics difficult to grasp</div>
+                                    </div>
+                                </div>
+                                <div class="challenge-option" onclick="selectChallenge(this, 'keeping')">
+                                    <div class="icon">⭐</div>
+                                    <div class="text">
+                                        <div class="title">KEEPING UP</div>
+                                        <div class="desc">Meeting grade-level expectations with room to grow</div>
+                                    </div>
+                                </div>
+                                <div class="challenge-option" onclick="selectChallenge(this, 'excelling')">
+                                    <div class="icon">⭐</div>
+                                    <div class="text">
+                                        <div class="title">EXCELLING</div>
+                                        <div class="desc">Seeking more rigorous and challenging material</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="btn" id="challengeBtn" disabled onclick="submitChallenge()">Next</button>
+                        </div>
+
+                        <div class="challenge-section" id="focusSection" style="display:none;">
+                            <h3>What would you like your child to focus on?</h3>
+                            <p class="subtitle">Select one or more areas</p>
+
+                            <div class="challenge-options">
+                                <div class="challenge-option" onclick="selectFocus(this, 'fundamentals')">
+                                    <div class="icon">⭐</div>
+                                    <div class="text">
+                                        <div class="title">BUILD FUNDAMENTALS AND BOOST CONFIDENCE</div>
+                                    </div>
+                                </div>
+                                <div class="challenge-option" onclick="selectFocus(this, 'relatable')">
+                                    <div class="icon">⭐</div>
+                                    <div class="text">
+                                        <div class="title">MAKE MATH RELATABLE AND ENJOYABLE</div>
+                                    </div>
+                                </div>
+                                <div class="challenge-option" onclick="selectFocus(this, 'homework')">
+                                    <div class="icon">⭐</div>
+                                    <div class="text">
+                                        <div class="title">KEEP UP WITH HOMEWORK AND SCHOOL TESTS</div>
+                                    </div>
+                                </div>
+                                <div class="challenge-option" onclick="selectFocus(this, 'speed')">
+                                    <div class="icon">⭐</div>
+                                    <div class="text">
+                                        <div class="title">ENHANCE CALCULATION SPEED AND ACCURACY</div>
+                                    </div>
+                                </div>
+                                <div class="challenge-option" onclick="selectFocus(this, 'problem-solving')">
+                                    <div class="icon">⭐</div>
+                                    <div class="text">
+                                        <div class="title">DEVELOP PROBLEM-SOLVING THINKING</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="btn" id="focusBtn" disabled onclick="submitFocus()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Out of Age Range -->
+                <div class="quiz-step" id="step4">
+                    <div class="success-content">
+                        <h2 style="color: #FE523B; font-size: 26px; margin-bottom: 20px;">Thank You for Your Interest!</h2>
+
+                        <div class="info-box" style="background: #FFF9F0; border-color: #FFE4B5; margin-bottom: 20px;">
+                            <p style="font-size: 16px; line-height: 1.6; margin: 0; color: #333;">
+                                Our lessons are currently for children ages <strong>5–9</strong>, so we wouldn't be the right fit just yet.
+                            </p>
+                        </div>
+
+                        <div class="info-box" style="background: #F0FAF0; border-color: #C8E6C9;">
+                            <p style="font-size: 16px; line-height: 1.6; margin: 0; color: #333;">
+                                <strong>Good news!</strong> We're expanding our age range soon — we'll keep you posted!
+                            </p>
+                        </div>
+
+                        <p style="color: #666; font-size: 14px; margin-top: 20px;">
+                            We've saved your details and will reach out when we have programs suitable for your child's age.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Alert Modal -->
+    <div class="custom-alert" id="customAlert">
+        <div class="alert-content">
+            <div class="alert-icon">⚠️</div>
+            <div class="alert-message" id="alertMessage"></div>
+            <button class="alert-button" onclick="closeAlert()">OK</button>
+        </div>
+    </div>
+
+    <script>
+        /* =========================================================
+           ТЕСТОВЫЙ МОК БЭКЕНДА
+           Перехватываем window.fetch, чтобы:
+           - action=getSlots      -> вернуть локально сгенерированные слоты
+           - action=bookSlot      -> вернуть success
+           - action=saveBooking   -> вернуть success
+           - api.telegram.org     -> "проглотить" (ничего не отправляем)
+           Всё логируется в консоль браузера.
+        ========================================================= */
+        (function mockBackend() {
+            function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+            // Генерируем слоты на 8 дней вперёд, время 15:00–19:00 (Israel)
+            function generateSlots() {
+                var slots = [];
+                var times = ['15:00', '16:00', '17:00', '18:00', '19:00'];
+                var base = new Date();
+                base.setHours(0, 0, 0, 0);
+                for (var d = 1; d <= 8; d++) {
+                    var day = new Date(base);
+                    day.setDate(base.getDate() + d);
+                    var dateStr = day.getFullYear() + '-' + pad(day.getMonth() + 1) + '-' + pad(day.getDate());
+                    // На каждый день — случайное подмножество времён (детерминированно от дня)
+                    times.forEach(function(t, i) {
+                        if ((d + i) % 3 !== 0) { // пропускаем часть слотов, чтобы выглядело реалистично
+                            slots.push({ id: 'evt-' + dateStr + '-' + t, date: dateStr, time: t });
+                        }
+                    });
+                }
+                return slots;
+            }
+
+            function jsonResponse(obj) {
+                return Promise.resolve({
+                    ok: true,
+                    json: function() { return Promise.resolve(obj); }
+                });
+            }
+
+            var realFetch = window.fetch ? window.fetch.bind(window) : null;
+
+            window.fetch = function(url, opts) {
+                var u = String(url);
+
+                // Telegram — просто логируем и возвращаем ок
+                if (u.indexOf('api.telegram.org') !== -1) {
+                    console.log('[MOCK] Telegram message suppressed:', opts && opts.body);
+                    return jsonResponse({ ok: true });
+                }
+
+                // Google Apps Script calendar API
+                if (u.indexOf('script.google.com') !== -1) {
+                    if (u.indexOf('action=getSlots') !== -1) {
+                        console.log('[MOCK] getSlots');
+                        return jsonResponse({ success: true, slots: generateSlots() });
+                    }
+                    if (u.indexOf('action=bookSlot') !== -1) {
+                        console.log('[MOCK] bookSlot', u);
+                        return jsonResponse({ success: true });
+                    }
+                    if (u.indexOf('action=saveBooking') !== -1) {
+                        console.log('[MOCK] saveBooking', u);
+                        return jsonResponse({ success: true });
+                    }
+                    if (u.indexOf('action=saveOutOfRange') !== -1) {
+                        console.log('[MOCK] saveOutOfRange', u);
+                        return jsonResponse({ success: true });
+                    }
+                    return jsonResponse({ success: true });
+                }
+
+                // Всё остальное (например, шрифты Google) — реальный fetch
+                if (realFetch) return realFetch(url, opts);
+                return jsonResponse({});
+            };
+        })();
+
+        // Configuration (в тесте используются как заглушки — реальные запросы перехвачены моком)
+        const CALENDAR_API_URL = 'https://script.google.com/macros/s/TEST/exec';
+        const TELEGRAM_BOT_TOKEN = 'TEST';
+        const TELEGRAM_CHAT_ID = 'TEST';
+
+        var availableSlots = [];
+        var filteredSlots = [];
+        var selectedDate = null;
+        var selectedSlot = null;
+        var selectedChallenge = null;
+        var selectedFocus = [];
+        var childName = null;
+
+        var quizData = {
+            parentName: null,
+            age: null,
+            whatsapp: null,
+            email: null,
+            date: null,
+            time: null,
+            eventId: null
+        };
+
+        function showAlert(message, icon) {
+            icon = icon || '⚠️';
+            document.getElementById('alertMessage').textContent = message;
+            document.querySelector('.alert-icon').textContent = icon;
+            document.getElementById('customAlert').classList.add('show');
+        }
+
+        function closeAlert() {
+            document.getElementById('customAlert').classList.remove('show');
+        }
+
+        function goToSlots() {
+            var parentName = document.getElementById('parentName').value.trim();
+            var whatsapp = document.getElementById('whatsapp').value.trim();
+            var email = document.getElementById('email').value.trim();
+            var age = document.getElementById('childAge').value;
+
+            if (!parentName || !whatsapp || !email || !age) {
+                showAlert('Please fill in all required fields');
+                return;
+            }
+
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showAlert('Please enter a valid email address');
+                return;
+            }
+
+            var emailDomain = email.toLowerCase().split('@')[1];
+            var popularDomains = [
+                'gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com',
+                'icloud.com', 'mail.ru', 'yandex.ru', 'aol.com',
+                'protonmail.com', 'live.com', 'msn.com', 'me.com',
+                'googlemail.com', 'inbox.ru', 'rambler.ru'
+            ];
+
+            if (popularDomains.indexOf(emailDomain) === -1) {
+                showAlert('Please use a popular email provider (Gmail, Yahoo, Outlook, etc.)');
+                return;
+            }
+
+            var phoneDigits = whatsapp.replace(/\D/g, '');
+            if (phoneDigits.length < 8) {
+                showAlert('Please enter a valid phone number (at least 8 digits)');
+                return;
+            }
+
+            if (whatsapp.indexOf('+') === -1) {
+                showAlert('Please include country code with + (e.g., +972)');
+                return;
+            }
+
+            quizData.parentName = parentName;
+            quizData.whatsapp = whatsapp;
+            quizData.email = email;
+            quizData.age = age;
+
+            if (age === 'less than 5' || age === 'older than 9') {
+                sendOutOfRangeToTelegram();
+                document.querySelector('.card-header').style.display = 'none';
+                goToStep(4);
+                return;
+            }
+
+            goToStep(2);
+            if (availableSlots.length === 0) {
+                loadAvailableSlots();
+            }
+        }
+
+        async function sendOutOfRangeToTelegram() {
+            var message = 'NEW INQUIRY - CHILD OUTSIDE AGE RANGE\n\n' +
+                'Parent: ' + quizData.parentName + '\n' +
+                'WhatsApp: ' + quizData.whatsapp + '\n' +
+                'Email: ' + quizData.email + '\n' +
+                'Child age: ' + quizData.age + '\n\n' +
+                'Submitted at: ' + new Date().toLocaleString('en-US', { timeZone: 'Asia/Jerusalem' });
+
+            try {
+                await fetch('https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message })
+                });
+
+                var params = new URLSearchParams({
+                    action: 'saveOutOfRange',
+                    parentName: quizData.parentName,
+                    email: quizData.email,
+                    whatsapp: quizData.whatsapp,
+                    childAge: quizData.age
+                });
+                await fetch(CALENDAR_API_URL + '?' + params);
+            } catch (error) {
+                console.error('Telegram error:', error);
+            }
+        }
+
+        async function loadAvailableSlots() {
+            try {
+                var response = await fetch(CALENDAR_API_URL + '?action=getSlots&_t=' + Date.now());
+                if (!response.ok) throw new Error('Network response was not ok');
+                var data = await response.json();
+
+                if (data.success && data.slots && data.slots.length > 0) {
+                    availableSlots = data.slots;
+                    displayDates();
+                } else {
+                    document.getElementById('datesContainer').innerHTML =
+                        '<p style="color:#666;">No available slots at the moment. Please contact us via WhatsApp.</p>';
+                }
+            } catch (error) {
+                console.error('Error loading slots:', error);
+                document.getElementById('datesContainer').innerHTML =
+                    '<p style="color:#666;">Unable to load available dates. Please contact us directly on WhatsApp to book your free trial lesson.</p>';
+            }
+        }
+
+        function displayDates() {
+            var tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(0, 0, 0, 0);
+
+            var weekLater = new Date(tomorrow);
+            weekLater.setDate(weekLater.getDate() + 6); // tomorrow + 6 days = 7 days total
+            weekLater.setHours(23, 59, 59, 999);
+
+            filteredSlots = availableSlots.filter(function(slot) {
+                var slotDate = new Date(slot.date + 'T00:00:00');
+                return slotDate >= tomorrow && slotDate <= weekLater;
+            });
+
+            if (filteredSlots.length === 0) {
+                document.getElementById('datesContainer').innerHTML =
+                    '<p style="color:#666;">No available slots at the moment. Please contact us via WhatsApp.</p>';
+                return;
+            }
+
+            var seen = {};
+            var uniqueDates = filteredSlots.map(function(s) { return s.date; }).filter(function(d) {
+                if (seen[d]) return false;
+                seen[d] = true;
+                return true;
+            });
+
+            var container = document.getElementById('datesContainer');
+            container.className = 'date-slots';
+            container.innerHTML = '';
+
+            uniqueDates.forEach(function(date) {
+                var dateObj = new Date(date + 'T00:00:00');
+                var display = dateObj.toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    weekday: 'short'
+                });
+
+                var div = document.createElement('div');
+                div.className = 'date-slot';
+                div.textContent = display;
+                div.onclick = function() { selectDate(date, div); };
+                container.appendChild(div);
+            });
+        }
+
+        function selectDate(date, element) {
+            selectedDate = date;
+            document.querySelectorAll('.date-slot').forEach(function(el) { el.classList.remove('selected'); });
+            element.classList.add('selected');
+            displayTimes();
+        }
+
+        function displayTimes() {
+            var slots = filteredSlots.filter(function(s) { return s.date === selectedDate; });
+            var container = document.getElementById('timesContainer');
+            container.innerHTML = '';
+
+            var dateObj = new Date(selectedDate + 'T00:00:00');
+            document.getElementById('selectedDateDisplay').textContent =
+                dateObj.toLocaleDateString('en-US', { month: 'long', day: 'numeric', weekday: 'long' });
+
+            document.getElementById('timesSection').style.display = 'block';
+
+            var userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+            slots.forEach(function(slot) {
+                // Собираем дату+время как Israel time (GMT+3)
+                var israelDateStr = slot.date + 'T' + slot.time + ':00+03:00';
+                var slotDateObj = new Date(israelDateStr);
+
+                // Конвертируем в локальное время юзера
+                var localTime = slotDateObj.toLocaleTimeString('en-US', {
+                    timeZone: userTZ,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                });
+
+                var div = document.createElement('div');
+                div.className = 'time-slot';
+                div.textContent = localTime;
+                div.onclick = function() { selectTime(slot, div); };
+                container.appendChild(div);
+            });
+        }
+
+        function selectTime(slot, element) {
+            selectedSlot = slot;
+            quizData.date = slot.date;
+            quizData.time = slot.time;
+            quizData.eventId = slot.id;
+
+            document.querySelectorAll('.time-slot').forEach(function(el) { el.classList.remove('selected'); });
+            element.classList.add('selected');
+            document.getElementById('confirmBtn').disabled = false;
+        }
+
+        async function confirmBooking() {
+            var btn = document.getElementById('confirmBtn');
+            btn.disabled = true;
+            btn.textContent = 'Booking...';
+
+            try {
+                try {
+                    if (typeof fbq !== 'undefined') fbq('track', 'Lead');
+                } catch (fbqError) {
+                    console.log('Meta Pixel error:', fbqError);
+                }
+
+                await Promise.all([
+                    bookSlotInCalendar(),
+                    sendToTelegram(),
+                    saveToGoogleSheets()
+                ]);
+
+                goToStep(3);
+                document.querySelector('.card-header').style.display = 'none';
+                document.getElementById('successDate').textContent = quizData.date;
+                document.getElementById('successTime').textContent = quizData.time;
+                document.getElementById('successParent').textContent = quizData.parentName;
+                document.getElementById('successWhatsApp').textContent = quizData.whatsapp;
+            } catch (error) {
+                console.error('Booking error:', error);
+                btn.disabled = false;
+                btn.textContent = 'Confirm booking';
+                showAlert('Error with booking. Please try again. Error: ' + error.message);
+            }
+        }
+
+        async function saveToGoogleSheets() {
+            var params = new URLSearchParams({
+                action: 'saveBooking',
+                parentName: quizData.parentName,
+                email: quizData.email,
+                whatsapp: quizData.whatsapp,
+                childAge: quizData.age,
+                date: quizData.date,
+                time: quizData.time,
+                challengeLevel: selectedChallenge || '',
+                focusAreas: selectedFocus.join(', ')
+            });
+
+            try {
+                var response = await fetch(CALENDAR_API_URL + '?' + params);
+                var data = await response.json();
+                if (!data.success) console.error('Failed to save to Google Sheets:', data.error);
+            } catch (error) {
+                console.error('Error saving to Google Sheets:', error);
+            }
+        }
+
+        async function bookSlotInCalendar() {
+            var params = new URLSearchParams({
+                action: 'bookSlot',
+                eventId: quizData.eventId,
+                parentName: quizData.parentName,
+                whatsapp: quizData.whatsapp,
+                childAge: quizData.age
+            });
+            var response = await fetch(CALENDAR_API_URL + '?' + params);
+            var data = await response.json();
+            if (!data.success) throw new Error(data.error);
+        }
+
+        async function sendToTelegram() {
+            var message = 'NEW FREE TRIAL LESSON BOOKING\n\n' +
+                'Parent: ' + quizData.parentName + '\n' +
+                'WhatsApp: ' + quizData.whatsapp + '\n' +
+                'Email: ' + (quizData.email || 'Not provided') + '\n' +
+                'Child age: ' + quizData.age + ' years old\n' +
+                'Date: ' + quizData.date + '\n' +
+                'Time: ' + quizData.time + '\n\n' +
+                'Booked at: ' + new Date().toLocaleString('en-US', { timeZone: 'Asia/Jerusalem' });
+
+            await fetch('https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message })
+            });
+        }
+
+        function submitChildName() {
+            var nameInput = document.getElementById('childNameInput').value.trim();
+            if (!nameInput) {
+                showAlert('Please enter your child\'s name');
+                return;
+            }
+            childName = nameInput;
+            document.getElementById('childNameSection').style.display = 'none';
+            document.getElementById('challengeSection').style.display = 'block';
+        }
+
+        function selectChallenge(element, value) {
+            selectedChallenge = value;
+            document.querySelectorAll('#challengeSection .challenge-option').forEach(function(el) {
+                el.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            document.getElementById('challengeBtn').disabled = false;
+        }
+
+        async function submitChallenge() {
+            try {
+                document.getElementById('challengeSection').style.display = 'none';
+                document.getElementById('focusSection').style.display = 'block';
+            } catch (error) {
+                console.error('Error in submitChallenge:', error);
+            }
+        }
+
+        function selectFocus(element, value) {
+            var index = selectedFocus.indexOf(value);
+            if (index > -1) {
+                selectedFocus.splice(index, 1);
+                element.classList.remove('selected');
+            } else {
+                selectedFocus.push(value);
+                element.classList.add('selected');
+            }
+            document.getElementById('focusBtn').disabled = selectedFocus.length === 0;
+        }
+
+        async function submitFocus() {
+            var message = 'ADDITIONAL INFO\n\n' +
+                'Parent: ' + quizData.parentName + '\n' +
+                'Child name: ' + (childName || 'Not provided') + '\n' +
+                'Challenge level: ' + selectedChallenge + '\n' +
+                'Focus areas: ' + selectedFocus.join(', ');
+
+            await fetch('https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message })
+            });
+
+            document.getElementById('focusSection').innerHTML =
+                '<p style="text-align:center; color:#4CAF50; font-size:18px;">✓ Thank you! We\'re personalizing your math class based on your answers</p>';
+        }
+
+        function goToStep(num) {
+            document.querySelectorAll('.quiz-step').forEach(function(s) { s.classList.remove('active'); });
+            document.getElementById('step' + num).classList.add('active');
+        }
+    </script>
+</body>
+</html>
