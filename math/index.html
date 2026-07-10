@@ -1521,5 +1521,202 @@
   });
 </script>
 
+<script>
+  /* ═══════════════════════════════════════
+     BOOKING MODAL LOGIC
+  ═══════════════════════════════════════ */
+  var BK_WA = '79011821753';                                          // наш WhatsApp (только цифры)
+  var BK_TG_TOKEN = '8526009584:AAH-hDqYhPz-1A5tqdvET2Bex52zJtRHMVM'; // Telegram-бот
+  var BK_TG_CHAT  = '-5113540334';                                    // Telegram-чат
+
+  /* Постоянное недельное расписание. Ключ = день недели (0=вс … 6=сб), значения — время начала слота. */
+  var BK_SCHEDULE = {
+    1: ['10:00','11:00','12:00','13:00','14:00','15:00','16:00'], // Пн 10:00–17:00
+    2: ['10:30','11:30','12:30','13:00','14:00','16:00'],         // Вт
+    3: ['10:30','11:30','12:30','13:00','16:00'],                 // Ср
+    4: ['10:30','11:30','12:30','13:00','14:00','15:00'],         // Чт
+    5: ['15:00','16:00'],                                         // Пт
+    6: ['10:00','11:00','12:00','13:00','14:00'],                 // Сб 10:00–15:00
+    0: ['10:00','11:00','12:00','13:00','14:00']                  // Вс 10:00–15:00
+  };
+
+  var bkData = { parentName: null, age: null, whatsapp: null, email: null, date: null, time: null };
+  var bkDatesData = [];
+  var bkSelDateEl = null, bkSelTimeEl = null;
+
+  function bkPad(n) { return n < 10 ? '0' + n : '' + n; }
+  function bkWaDigits(num) { return num.replace(/\D/g, ''); }
+
+  function openBooking(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    document.getElementById('bkOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    bkGoStep(1);
+  }
+  function closeBooking() {
+    document.getElementById('bkOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('bkOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeBooking();
+  });
+
+  function bkGoStep(n) {
+    document.querySelectorAll('.bk-step').forEach(function(s) { s.classList.remove('active'); });
+    document.getElementById('bkStep' + n).classList.add('active');
+  }
+
+  function bkGoToSlots() {
+    var name  = document.getElementById('bkParentName').value.trim();
+    var age   = document.getElementById('bkChildAge').value;
+    var wa    = document.getElementById('bkWhatsApp').value.trim();
+    var email = document.getElementById('bkEmail').value.trim();
+
+    if (!name || !age || !wa || !email) { alert('Please fill in all fields'); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Please enter a valid email'); return; }
+    if (wa.indexOf('+') === -1) { alert('Please include the country code with + (e.g. +972 or +7)'); return; }
+    if (bkWaDigits(wa).length < 8) { alert('Please enter a valid WhatsApp number'); return; }
+
+    bkData.parentName = name;
+    bkData.age = age;
+    bkData.whatsapp = wa;
+    bkData.email = email;
+
+    if (age === 'less than 5' || age === 'older than 10') {
+      bkSendOutOfRange();
+      bkGoStep(4);
+      return;
+    }
+
+    bkBuildDates();
+    bkGoStep(2);
+  }
+
+  function bkBuildDates() {
+    bkDatesData = [];
+    var base = new Date(); base.setHours(0, 0, 0, 0);
+    for (var i = 1; i <= 7; i++) {
+      var d = new Date(base); d.setDate(base.getDate() + i);
+      var times = BK_SCHEDULE[d.getDay()] || [];
+      if (!times.length) continue;
+      var ds = d.getFullYear() + '-' + bkPad(d.getMonth() + 1) + '-' + bkPad(d.getDate());
+      bkDatesData.push({ date: ds, times: times.slice() });
+    }
+    bkRenderDates();
+    document.getElementById('bkTimesWrap').style.display = 'none';
+    bkData.date = null; bkData.time = null;
+    bkSelDateEl = null; bkSelTimeEl = null;
+    document.getElementById('bkConfirm').disabled = true;
+  }
+
+  function bkRenderDates() {
+    var c = document.getElementById('bkDates');
+    c.innerHTML = '';
+    bkDatesData.forEach(function(item) {
+      var dObj = new Date(item.date + 'T00:00:00');
+      var wd = dObj.toLocaleDateString('en-US', { weekday: 'short' });
+      var md = dObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      var el = document.createElement('div');
+      el.className = 'bk-slot';
+      el.innerHTML = md + '<small>' + wd + '</small>';
+      el.onclick = function() { bkSelectDate(item, el); };
+      c.appendChild(el);
+    });
+  }
+
+  function bkSelectDate(item, el) {
+    bkData.date = item.date; bkData.time = null;
+    if (bkSelDateEl) bkSelDateEl.classList.remove('sel');
+    el.classList.add('sel'); bkSelDateEl = el;
+    bkSelTimeEl = null;
+    document.getElementById('bkConfirm').disabled = true;
+
+    var dObj = new Date(item.date + 'T00:00:00');
+    document.getElementById('bkDateLabel').textContent =
+      dObj.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+
+    var tc = document.getElementById('bkTimes');
+    tc.innerHTML = '';
+    item.times.forEach(function(t) {
+      var te = document.createElement('div');
+      te.className = 'bk-slot';
+      te.textContent = t;
+      te.onclick = function() { bkSelectTime(t, te); };
+      tc.appendChild(te);
+    });
+    document.getElementById('bkTimesWrap').style.display = 'block';
+  }
+
+  function bkSelectTime(t, el) {
+    bkData.time = t;
+    if (bkSelTimeEl) bkSelTimeEl.classList.remove('sel');
+    el.classList.add('sel'); bkSelTimeEl = el;
+    document.getElementById('bkConfirm').disabled = false;
+  }
+
+  function bkConfirm() {
+    if (!bkData.date || !bkData.time) return;
+
+    if (typeof fbq === 'function') fbq('track', 'Lead', { content_name: 'booking_math_variant_b' });
+
+    var parentDigits = bkWaDigits(bkData.whatsapp);
+    var parentPlus = '+' + parentDigits;
+
+    /* Сообщение, которое родитель отправит НАМ в WhatsApp */
+    var waMsg = 'привет я забукал урок\n' +
+                'Date: ' + bkData.date + '\n' +
+                'Time: ' + bkData.time + '\n' +
+                'Parent: ' + bkData.parentName + '\n' +
+                'WhatsApp: ' + parentPlus;
+    var waLink = 'https://wa.me/' + BK_WA + '?text=' + encodeURIComponent(waMsg);
+
+    /* Открываем WhatsApp синхронно — иначе попап-блокер может помешать */
+    window.open(waLink, '_blank');
+
+    /* Мгновенное уведомление в Telegram (WhatsApp родителя — кликабельной ссылкой) */
+    var now = new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow', hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit' });
+    var tg = '🔥 Новый лид — забронирован пробный урок! [/math]\n\n' +
+             '👤 Родитель: ' + bkData.parentName + '\n' +
+             '📱 WhatsApp: https://wa.me/' + parentDigits + '\n' +
+             '👶 Возраст ребёнка: ' + bkData.age + '\n' +
+             '📅 Дата: ' + bkData.date + '\n' +
+             '🕐 Время: ' + bkData.time + '\n' +
+             '📧 Email: ' + bkData.email + '\n\n' +
+             '⏰ ' + now + ' (МСК)';
+    bkSendTelegram(tg);
+
+    /* Экран успеха */
+    document.getElementById('bkSummary').innerHTML =
+      '<div><b>Date:</b> ' + bkData.date + '</div>' +
+      '<div><b>Time:</b> ' + bkData.time + '</div>' +
+      '<div><b>Parent:</b> ' + bkData.parentName + '</div>' +
+      '<div><b>WhatsApp:</b> ' + parentPlus + '</div>';
+    document.getElementById('bkWaLink').href = waLink;
+    bkGoStep(3);
+  }
+
+  function bkSendOutOfRange() {
+    var parentDigits = bkWaDigits(bkData.whatsapp);
+    var now = new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow', hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit' });
+    var tg = '📩 Новый лид — вне возраста 5–10 [/math]\n\n' +
+             '👤 Родитель: ' + bkData.parentName + '\n' +
+             '📱 WhatsApp: https://wa.me/' + parentDigits + '\n' +
+             '👶 Возраст ребёнка: ' + bkData.age + '\n' +
+             '📧 Email: ' + bkData.email + '\n\n' +
+             '⏰ ' + now + ' (МСК)';
+    bkSendTelegram(tg);
+  }
+
+  function bkSendTelegram(text) {
+    try {
+      fetch('https://api.telegram.org/bot' + BK_TG_TOKEN + '/sendMessage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: BK_TG_CHAT, text: text })
+      });
+    } catch (err) { console.error('TG error', err); }
+  }
+</script>
+
 </body>
 </html>
