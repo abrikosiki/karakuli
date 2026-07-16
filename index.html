@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Karakuli MATH | Interactive Math Lessons for Kids</title>
+  <title>Karakuli MATH | Free Math Assessment for Kids</title>
   <meta name="description" content="Live 1-on-1 math tutoring for kids ages 5–10, wrapped in an RPG adventure. First lesson free." />
   <link rel="icon" type="image/png" href="https://static.tildacdn.com/tild6166-6234-4662-b333-376165333562/ChatGPT_Image_10__20.png" />
   <link rel="apple-touch-icon" href="https://static.tildacdn.com/tild6166-6234-4662-b333-376165333562/ChatGPT_Image_10__20.png" />
@@ -868,6 +868,144 @@
       .badge { font-size: 0.78rem; padding: 6px 14px; }
       .hero-inner { padding: 16px 16px 0; }
     }
+
+    /* ═══════════════════════════════════════
+       BOOKING WIDGET (inline)
+    ═══════════════════════════════════════ */
+    .bk-card {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 22px;
+      box-shadow: var(--sh-lg);
+      width: 100%;
+      max-width: 430px;
+      margin: 6px auto 0;
+      padding: 28px 26px 26px;
+      position: relative;
+      text-align: left;
+    }
+
+    .bk-step { display: none; }
+    .bk-step.active { display: block; animation: bkFade 0.35s ease; }
+    @keyframes bkFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .bk-head { text-align: center; margin-bottom: 22px; }
+    .bk-emoji { font-size: 2.6rem; display: block; margin-bottom: 8px; }
+    .bk-head h3 { font-family: 'Fredoka One', Arial, sans-serif; font-size: 1.5rem; color: var(--ink); margin-bottom: 6px; }
+    .bk-head p { font-size: 0.9rem; font-weight: 700; color: var(--ink-lite); }
+
+    .bk-field { margin-bottom: 16px; }
+    .bk-field label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .bk-field input,
+    .bk-field select {
+      width: 100%;
+      padding: 13px 14px;
+      font-family: 'Nunito', Arial, sans-serif;
+      font-size: 16px; /* 16px, чтобы iOS не зумил при фокусе */
+      font-weight: 700;
+      color: var(--ink);
+      background: var(--cream);
+      border: var(--border);
+      border-radius: 12px;
+      box-shadow: var(--sh-sm);
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .bk-field select {
+      padding-right: 40px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%232C1A0E' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 15px center;
+    }
+    .bk-field input:focus,
+    .bk-field select:focus { box-shadow: 5px 5px 0 var(--gold); }
+    .bk-field input::placeholder { color: #B7A48F; font-weight: 600; }
+
+    .bk-btn { margin-top: 8px; }
+    .btn-gold.bk-btn { width: 100%; justify-content: center; padding: 15px 24px; font-size: 1.1rem; }
+    .btn-wa:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: var(--sh-sm); }
+    .btn-wa:disabled:hover { transform: none; box-shadow: var(--sh-sm); }
+
+    .bk-back {
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin-top: 12px;
+      background: none;
+      border: none;
+      font-family: 'Fredoka One', Arial, sans-serif;
+      font-size: 0.9rem;
+      color: var(--ink-lite);
+      cursor: pointer;
+    }
+
+    .bk-slots {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .bk-slot {
+      padding: 11px 6px;
+      text-align: center;
+      background: var(--white);
+      border: var(--border);
+      border-radius: 12px;
+      box-shadow: var(--sh-sm);
+      font-family: 'Nunito', Arial, sans-serif;
+      font-weight: 800;
+      font-size: 0.86rem;
+      color: var(--ink);
+      cursor: pointer;
+      transition: transform 0.12s, box-shadow 0.12s;
+    }
+    .bk-slot small { display: block; font-weight: 700; font-size: 0.72rem; color: var(--ink-lite); }
+    .bk-slot:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--gold-dark); }
+    .bk-slot.sel { background: var(--gold); color: var(--ink); box-shadow: var(--sh-sm); }
+    .bk-slot.sel small { color: var(--ink); }
+
+    .bk-times-label {
+      display: block;
+      font-family: 'Fredoka One', Arial, sans-serif;
+      font-size: 1rem;
+      color: var(--ink);
+      margin: 18px 0 4px;
+    }
+
+    .bk-summary {
+      background: var(--white);
+      border: var(--border);
+      border-radius: 14px;
+      box-shadow: var(--sh-sm);
+      padding: 16px 18px;
+      margin-bottom: 18px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--ink);
+      text-align: left;
+    }
+    .bk-summary div { padding: 3px 0; }
+    .bk-summary b { color: var(--ink-lite); }
+
+    .bk-note {
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--ink-lite);
+      margin-top: 14px;
+    }
+
+    @media (max-width: 480px) {
+      .bk-card { padding: 26px 18px 22px; }
+      .bk-head h3 { font-size: 1.3rem; }
+    }
   </style>
 </head>
 <body>
@@ -890,28 +1028,105 @@
   <div class="floater f6">🎒</div>
 
   <div class="hero-inner">
-    <div class="badge">🎮 Live 1-on-1 tutoring · Ages 5–10</div>
+    <div class="badge">🎓 Free 30-min trial lesson · Ages 5–10</div>
 
     <h1 class="hero-h1">
-      Your child will<br>
-      <span class="gold">beg</span> to do <span class="teal">math</span>
+      See exactly where your child<br>
+      stands in <span class="teal">math</span> — <span class="gold">free</span>
     </h1>
 
-    <p class="hero-sub">
-      No more homework battles. No more "I hate math."<br>
-      Live 1-on-1 lessons with real tutors, wrapped in an RPG adventure — when kids love the process, progress takes care of itself.
-    </p>
-
     <div class="hero-bullets">
-      <div class="hb-item">✅ 45-min live lesson — no prep needed</div>
+      <div class="hb-item">✅ Free 30-min live lesson with a real tutor</div>
       <div class="hb-item">✅ Personalised math level assessment</div>
-      <div class="hb-item">✅ Tutor feedback + your child's learning plan</div>
+      <div class="hb-item">✅ A learning plan you keep — even if you don't continue</div>
     </div>
 
-    <a href="https://wa.me/79011821753?text=Hi!%20I%20would%20like%20to%20sign%20up%20for%20a%20free%20lesson" target="_blank" rel="noopener" class="btn btn-wa">
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-      Book Free Lesson
-    </a>
+    <!-- ═══ INLINE BOOKING WIDGET ═══ -->
+    <div class="bk-card" id="bookingWidget">
+
+      <!-- Step 1 — details -->
+      <div class="bk-step active" id="bkStep1">
+        <div class="bk-head">
+          <span class="bk-emoji">🎓</span>
+          <h3>Book your free lesson</h3>
+          <p>30-min live trial · Ages 5–10</p>
+        </div>
+        <div class="bk-field">
+          <label>Parent's name</label>
+          <input type="text" id="bkParentName" placeholder="Your name">
+        </div>
+        <div class="bk-field">
+          <label>Child's age</label>
+          <select id="bkChildAge">
+            <option value="">Select age</option>
+            <option value="less than 5">Less than 5 y.o.</option>
+            <option value="5">5 years old</option>
+            <option value="6">6 years old</option>
+            <option value="7">7 years old</option>
+            <option value="8">8 years old</option>
+            <option value="9">9 years old</option>
+            <option value="10">10 years old</option>
+            <option value="older than 10">Older than 10 y.o.</option>
+          </select>
+        </div>
+        <div class="bk-field">
+          <label>WhatsApp number</label>
+          <input type="tel" id="bkWhatsApp" placeholder="+972 5X XXX XXXX">
+        </div>
+        <button type="button" class="btn btn-gold bk-btn" onclick="bkGoToSlots()">Next →</button>
+      </div>
+
+      <!-- Step 2 — date & time -->
+      <div class="bk-step" id="bkStep2">
+        <div class="bk-head">
+          <span class="bk-emoji">📅</span>
+          <h3>Pick a date &amp; time</h3>
+          <p>Choose a slot that works for you</p>
+        </div>
+        <div class="bk-field">
+          <label>Date</label>
+          <div id="bkDates" class="bk-slots"></div>
+        </div>
+        <div id="bkTimesWrap" style="display:none;">
+          <span class="bk-times-label" id="bkDateLabel"></span>
+          <div id="bkTimes" class="bk-slots"></div>
+        </div>
+        <button type="button" class="btn btn-wa bk-btn" id="bkConfirm" disabled onclick="bkConfirm()">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Confirm booking
+        </button>
+        <button type="button" class="bk-back" onclick="bkGoStep(1)">← Back</button>
+      </div>
+
+      <!-- Step 3 — success -->
+      <div class="bk-step" id="bkStep3">
+        <div class="bk-head">
+          <span class="bk-emoji">🎉</span>
+          <h3>Almost done!</h3>
+          <p>We've opened WhatsApp for you — just tap <b>Send</b> to confirm. We'll reply with your Zoom link.</p>
+        </div>
+        <div class="bk-summary" id="bkSummary"></div>
+        <a class="btn btn-wa bk-btn" id="bkWaLink" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Open WhatsApp again
+        </a>
+        <p class="bk-note">If WhatsApp didn't open, tap the button above 👆</p>
+      </div>
+
+      <!-- Step 4 — out of age range -->
+      <div class="bk-step" id="bkStep4">
+        <div class="bk-head">
+          <span class="bk-emoji">💌</span>
+          <h3>Thank you for your interest!</h3>
+        </div>
+        <div class="bk-summary" style="text-align:center;">
+          Our lessons are currently for children ages <b>5–10</b>, so we wouldn't be the right fit just yet.
+          We've saved your details and will reach out as soon as we expand our age range!
+        </div>
+        <button type="button" class="btn btn-gold bk-btn" onclick="bkGoStep(1)">← Back to start</button>
+      </div>
+
+    </div>
 
   </div>
 
@@ -1054,7 +1269,7 @@
     </div>
     <div class="fp reveal d3">
       <div class="fp-head"><span class="fp-ico">📵</span><span class="fp-title">Screen Time You'll Approve</span></div>
-      <p class="fp-desc">45 minutes of intentional, adult-supervised, genuinely educational screen time. Not Netflix. Not TikTok.</p>
+      <p class="fp-desc">30 minutes of intentional, adult-supervised, genuinely educational screen time. Not Netflix. Not TikTok.</p>
     </div>
   </div>
 </section>
@@ -1165,7 +1380,7 @@
   <div class="faq-list">
     <details class="reveal d1">
       <summary>What happens in the free lesson?</summary>
-      <p class="faq-body">Your child gets a full 45-minute live session with a real tutor. They'll create their character, name it, pick their look, and set off on the first quest. No prep needed — no worksheets, no homework. Just show up and play.</p>
+      <p class="faq-body">Your child gets a full 30-minute live session with a real tutor. They'll create their character, name it, pick their look, and set off on the first quest. No prep needed — no worksheets, no homework. Just show up and play.</p>
     </details>
     <details class="reveal d2">
       <summary>What if my child doesn't like it?</summary>
@@ -1212,6 +1427,7 @@
   <a href="https://wa.me/79011821753?text=Hi!%20I%20would%20like%20to%20sign%20up%20for%20a%20free%20lesson" target="_blank" rel="noopener" class="sticky-btn">Book Free →</a>
 </div>
 
+
 <script>
   /* ─── Steps carousel ─── */
   const stepsWrap = document.querySelector('.steps-carousel-wrap');
@@ -1249,19 +1465,9 @@
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-  /* ─── Meta Pixel + Telegram: fire on WhatsApp click ─── */
+  /* ─── Любая WhatsApp-кнопка теперь открывает окно записи ─── */
   document.querySelectorAll('a[href*="wa.me"]').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      if (typeof fbq === 'function') fbq('track', 'Lead');
-
-      var now = new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow', hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit' });
-      var text = '🔥 Новый лид!\n\nКто-то нажал «Book Free Lesson» на сайте KARAKULI\n⏰ ' + now + ' (МСК)';
-      fetch('https://api.telegram.org/bot8526009584:AAH-hDqYhPz-1A5tqdvET2Bex52zJtRHMVM/sendMessage', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: '-5113540334', text: text })
-      });
-    });
+    btn.addEventListener('click', function(e) { openBooking(e); });
   });
 
   /* ─── Sticky mobile CTA ─── */
@@ -1280,6 +1486,191 @@
   window.addEventListener('resize', () => {
     if (window.innerWidth > 768) sticky.classList.remove('show');
   });
+</script>
+
+<script>
+  /* ═══════════════════════════════════════
+     BOOKING MODAL LOGIC
+  ═══════════════════════════════════════ */
+  var BK_WA = '79011821753';                                          // наш WhatsApp (только цифры)
+  var BK_TG_TOKEN = '8526009584:AAH-hDqYhPz-1A5tqdvET2Bex52zJtRHMVM'; // Telegram-бот
+  var BK_TG_CHAT  = '-5113540334';                                    // Telegram-чат
+
+  /* Постоянное недельное расписание. Ключ = день недели (0=вс … 6=сб), значения — время начала слота. */
+  var BK_SCHEDULE = {
+    1: ['10:00','11:00','12:00','13:00','14:00','15:00','16:00','19:30','20:00','20:30'], // Пн
+    2: ['10:30','11:30','12:30','13:00','14:00','16:00','19:30','20:00','20:30'],         // Вт
+    3: ['10:30','11:30','12:30','13:00','16:00','19:30','20:00','20:30'],                 // Ср
+    4: ['10:30','11:30','12:30','13:00','14:00','15:00','19:30','20:00','20:30'],         // Чт
+    5: ['15:00','16:00','19:30','20:00','20:30'],                                         // Пт
+    6: ['10:00','11:00','12:00','13:00','14:00'],                                         // Сб 10:00–15:00
+    0: ['10:00','11:00','12:00','13:00','14:00']                                          // Вс 10:00–15:00
+  };
+
+  var bkData = { parentName: null, age: null, whatsapp: null, date: null, time: null };
+  var bkDatesData = [];
+  var bkSelDateEl = null, bkSelTimeEl = null;
+
+  function bkPad(n) { return n < 10 ? '0' + n : '' + n; }
+  function bkWaDigits(num) { return num.replace(/\D/g, ''); }
+
+  /* Кнопки CTA по странице просто прокручивают к встроенному виджету */
+  function openBooking(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    var w = document.getElementById('bookingWidget');
+    if (w) w.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function bkGoStep(n) {
+    document.querySelectorAll('.bk-step').forEach(function(s) { s.classList.remove('active'); });
+    document.getElementById('bkStep' + n).classList.add('active');
+  }
+
+  function bkGoToSlots() {
+    var name  = document.getElementById('bkParentName').value.trim();
+    var age   = document.getElementById('bkChildAge').value;
+    var wa    = document.getElementById('bkWhatsApp').value.trim();
+
+    if (!name || !age || !wa) { alert('Please fill in all fields'); return; }
+    if (wa.indexOf('+') === -1) { alert('Please include the country code with + (e.g. +972 or +7)'); return; }
+    if (bkWaDigits(wa).length < 8) { alert('Please enter a valid WhatsApp number'); return; }
+
+    bkData.parentName = name;
+    bkData.age = age;
+    bkData.whatsapp = wa;
+
+    if (age === 'less than 5' || age === 'older than 10') {
+      bkSendOutOfRange();
+      bkGoStep(4);
+      return;
+    }
+
+    bkBuildDates();
+    bkGoStep(2);
+  }
+
+  function bkBuildDates() {
+    bkDatesData = [];
+    var base = new Date(); base.setHours(0, 0, 0, 0);
+    for (var i = 1; i <= 7; i++) {
+      var d = new Date(base); d.setDate(base.getDate() + i);
+      var times = BK_SCHEDULE[d.getDay()] || [];
+      if (!times.length) continue;
+      var ds = d.getFullYear() + '-' + bkPad(d.getMonth() + 1) + '-' + bkPad(d.getDate());
+      bkDatesData.push({ date: ds, times: times.slice() });
+    }
+    bkRenderDates();
+    document.getElementById('bkTimesWrap').style.display = 'none';
+    bkData.date = null; bkData.time = null;
+    bkSelDateEl = null; bkSelTimeEl = null;
+    document.getElementById('bkConfirm').disabled = true;
+  }
+
+  function bkRenderDates() {
+    var c = document.getElementById('bkDates');
+    c.innerHTML = '';
+    bkDatesData.forEach(function(item) {
+      var dObj = new Date(item.date + 'T00:00:00');
+      var wd = dObj.toLocaleDateString('en-US', { weekday: 'short' });
+      var md = dObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      var el = document.createElement('div');
+      el.className = 'bk-slot';
+      el.innerHTML = md + '<small>' + wd + '</small>';
+      el.onclick = function() { bkSelectDate(item, el); };
+      c.appendChild(el);
+    });
+  }
+
+  function bkSelectDate(item, el) {
+    bkData.date = item.date; bkData.time = null;
+    if (bkSelDateEl) bkSelDateEl.classList.remove('sel');
+    el.classList.add('sel'); bkSelDateEl = el;
+    bkSelTimeEl = null;
+    document.getElementById('bkConfirm').disabled = true;
+
+    var dObj = new Date(item.date + 'T00:00:00');
+    document.getElementById('bkDateLabel').textContent =
+      dObj.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+
+    var tc = document.getElementById('bkTimes');
+    tc.innerHTML = '';
+    item.times.forEach(function(t) {
+      var te = document.createElement('div');
+      te.className = 'bk-slot';
+      te.textContent = t;
+      te.onclick = function() { bkSelectTime(t, te); };
+      tc.appendChild(te);
+    });
+    document.getElementById('bkTimesWrap').style.display = 'block';
+  }
+
+  function bkSelectTime(t, el) {
+    bkData.time = t;
+    if (bkSelTimeEl) bkSelTimeEl.classList.remove('sel');
+    el.classList.add('sel'); bkSelTimeEl = el;
+    document.getElementById('bkConfirm').disabled = false;
+  }
+
+  function bkConfirm() {
+    if (!bkData.date || !bkData.time) return;
+
+    if (typeof fbq === 'function') fbq('track', 'Lead', { content_name: 'booking_math' });
+
+    var parentDigits = bkWaDigits(bkData.whatsapp);
+    var parentPlus = '+' + parentDigits;
+
+    /* Сообщение, которое родитель отправит НАМ в WhatsApp */
+    var waMsg = 'Hi! I booked a lesson\n' +
+                'Date: ' + bkData.date + '\n' +
+                'Time: ' + bkData.time + '\n' +
+                'Parent: ' + bkData.parentName + '\n' +
+                'WhatsApp: ' + parentPlus;
+    var waLink = 'https://wa.me/' + BK_WA + '?text=' + encodeURIComponent(waMsg);
+
+    /* Открываем WhatsApp синхронно — иначе попап-блокер может помешать */
+    window.open(waLink, '_blank');
+
+    /* Мгновенное уведомление в Telegram (WhatsApp родителя — кликабельной ссылкой) */
+    var now = new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow', hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit' });
+    var tg = '🔥 Новый лид — забронирован пробный урок! [/math]\n\n' +
+             '👤 Родитель: ' + bkData.parentName + '\n' +
+             '📱 WhatsApp: https://wa.me/' + parentDigits + '\n' +
+             '👶 Возраст ребёнка: ' + bkData.age + '\n' +
+             '📅 Дата: ' + bkData.date + '\n' +
+             '🕐 Время: ' + bkData.time + '\n\n' +
+             '⏰ ' + now + ' (МСК)';
+    bkSendTelegram(tg);
+
+    /* Экран успеха */
+    document.getElementById('bkSummary').innerHTML =
+      '<div><b>Date:</b> ' + bkData.date + '</div>' +
+      '<div><b>Time:</b> ' + bkData.time + '</div>' +
+      '<div><b>Parent:</b> ' + bkData.parentName + '</div>' +
+      '<div><b>WhatsApp:</b> ' + parentPlus + '</div>';
+    document.getElementById('bkWaLink').href = waLink;
+    bkGoStep(3);
+  }
+
+  function bkSendOutOfRange() {
+    var parentDigits = bkWaDigits(bkData.whatsapp);
+    var now = new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow', hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit' });
+    var tg = '📩 Новый лид — вне возраста 5–10 [/math]\n\n' +
+             '👤 Родитель: ' + bkData.parentName + '\n' +
+             '📱 WhatsApp: https://wa.me/' + parentDigits + '\n' +
+             '👶 Возраст ребёнка: ' + bkData.age + '\n\n' +
+             '⏰ ' + now + ' (МСК)';
+    bkSendTelegram(tg);
+  }
+
+  function bkSendTelegram(text) {
+    try {
+      fetch('https://api.telegram.org/bot' + BK_TG_TOKEN + '/sendMessage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: BK_TG_CHAT, text: text })
+      });
+    } catch (err) { console.error('TG error', err); }
+  }
 </script>
 
 </body>
