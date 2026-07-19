@@ -1560,19 +1560,49 @@
     bkGoStep(2);
   }
 
-  function bkBuildDates() {
-    bkDatesData = [];
-    var base = new Date(); base.setHours(0, 0, 0, 0);
-    for (var i = 1; i <= 7; i++) {
-      var d = new Date(base); d.setDate(base.getDate() + i);
-      var times = BK_SCHEDULE[d.getDay()] || [];
-      if (!times.length) continue;
-      var ds = d.getFullYear() + '-' + bkPad(d.getMonth() + 1) + '-' + bkPad(d.getDate());
-      bkDatesData.push({ date: ds, times: times.slice() });
+  /* Строим слоты из недельного расписания (МСК) как реальные моменты времени (Date),
+     затем группируем и подписываем их уже в часовом поясе браузера посетителя —
+     конкретный час/дата на экране всегда соответствуют его местному времени. */
+  function bkBuildSlots() {
+    var mskNow = new Date(Date.now() + BK_MSK_OFFSET_MS); // UTC-геттеры этого объекта = московское время
+    var baseY = mskNow.getUTCFullYear(), baseM = mskNow.getUTCMonth(), baseD = mskNow.getUTCDate();
+
+    var slots = [];
+    for (var i = 1; i <= 12; i++) { // с запасом: конвертация в другой пояс может сдвинуть календарный день
+      var day = new Date(Date.UTC(baseY, baseM, baseD + i));
+      var times = BK_SCHEDULE[day.getUTCDay()] || [];
+      times.forEach(function(t) {
+        var tp = t.split(':');
+        var utcMs = Date.UTC(day.getUTCFullYear(), day.getUTCMonth(), day.getUTCDate(), Number(tp[0]), Number(tp[1])) - BK_MSK_OFFSET_MS;
+        slots.push(new Date(utcMs));
+      });
     }
+    return slots; // уже в хронологическом порядке
+  }
+
+  function bkBuildDates() {
+    var slots = bkBuildSlots();
+    var now = Date.now();
+    var byDate = {};
+    bkDatesData = [];
+
+    slots.forEach(function(instant) {
+      if (instant.getTime() <= now) return; // прошедшее по местному времени пользователя — пропускаем
+      var key = instant.getFullYear() + '-' + bkPad(instant.getMonth() + 1) + '-' + bkPad(instant.getDate());
+      if (!byDate[key]) {
+        byDate[key] = { key: key, sample: instant, times: [] };
+        bkDatesData.push(byDate[key]);
+      }
+      byDate[key].times.push(instant);
+    });
+
+    bkDatesData = bkDatesData.slice(0, 7); // ближайшие 7 дней в местном времени пользователя
+
     bkRenderDates();
+    var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    document.getElementById('bkTzNote').textContent = 'Times shown in your local time zone' + (tz ? ' (' + tz + ')' : '');
     document.getElementById('bkTimesWrap').style.display = 'none';
-    bkData.date = null; bkData.time = null;
+    bkData.instant = null; bkData.localLabel = null;
     bkSelDateEl = null; bkSelTimeEl = null;
     document.getElementById('bkConfirm').disabled = true;
   }
@@ -1581,9 +1611,8 @@
     var c = document.getElementById('bkDates');
     c.innerHTML = '';
     bkDatesData.forEach(function(item) {
-      var dObj = new Date(item.date + 'T00:00:00');
-      var wd = dObj.toLocaleDateString('en-US', { weekday: 'short' });
-      var md = dObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      var wd = item.sample.toLocaleDateString('en-US', { weekday: 'short' });
+      var md = item.sample.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
       var el = document.createElement('div');
       el.className = 'bk-slot';
       el.innerHTML = md + '<small>' + wd + '</small>';
@@ -1593,47 +1622,53 @@
   }
 
   function bkSelectDate(item, el) {
-    bkData.date = item.date; bkData.time = null;
+    bkData.instant = null; bkData.localLabel = null;
     if (bkSelDateEl) bkSelDateEl.classList.remove('sel');
     el.classList.add('sel'); bkSelDateEl = el;
     bkSelTimeEl = null;
     document.getElementById('bkConfirm').disabled = true;
 
-    var dObj = new Date(item.date + 'T00:00:00');
     document.getElementById('bkDateLabel').textContent =
-      dObj.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+      item.sample.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
     var tc = document.getElementById('bkTimes');
     tc.innerHTML = '';
-    item.times.forEach(function(t) {
+    item.times.forEach(function(instant) {
+      var label = bkPad(instant.getHours()) + ':' + bkPad(instant.getMinutes());
       var te = document.createElement('div');
       te.className = 'bk-slot';
-      te.textContent = t;
-      te.onclick = function() { bkSelectTime(t, te); };
+      te.textContent = label;
+      te.onclick = function() { bkSelectTime(instant, label, te); };
       tc.appendChild(te);
     });
     document.getElementById('bkTimesWrap').style.display = 'block';
   }
 
-  function bkSelectTime(t, el) {
-    bkData.time = t;
+  function bkSelectTime(instant, label, el) {
+    bkData.instant = instant.getTime();
+    bkData.localLabel = label;
     if (bkSelTimeEl) bkSelTimeEl.classList.remove('sel');
     el.classList.add('sel'); bkSelTimeEl = el;
     document.getElementById('bkConfirm').disabled = false;
   }
 
   function bkConfirm() {
-    if (!bkData.date || !bkData.time) return;
+    if (!bkData.instant) return;
 
     if (typeof fbq === 'function') fbq('track', 'Lead', { content_name: 'booking_math' });
+
+    var instant = new Date(bkData.instant);
+    var localDateLabel = instant.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    var localTz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+    var mskLabel = instant.toLocaleString('ru-RU', { timeZone: 'Europe/Moscow', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
 
     var parentDigits = bkWaDigits(bkData.whatsapp);
     var parentPlus = '+' + parentDigits;
 
-    /* Сообщение, которое родитель отправит НАМ в WhatsApp */
+    /* Сообщение, которое родитель отправит НАМ в WhatsApp (время — в его часовом поясе) */
     var waMsg = 'Hi! I booked a lesson\n' +
-                'Date: ' + bkData.date + '\n' +
-                'Time: ' + bkData.time + '\n' +
+                'Date: ' + localDateLabel + '\n' +
+                'Time: ' + bkData.localLabel + (localTz ? ' (' + localTz + ')' : '') + '\n' +
                 'Parent: ' + bkData.parentName + '\n' +
                 'WhatsApp: ' + parentPlus;
     var waLink = 'https://wa.me/' + BK_WA + '?text=' + encodeURIComponent(waMsg);
@@ -1641,21 +1676,21 @@
     /* Открываем WhatsApp синхронно — иначе попап-блокер может помешать */
     window.open(waLink, '_blank');
 
-    /* Мгновенное уведомление в Telegram (WhatsApp родителя — кликабельной ссылкой) */
+    /* Мгновенное уведомление в Telegram — время дублируем по МСК, чтобы тьютор не пересчитывал */
     var now = new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow', hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit' });
     var tg = '🔥 Новый лид — забронирован пробный урок!\n\n' +
              '👤 Родитель: ' + bkData.parentName + '\n' +
              '📱 WhatsApp: https://wa.me/' + parentDigits + '\n' +
              '👶 Возраст ребёнка: ' + bkData.age + '\n' +
-             '📅 Дата: ' + bkData.date + '\n' +
-             '🕐 Время: ' + bkData.time + '\n\n' +
-             '⏰ ' + now + ' (МСК)';
+             '📅 Дата/время клиента (' + (localTz || 'его пояс') + '): ' + localDateLabel + ', ' + bkData.localLabel + '\n' +
+             '🕐 Время по МСК: ' + mskLabel + '\n\n' +
+             '⏰ Заявка отправлена: ' + now + ' (МСК)';
     bkSendTelegram(tg);
 
     /* Экран успеха */
     document.getElementById('bkSummary').innerHTML =
-      '<div><b>Date:</b> ' + bkData.date + '</div>' +
-      '<div><b>Time:</b> ' + bkData.time + '</div>' +
+      '<div><b>Date:</b> ' + localDateLabel + '</div>' +
+      '<div><b>Time:</b> ' + bkData.localLabel + (localTz ? ' (' + localTz + ')' : '') + '</div>' +
       '<div><b>Parent:</b> ' + bkData.parentName + '</div>' +
       '<div><b>WhatsApp:</b> ' + parentPlus + '</div>';
     document.getElementById('bkWaLink').href = waLink;
